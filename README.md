@@ -3,7 +3,7 @@ P&L Smart Pivot, a Qlik Sense Extension for Financial reporting
 =============================
 ==================================
 
-
+Available in https://github.com/iviasensio/PLSmartPivot
 
 Current version 1.0.
 
