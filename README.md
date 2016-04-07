@@ -17,7 +17,14 @@ This extension is useful to create reports where the look&feel is rellevantand a
 
 
 
-It's specifically focused on financial reports, trying to solve some common needs of this area.
+It's specifically focused on financial reports, trying to solve some common needs of this area:
+- smart export to excel
+- easy creation of reports
+- custom corporate reporting (bold, italic, background color, letter size, headers,...)
+- selections inside the reports
+- custom external templates
+- analytical reports
+- ...
 
 
 
