@@ -1207,8 +1207,8 @@ define(["jquery","text!./PLSmartPivot.css"], function(e,t) {'use strict';
 			
 			var vNumDims = 0;
 			var vNumMeasures = 0;
-			var vNumMeasures2 = 0;//sirve para multiplicar num medidas por num elementos de la 2ª dimensión
-			var SecondHeaderLength = 0;//sirve para determinar cuántos elementos hay en la 2ª dimensión
+			var vNumMeasures2 = 0;//sirve para multiplicar num medidas por num elementos de la 2Âª dimensiÃ³n
+			var SecondHeaderLength = 0;//sirve para determinar cuÃ¡ntos elementos hay en la 2Âª dimensiÃ³n
 			var vNumMeasuresCheckLevels = 2;
 			var vNumCols = 0;
 			var MeasuresFormat = new Array();
@@ -1249,7 +1249,7 @@ define(["jquery","text!./PLSmartPivot.css"], function(e,t) {'use strict';
 				LabelsArray.push(vDimName);
 				var mfor = "";
 				
-				if(t.qNumFormat.qType == 'U'){					
+				if(t.qNumFormat.qType == 'U' || t.qNumFormat.qFmt == '##############'){					
 					mfor = '#.##0'; //in case of undefined
 				}else{
 					if(t.qNumFormat.qType == 'R'){
@@ -1492,7 +1492,7 @@ define(["jquery","text!./PLSmartPivot.css"], function(e,t) {'use strict';
 							if (CustomArrayBasic.indexOf(vColumnText) < 0) {
 								vCustomAttribute == 'none';
 							}else{
-								vCustomAttribute = CustomArray[CustomArrayBasic.indexOf(vColumnText)][aach]; //CustomArrayBasic se ha rellenado con los atributos de look al principio de la ejecución del código
+								vCustomAttribute = CustomArray[CustomArrayBasic.indexOf(vColumnText)][aach]; //CustomArrayBasic se ha rellenado con los atributos de look al principio de la ejecuciÃ³n del cÃ³digo
 							}														
 							ApplyBold(vCustomAttribute,vComas);
 							vComas += vGlobalComas;
@@ -1882,10 +1882,10 @@ define(["jquery","text!./PLSmartPivot.css"], function(e,t) {'use strict';
 				SelectRow = ConceptMatrixRowElem[(indextr)];						
 				
 														
-				// este if verifica primero si hay selecciones hechas en la dimensión, si las hay
+				// este if verifica primero si hay selecciones hechas en la dimensiÃ³n, si las hay
 				// las reselecciona para poder borrar antes de poder seleccionar lo que quiero
 				// no es viable pedirle que seleccione a la vez elementos de 2 selecciones, se queda
-				// colgado el menú de confirm, por eso uso este sistema, que sí funciona.
+				// colgado el menÃº de confirm, por eso uso este sistema, que sÃ­ funciona.
 				// it can cause issues like error messages and wrong selections if there are null values
 				// and the check allow null values is active
 				if(vNumDims > 1 && indextd > 0){
@@ -1957,7 +1957,7 @@ define(["jquery","text!./PLSmartPivot.css"], function(e,t) {'use strict';
 				e(".header-wrapper th").children(".icon-xls").remove();// remove the xls icon when exporting 
 				if (isChrome || isSafari) {
 					
-					var $clonedDiv = e('.data-table').clone(true);//.kpi-table a secas exporta la 1ªcol				
+					var $clonedDiv = e('.data-table').clone(true);//.kpi-table a secas exporta la 1Âªcol				
 					var vEncodeHead = '<html><head><meta charset="UTF-8"></head>';
 					vEncodeHead += myTitle + mySubTitle + myFootNote;
 					var vEncode = encodeURIComponent($clonedDiv.html());
@@ -1986,7 +1986,7 @@ define(["jquery","text!./PLSmartPivot.css"], function(e,t) {'use strict';
 				
 				if (isFirefox) {
 				
-					var $clonedDiv = e('.data-table').clone(true);//.kpi-table a secas exporta la 1ªcol				
+					var $clonedDiv = e('.data-table').clone(true);//.kpi-table a secas exporta la 1Âªcol				
 					var vEncodeHead = '<html><head><meta charset="UTF-8"></head>';
 					vEncodeHead += myTitle + mySubTitle + myFootNote;
 					var vEncode = encodeURIComponent($clonedDiv.html());
