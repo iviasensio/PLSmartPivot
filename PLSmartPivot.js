@@ -1546,7 +1546,7 @@ define(["jquery","text!./PLSmartPivot.css"], function(e,t) {'use strict';
 					}
 					for(var nMeasures2 = 1;nMeasures2 <= vNumMeasures;nMeasures2++){
 						if (vColumnText.substring(0, 1) == '%') {
-							vColumnNum = ApplyMask('0,00%', ConceptMatrix[nmrows][nMeasures2]);
+							vColumnNum = ApplyPreMask('0,00%', ConceptMatrix[nmrows][nMeasures2]);
 							vSpecialF = '0,00%';
 						}else{
 							
@@ -1575,23 +1575,23 @@ define(["jquery","text!./PLSmartPivot.css"], function(e,t) {'use strict';
 							var vSpecialF = MeasuresFormat[nMeasures2 - 1].replace(/k|K|m|M/gi,'');
 							if(!isNaN(ConceptMatrix[nmrows][nMeasures2])){
 								vMaskNum = ConceptMatrix[nmrows][nMeasures2];
-							 if(vSpecialF.substring(vSpecialF.length - 1) == '%'){
-								vMaskNum = vMaskNum * 100;								
-							 }
-							 switch (vSpecialF)
-							 {
-								case '#.##0':
-								vColumnNum = addSeparators ((vMaskNum / vDivide), '.', ',', 0);
-								break;
-							
-								case '#,##0':
-								vColumnNum = addSeparators ((vMaskNum / vDivide), ',', '.', 0);
-								break;
-							
-								default:
-								vColumnNum = ApplyMask(vSpecialF, (vMaskNum / vDivide));
-								break;
-							 }
+								if(vSpecialF.substring(vSpecialF.length - 1) == '%'){
+									vMaskNum = vMaskNum * 100;								
+								}
+								switch (vSpecialF)
+								{
+								       case '#.##0':
+								       vColumnNum = addSeparators ((vMaskNum / vDivide), '.', ',', 0);
+								       break;
+							       
+								       case '#,##0':
+								       vColumnNum = addSeparators ((vMaskNum / vDivide), ',', '.', 0);
+								       break;
+							       
+								       default:
+								       vColumnNum = ApplyPreMask(vSpecialF, (vMaskNum / vDivide));
+								       break;
+								}
 							}else{
 								vColumnNum = vSymbolForNulls;
 							}
@@ -1708,7 +1708,7 @@ define(["jquery","text!./PLSmartPivot.css"], function(e,t) {'use strict';
 						nMeasure7++;
 						nMeasure72++;
 						if (vColumnText.substring(0, 1) == '%') {
-							vColumnNum = ApplyMask('0,00%', ConceptMatrixPivot[nmrows2][nMeasures22]);
+							vColumnNum = ApplyPreMask('0,00%', ConceptMatrixPivot[nmrows2][nMeasures22]);
 							vSpecialF = '0,00%';
 						}else{
 							switch (MeasuresFormat[nMeasure72].substr(MeasuresFormat[nMeasure72].length - 1))
@@ -1736,22 +1736,22 @@ define(["jquery","text!./PLSmartPivot.css"], function(e,t) {'use strict';
 							var vSpecialF = MeasuresFormat[nMeasure72].replace(/k|K|m|M/gi,'');
 							if(!isNaN(ConceptMatrixPivot[nmrows2][nMeasures22])){
 								vMaskNum = ConceptMatrixPivot[nmrows2][nMeasures22];
-							 if(vSpecialF.substring(vSpecialF.length - 1) == '%'){
-								vMaskNum = vMaskNum * 100;								
-							 }
+								if(vSpecialF.substring(vSpecialF.length - 1) == '%'){
+									vMaskNum = vMaskNum * 100;								
+								}
 							 
-							 switch (vSpecialF)
-							 {
-								case '#.##0':
-								vColumnNum = addSeparators ((vMaskNum / vDivide), '.', ',', 0);
-								break;
-								case '#,##0':
-								vColumnNum = addSeparators ((vMaskNum / vDivide), ',', '.', 0);
-								break;
-								default:
-								vColumnNum = ApplyMask(vSpecialF, (vMaskNum / vDivide));
-								break;
-							 }
+								switch (vSpecialF)
+								{
+								       case '#.##0':
+								       vColumnNum = addSeparators ((vMaskNum / vDivide), '.', ',', 0);
+								       break;
+								       case '#,##0':
+								       vColumnNum = addSeparators ((vMaskNum / vDivide), ',', '.', 0);
+								       break;
+								       default:
+								       vColumnNum = ApplyPreMask(vSpecialF, (vMaskNum / vDivide));
+								       break;
+								}
 							}else{
 								vColumnNum = vSymbolForNulls;
 							}
@@ -2270,7 +2270,55 @@ define(["jquery","text!./PLSmartPivot.css"], function(e,t) {'use strict';
 				    
 				}										
 			};
-			
+			function ApplyPreMask(mask, value){//aqui
+				if (mask.indexOf(';') >= 0) {
+					if (value >=0) {
+						switch (mask.substring(0, mask.indexOf(';')))
+						{
+							case '#.##0':
+							return (addSeparators (value, '.', ',', 0));
+							break;
+							case '#,##0':
+							return (addSeparators (value, ',', '.', 0));
+							break;
+							case '+#.##0':
+							return (addSeparators (value, '.', ',', 0));
+							break;
+							case '+#,##0':
+							return (addSeparators (value, ',', '.', 0));
+							break;
+							default:
+							return(ApplyMask(mask.substring(0, mask.indexOf(';')),value));
+							break;
+						}						
+					}else{
+						var vMyValue = value * -1;
+						var vMyMask = mask.substring(mask.indexOf(';') + 1,mask.length);
+						vMyMask = vMyMask.replace('(','');
+						vMyMask = vMyMask.replace(')','');
+						switch (vMyMask)
+						{
+							case '#.##0':
+							return ('(' + addSeparators (vMyValue, '.', ',', 0) + ')');
+							break;
+							case '#,##0':
+							return ('(' + addSeparators (vMyValue, ',', '.', 0) + ')');
+							break;
+							case '-#.##0':
+							return ('(' + addSeparators (vMyValue, '.', ',', 0) + ')');
+							break;
+							case '-#,##0':
+							return ('(' + addSeparators (vMyValue, ',', '.', 0) + ')');
+							break;
+							default:
+							return('(' + ApplyMask(vMyMask,vMyValue) + ')');
+							break;
+						}
+					}					
+				}else{
+					return(ApplyMask( mask, value ));
+				}
+			};
 			function ApplyMask( mask, value ) {
 				
 				'use strict';
