@@ -400,6 +400,20 @@ define(["jquery","text!./PLSmartPivot.css"], function(e,t) {'use strict';
 										label: "Off"
 									}],
 									defaultValue: true
+								},
+								FilterOnCellClick: {
+									ref: "filteroncellclick",
+									type: "boolean",
+									component: "switch",
+									label: "Filter data when cell clicked",
+									options: [{
+										value: true,
+										label: "On"
+									}, {
+										value: false,
+										label: "Off"
+									}],
+									defaultValue: true
 								}
 							}
 						},
@@ -1871,8 +1885,10 @@ define(["jquery","text!./PLSmartPivot.css"], function(e,t) {'use strict';
 			),
 			
 			//allow making selections inside the table
-			e(".data-table td").on("click",function(){
-				
+			e(".data-table td").on("click",function() {
+				if (!self.backendApi.model.layout.filteroncellclick)
+					return;
+
 				var indextr = e(this).parent().parent().children().index(e(this).parent()); //identifica la row
 				var indextd = e(this).parent().children().index(e(this)); //identifica la col
 				

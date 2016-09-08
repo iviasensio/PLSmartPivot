@@ -32,7 +32,7 @@
   overflow-y: hidden;
   z-index: 110;
 }
-.qv-object-PLSmartPivot icon-xls {
+.qv-object-PLSmartPivot .icon-xls {
   text-align: left;
 }
 .qv-object-PLSmartPivot button {
