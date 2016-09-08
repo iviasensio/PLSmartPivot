@@ -4,6 +4,10 @@
 	z-index:110
 }
 
+.qv-object-PLSmartPivot * {
+	box-sizing: border-box;
+}
+
 .qv-object-PLSmartPivot icon-xls {
 	text-align:left
 }
@@ -122,8 +126,8 @@
     
 /*header*/
 .qv-object-PLSmartPivot .grid-cells2{
-    min-width:69px!Important;
-    max-width:69px!Important;
+    min-width:70px!Important;
+    max-width:70px!Important;
     cursor: pointer;
     
     /*padding:5px 10px;
@@ -141,8 +145,8 @@
     
 /*header*/
 .qv-object-PLSmartPivot .grid-cells2-small{
-    min-width:51px!Important;
-    max-width:51px!Important;
+    min-width:52px!Important;
+    max-width:52px!Important;
     cursor: pointer;
     /*padding:5px 10px;
     margin:0;*/
@@ -163,8 +167,8 @@
     
 /*header*/
 .qv-object-PLSmartPivot .grid-cells2-s{
-    min-width:66px!Important;
-    max-width:66px!Important;
+    min-width:67px!Important;
+    max-width:67px!Important;
     cursor: pointer;
     /*padding:5px 10px;
     margin:0;*/
@@ -181,8 +185,8 @@
     
 /*header*/
 .qv-object-PLSmartPivot .grid-cells2-small-s{
-    min-width:51px!Important;
-    max-width:51px!Important;
+    min-width:52px!Important;
+    max-width:52px!Important;
     cursor: pointer;
     /*padding:5px 10px;
     margin:0;*/
@@ -202,8 +206,8 @@
     
 /*header*/
 .qv-object-PLSmartPivot .grid-cells2-l{
-    min-width:81px!Important;
-    max-width:81px!Important;
+    min-width:82px!Important;
+    max-width:82px!Important;
     cursor: pointer;
     /*padding:5px 10px;
     margin:0;*/
@@ -220,8 +224,8 @@
     
 /*header*/
 .qv-object-PLSmartPivot .grid-cells2-small-l{
-    min-width:65px!Important;
-    max-width:65px!Important;
+    min-width:66px!Important;
+    max-width:66px!Important;
     cursor: pointer;
     /*padding:5px 10px;
     margin:0;*/
