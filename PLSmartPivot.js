@@ -1545,7 +1545,7 @@ define(["jquery","text!./PLSmartPivot.css"], function(e,t) {'use strict';
 						}							
 					}
 					for(var nMeasures2 = 1;nMeasures2 <= vNumMeasures;nMeasures2++){
-						if (vColumnText.substring(0, 1) == '%') {
+						if (vColumnText.indexOf('%') != -1) {
 							vColumnNum = ApplyPreMask('0,00%', ConceptMatrix[nmrows][nMeasures2]);
 							vSpecialF = '0,00%';
 						}else{
@@ -1707,7 +1707,7 @@ define(["jquery","text!./PLSmartPivot.css"], function(e,t) {'use strict';
 						nMeasAux = nMeasure72Semaphore;
 						nMeasure7++;
 						nMeasure72++;
-						if (vColumnText.substring(0, 1) == '%') {
+						if (vColumnText.indexOf('%') != -1) {
 							vColumnNum = ApplyPreMask('0,00%', ConceptMatrixPivot[nmrows2][nMeasures22]);
 							vSpecialF = '0,00%';
 						}else{
