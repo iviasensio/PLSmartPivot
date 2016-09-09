@@ -387,6 +387,12 @@ define(["jquery","text!./PLSmartPivot.css"], function(e,t) {'use strict';
 									type : "string",
 									defaultValue : " "									
 								},
+								PercentCellFormat: {
+									ref: "percentcellformat",
+									label: "Cell format for percent values",
+									type: "string",
+									defaultValue: "0,00%"
+								},
 								AllowExportXLS : {
 									ref : "allowexportxls",
 									type : "boolean",
@@ -1560,8 +1566,8 @@ define(["jquery","text!./PLSmartPivot.css"], function(e,t) {'use strict';
 					}
 					for(var nMeasures2 = 1;nMeasures2 <= vNumMeasures;nMeasures2++){
 						if (vColumnText.indexOf('%') != -1) {
-							vColumnNum = ApplyPreMask('0,00%', ConceptMatrix[nmrows][nMeasures2]);
-							vSpecialF = '0,00%';
+							vSpecialF = self.backendApi.model.layout.percentcellformat || '0,00%';
+							vColumnNum = ApplyPreMask(vSpecialF, ConceptMatrix[nmrows][nMeasures2]);
 						}else{
 							
 							switch (MeasuresFormat[nMeasures2 - 1].substr(MeasuresFormat[nMeasures2 - 1].length - 1))
@@ -1722,8 +1728,8 @@ define(["jquery","text!./PLSmartPivot.css"], function(e,t) {'use strict';
 						nMeasure7++;
 						nMeasure72++;
 						if (vColumnText.indexOf('%') != -1) {
-							vColumnNum = ApplyPreMask('0,00%', ConceptMatrixPivot[nmrows2][nMeasures22]);
-							vSpecialF = '0,00%';
+							vSpecialF = self.backendApi.model.layout.percentcellformat || '0,00%';
+							vColumnNum = ApplyPreMask(vSpecialF, ConceptMatrixPivot[nmrows2][nMeasures22]);
 						}else{
 							switch (MeasuresFormat[nMeasure72].substr(MeasuresFormat[nMeasure72].length - 1))
 							{
