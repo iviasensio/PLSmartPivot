@@ -387,11 +387,31 @@ define(["jquery","text!./PLSmartPivot.css"], function(e,t) {'use strict';
 									type : "string",
 									defaultValue : " "									
 								},
+								PercentCellFormat: {
+									ref: "percentcellformat",
+									label: "Cell format for percent values",
+									type: "string",
+									defaultValue: "0,00%"
+								},
 								AllowExportXLS : {
 									ref : "allowexportxls",
 									type : "boolean",
 									component : "switch",
 									label : "Allow export to Excel",
+									options: [{
+										value: true,
+										label: "On"
+									}, {
+										value: false,
+										label: "Off"
+									}],
+									defaultValue: true
+								},
+								FilterOnCellClick: {
+									ref: "filteroncellclick",
+									type: "boolean",
+									component: "switch",
+									label: "Filter data when cell clicked",
 									options: [{
 										value: true,
 										label: "On"
@@ -1545,9 +1565,9 @@ define(["jquery","text!./PLSmartPivot.css"], function(e,t) {'use strict';
 						}							
 					}
 					for(var nMeasures2 = 1;nMeasures2 <= vNumMeasures;nMeasures2++){
-						if (vColumnText.substring(0, 1) == '%') {
-							vColumnNum = ApplyPreMask('0,00%', ConceptMatrix[nmrows][nMeasures2]);
-							vSpecialF = '0,00%';
+						if (vColumnText.indexOf('%') != -1) {
+							vSpecialF = self.backendApi.model.layout.percentcellformat || '0,00%';
+							vColumnNum = ApplyPreMask(vSpecialF, ConceptMatrix[nmrows][nMeasures2]);
 						}else{
 							
 							switch (MeasuresFormat[nMeasures2 - 1].substr(MeasuresFormat[nMeasures2 - 1].length - 1))
@@ -1707,9 +1727,9 @@ define(["jquery","text!./PLSmartPivot.css"], function(e,t) {'use strict';
 						nMeasAux = nMeasure72Semaphore;
 						nMeasure7++;
 						nMeasure72++;
-						if (vColumnText.substring(0, 1) == '%') {
-							vColumnNum = ApplyPreMask('0,00%', ConceptMatrixPivot[nmrows2][nMeasures22]);
-							vSpecialF = '0,00%';
+						if (vColumnText.indexOf('%') != -1) {
+							vSpecialF = self.backendApi.model.layout.percentcellformat || '0,00%';
+							vColumnNum = ApplyPreMask(vSpecialF, ConceptMatrixPivot[nmrows2][nMeasures22]);
 						}else{
 							switch (MeasuresFormat[nMeasure72].substr(MeasuresFormat[nMeasure72].length - 1))
 							{
@@ -1871,8 +1891,10 @@ define(["jquery","text!./PLSmartPivot.css"], function(e,t) {'use strict';
 			),
 			
 			//allow making selections inside the table
-			e(".data-table td").on("click",function(){
-				
+			e(".data-table td").on("click",function() {
+				if (!self.backendApi.model.layout.filteroncellclick)
+					return;
+
 				var indextr = e(this).parent().parent().children().index(e(this).parent()); //identifica la row
 				var indextd = e(this).parent().children().index(e(this)); //identifica la col
 				
