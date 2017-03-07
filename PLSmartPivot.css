@@ -1,294 +1,231 @@
-.qv-object-PLSmartPivot div.qv-object-content-container {
-	overflow-x:scroll;
-	overflow-y:hidden;
-	z-index:110
+.qv-object-PLSmartPivot .qv-object-content-container {
+    overflow-x: scroll;
+    overflow-y: hidden;
+    z-index: 110;
 }
-
 .qv-object-PLSmartPivot icon-xls {
-	text-align:left
+    text-align: left;
 }
 .qv-object-PLSmartPivot button {
-	width: 100%;
+    width: 100%;
 }
-.qv-object-PLSmartPivot table{
-    border-collapse:collapse;
-    border-spacing:0;
-    width:auto;
-    border-left:1px solid #d3d3d3;
-    border-right:1px solid #d3d3d3;
-    border-top:1px solid #d3d3d3
-    }
-.qv-object-PLSmartPivot td, th{
-    border: 1px solid #ffffff;
-    padding:5px;
+.qv-object-PLSmartPivot table {
     border-collapse: collapse;
-    white-space: nowrap;
+    border-left: 1px solid #d3d3d3;
+    border-right: 1px solid #d3d3d3;
+    border-spacing: 0;
+    border-top: 1px solid #d3d3d3;
+    width: auto;
+}
+.qv-object-PLSmartPivot td, th {
+    border: 1px solid #fff;
+    border-collapse: collapse;
+    cursor: default;
     overflow: hidden;
+    padding: 5px;
     text-overflow: ellipsis;
     vertical-align: middle;
-    cursor: default;    
-    }
-
-.qv-object-PLSmartPivot .empty{
-    width:3%;
-    background:#ffffff;
-    min-width:4px !important;
-    max-width:4px !important;
-    /*border-right:1px solid white;
-    box-shadow:4px 2px 8px #e1e1e1
-    border-bottom:0;
-    border-top:0;
-    border-left:1px solid #d3d3d3;
-    border-right:1px solid #d3d3d3;
-    border-top:#fff 1px solid;
-    border-bottom:#fff 1px solid*/
-    }
-
-.qv-object-PLSmartPivot th.main-kpi{
-    text-align:center;
-    vertical-align:middle;
-    border-bottom:1px solid #d3d3d3
-    }
-.qv-object-PLSmartPivot .numeric{
-    text-align:right
-    }
-.grid{
-    height:50px;
-    width:350px
-    }
-.header-wrapper{
-    position:absolute;
-    top:0;
-    z-index:1
-    }
-/*popups for headers*/
-.tooltip
-{
-    position: fixed!important;
-    color: RGB(70,70,70);
-    background-color: RGB(245,239,207);
+    white-space: nowrap;
+}
+.qv-object-PLSmartPivot .empty {
+    background: #fff;
+    max-width: 4px !important;
+    min-width: 4px !important;
+    width: 3%;
+}
+.qv-object-PLSmartPivot .main-kpi {
+    border-bottom: 1px solid #d3d3d3;
     text-align: center;
+    vertical-align: middle;
+}
+.qv-object-PLSmartPivot .numeric {
+    text-align: right;
+}
+.grid {
+    height: 50px;
+    width: 350px;
+}
+.header-wrapper {
+    position: absolute;
+    top: 0;
+    z-index: 1;
+}
+/*popups for headers*/
+.tooltip {
+    background-color: #f5efcf;
     border: groove;
+    color: #464646;
+    position: fixed !important;
+    text-align: center;
 }
 /*end popups*/
-.row-wrapper{
-    position:absolute;
-    top:97px;
-    height:100%!Important;
-    overflow-x:hidden;
-    overflow-y:scroll;
-    padding:0;
-    margin-top:0;   
-    }
-
+.row-wrapper {
+    height: 100% !important;
+    margin-top: 0;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    padding: 0;
+    position: absolute;
+    top: 97px;
+}
 /*This is for wrap text in headers*/
-.qv-object-PLSmartPivot .wrapclass25{
-	width:100%;
-	height:25px;
-	white-space: pre-line;
-	overflow: hidden;
-	display:block;
+.qv-object-PLSmartPivot .wrapclass25 {
+    display: block;
+    height: 25px;
+    overflow: hidden;
+    white-space: pre-line;
+    width: 100%;
 }
-.qv-object-PLSmartPivot .wrapclass45{
-	width:100%;
-	height:45px;
-	white-space: pre-line;
-	overflow: hidden;
-	display:block;	
+.qv-object-PLSmartPivot .wrapclass45 {
+    display: block;
+    height: 45px;
+    overflow: hidden;
+    white-space: pre-line;
+    width: 100%;
 }
-.qv-object-PLSmartPivot .wrapclass70{
-	width:100%;
-	height:70px;
-	white-space: pre-line;
-	overflow: hidden;
-	display:inline-block;
-	vertical-align: middle;
-	line-height: 20px;
+.qv-object-PLSmartPivot .wrapclass70 {
+    display: inline-block;
+    height: 70px;
+    line-height: 20px;
+    overflow: hidden;
+    vertical-align: middle;
+    white-space: pre-line;
+    width: 100%;
 }
-.qv-object-PLSmartPivot .wrapclassEmpty{
-	width:100%;	
+.qv-object-PLSmartPivot .wrapclassEmpty {
+    width: 100%;
 }
 /*******************/
 /* Medium column size*/
 /*******************/
 /*body*/
-.qv-object-PLSmartPivot .grid-cells{
-    min-width:70px!Important;
-    max-width:70px!Important;
+.qv-object-PLSmartPivot .grid-cells {
     cursor: pointer;
-    /*padding:5px 10px;
-    margin:0;*/
-    }
-    
+    max-width: 70px !important;
+    min-width: 70px !important;
+}
 /*header*/
-.qv-object-PLSmartPivot .grid-cells2{
-    min-width:69px!Important;
-    max-width:69px!Important;
+.qv-object-PLSmartPivot .grid-cells2 {
     cursor: pointer;
-    
-    /*padding:5px 10px;
-    margin:0;*/
-    }
-    
+    max-width: 69px !important;
+    min-width: 69px !important;
+}
 /*body*/
-.qv-object-PLSmartPivot .grid-cells-small{
-    min-width:52px!Important;
-    max-width:52px!Important;
+.qv-object-PLSmartPivot .grid-cells-small {
     cursor: pointer;
-    /*padding:5px 10px;
-    margin:0;*/
-    }
-    
+    max-width: 52px !important;
+    min-width: 52px !important;
+}
 /*header*/
-.qv-object-PLSmartPivot .grid-cells2-small{
-    min-width:51px!Important;
-    max-width:51px!Important;
+.qv-object-PLSmartPivot .grid-cells2-small {
     cursor: pointer;
-    /*padding:5px 10px;
-    margin:0;*/
-    }
-    
+    max-width: 51px !important;
+    min-width: 51px !important;
+}
 /*******************/
 /* Small column size*/
 /*******************/
-
 /*body*/
-.qv-object-PLSmartPivot .grid-cells-s{
-    min-width:67px!Important;
-    max-width:67px!Important;
+.qv-object-PLSmartPivot .grid-cells-s {
     cursor: pointer;
-    /*padding:5px 10px;
-    margin:0;*/
-    }
-    
+    max-width: 67px !important;
+    min-width: 67px !important;
+}
 /*header*/
-.qv-object-PLSmartPivot .grid-cells2-s{
-    min-width:66px!Important;
-    max-width:66px!Important;
+.qv-object-PLSmartPivot .grid-cells2-s {
     cursor: pointer;
-    /*padding:5px 10px;
-    margin:0;*/
-    }
-    
+    max-width: 66px !important;
+    min-width: 66px !important;
+}
 /*body*/
-.qv-object-PLSmartPivot .grid-cells-small-s{
-    min-width:52px!Important;
-    max-width:52px!Important;
+.qv-object-PLSmartPivot .grid-cells-small-s {
     cursor: pointer;
-    /*padding:5px 10px;
-    margin:0;*/
-    }
-    
+    max-width: 52px !important;
+    min-width: 52px !important;
+}
 /*header*/
-.qv-object-PLSmartPivot .grid-cells2-small-s{
-    min-width:51px!Important;
-    max-width:51px!Important;
+.qv-object-PLSmartPivot .grid-cells2-small-s {
     cursor: pointer;
-    /*padding:5px 10px;
-    margin:0;*/
-    }
-
+    max-width: 51px !important;
+    min-width: 51px !important;
+}
 /*******************/
 /* large column size*/
 /*******************/
 /*body*/
-.qv-object-PLSmartPivot .grid-cells-l{
-    min-width:82px!Important;
-    max-width:82px!Important;
+.qv-object-PLSmartPivot .grid-cells-l {
     cursor: pointer;
-    /*padding:5px 10px;
-    margin:0;*/
-    }
-    
+    max-width: 82px !important;
+    min-width: 82px !important;
+}
 /*header*/
-.qv-object-PLSmartPivot .grid-cells2-l{
-    min-width:81px!Important;
-    max-width:81px!Important;
+.qv-object-PLSmartPivot .grid-cells2-l {
     cursor: pointer;
-    /*padding:5px 10px;
-    margin:0;*/
-    }
-    
+    max-width: 81px !important;
+    min-width: 81px !important;
+}
 /*body*/
-.qv-object-PLSmartPivot .grid-cells-small-l{
-    min-width:66px!Important;
-    max-width:66px!Important;
+.qv-object-PLSmartPivot .grid-cells-small-l {
     cursor: pointer;
-    /*padding:5px 10px;
-    margin:0;*/
-    }
-    
+    max-width: 66px !important;
+    min-width: 66px !important;
+}
 /*header*/
-.qv-object-PLSmartPivot .grid-cells2-small-l{
-    min-width:65px!Important;
-    max-width:65px!Important;
+.qv-object-PLSmartPivot .grid-cells2-small-l {
     cursor: pointer;
-    /*padding:5px 10px;
-    margin:0;*/
-    }
+    max-width: 65px !important;
+    min-width: 65px !important;
+}
 /*END OF GRID CELLS*/
-
 /*First Column*/
-.qv-object-PLSmartPivot .fdim-cells{
-    min-width:230px!Important;
-    max-width:230px!Important;
+.qv-object-PLSmartPivot .fdim-cells {
+    background-color: white;
     cursor: pointer;
-    background-color:white;
-    /*padding:0 20px*/
-    }
-
+    max-width: 230px !important;
+    min-width: 230px !important;
+}
 .qv-object-PLSmartPivot .fdim-cells:hover {
-    /*cursor: default;*/
-    background-color:#808080 !important;
-    color:#ffffff;
+    background-color: #808080 !important;
+    color: #fff;
 }
 .qv-object-PLSmartPivot tbody tr:hover {
+    background-color: #808080 !important;
+    color: #fff;
     cursor: default;
-    background-color:#808080 !important;
-    color:#ffffff;
 }
-.qv-object-PLSmartPivot .grid-cells-header{
-    /*padding:15px 10px*/
-    padding:0px
-    }
-.qv-object-PLSmartPivot .grid-cells-title{
-    min-width:522px
-    }
-
-/*estos dos hcen referencia a la primera columna*/
-.kpi-table .fdim-cells{
-    /*padding:5px 10px*/
-    }
-.data-table .fdim-cells{
-    display:none
-    }
-.kpi-table{
-    width:240px !important;
-    overflow:hidden !important;
-    display:table;
-    height:100%;
-    z-index:100;
-    /*background:white;*/
-    left:258px;
-    margin:0;
-    padding:0;
-    z-index:999;
-    position:absolute;
-    top:0;
-    left:0;
-    border-right:1px solid white;
-    box-shadow:4px 2px 8px #e1e1e1
-    }
-.kpi-table .row-wrapper{
-    overflow:hidden
-    }
-.data-table{
-    width:272px !important;
-    float:left;
-    display:table;
-    height:100%;
-    z-index:90;
-    position:absolute;
-    margin-left:253px;
-    -ms-overflow-style:none
-    }
+.qv-object-PLSmartPivot .grid-cells-header {
+    padding: 0;
+}
+.qv-object-PLSmartPivot .grid-cells-title {
+    min-width: 522px;
+}
+.data-table .fdim-cells {
+    display: none;
+}
+.kpi-table {
+    border-right: 1px solid #fff;
+    box-shadow: 4px 2px 8px #e1e1e1;
+    display: table;
+    height: 100%;
+    left: 258px;
+    margin: 0;
+    overflow: hidden !important;
+    padding: 0;
+    position: absolute;
+    top: 0;
+    width: 240px !important;
+    z-index: 100;
+}
+.kpi-table .row-wrapper {
+    overflow: hidden;
+}
+.data-table {
+    display: table;
+    float: left;
+    height: 100%;
+    margin-left: 253px;
+    -ms-overflow-style: none;
+    position: absolute;
+    width: 272px !important;
+    z-index: 90;
+}
