@@ -387,12 +387,6 @@ define(["jquery","text!./PLSmartPivot.css"], function(e,t) {'use strict';
 									type : "string",
 									defaultValue : " "									
 								},
-								PercentCellFormat: {
-									ref: "percentcellformat",
-									label: "Cell format for percent values",
-									type: "string",
-									defaultValue: "0,00%"
-								},
 								AllowExportXLS : {
 									ref : "allowexportxls",
 									type : "boolean",
@@ -1204,9 +1198,7 @@ define(["jquery","text!./PLSmartPivot.css"], function(e,t) {'use strict';
 			var CustomArrayBasic = new Array();
 			var vNumCustomHeaders = 0;
 			
-			if (vCustomFileBool && vCustomFile.length > 4) {
-				ReadCustomSchema();				
-			}
+			
 			
 			var ConceptMatrix = new Array();
 			var ConceptMatrixFirst = new Array();
@@ -1486,7 +1478,46 @@ define(["jquery","text!./PLSmartPivot.css"], function(e,t) {'use strict';
 			f += "</table></div>";
 			f += " <div class='row-wrapper'><table >";
 			
+			if (vCustomFileBool && vCustomFile.length > 4) {				
+				ReadCustomSchema();
+			}else{
+				PaintTheNumbers();
+				RenderData();
+			}
+			//This function opens a csv file that contains the parameters for the custom mode
+			//this will prevent consuming to many dimensions, as there allowed only 10 columns between
+			//dimensions and metrics
+			function ReadCustomSchema() {				
+					var Url   = "/Extensions/PLSmartPivot/" + vCustomFile;
+					var Items = $.get(Url).then(function(response){
+						
+							
+							var allTextLines = response.split(/\r\n|\n/);
+				    		var headers = allTextLines[0].split(';');
+				    		vNumCustomHeaders = headers.length;
+				    		
+				    		for (var i=0; i<allTextLines.length; i++) {					
+								CustomArray[i] = new Array(headers.length);
+							    var data = allTextLines[i].split(';');
+								
+						        if (data.length == headers.length) {
+
+						            for (var j=0; j<headers.length; j++) {
+								
+										CustomArrayBasic[i] = data[0];
+						                CustomArray[i][j]=data[j];																
+						            }					    
+						        }					
+							}
+							
+							PaintTheNumbers();
+							RenderData();											    	
+				  		});		
+					
+				  return Items;
+			};
 			//Paint the numbers
+			function PaintTheNumbers(){
 			if (vNumDims == 1) {
 				//apply the custom style
 				for (var nmrows = 0;nmrows <= lastrow;nmrows++) {
@@ -1565,9 +1596,9 @@ define(["jquery","text!./PLSmartPivot.css"], function(e,t) {'use strict';
 						}							
 					}
 					for(var nMeasures2 = 1;nMeasures2 <= vNumMeasures;nMeasures2++){
-						if (vColumnText.indexOf('%') != -1) {
-							vSpecialF = self.backendApi.model.layout.percentcellformat || '0,00%';
-							vColumnNum = ApplyPreMask(vSpecialF, ConceptMatrix[nmrows][nMeasures2]);
+						if (vColumnText.substring(0, 1) == '%') {
+							vColumnNum = ApplyPreMask('0,00%', ConceptMatrix[nmrows][nMeasures2]);
+							vSpecialF = '0,00%';
 						}else{
 							
 							switch (MeasuresFormat[nMeasures2 - 1].substr(MeasuresFormat[nMeasures2 - 1].length - 1))
@@ -1643,6 +1674,7 @@ define(["jquery","text!./PLSmartPivot.css"], function(e,t) {'use strict';
 					f += '</tr>';									
 				}
 			}else{
+				
 				var nPivotRows = ConceptMatrixFirstClean.length;
 				for (var nmrows2 = 0;nmrows2 < nPivotRows;nmrows2++) {
 					
@@ -1727,9 +1759,9 @@ define(["jquery","text!./PLSmartPivot.css"], function(e,t) {'use strict';
 						nMeasAux = nMeasure72Semaphore;
 						nMeasure7++;
 						nMeasure72++;
-						if (vColumnText.indexOf('%') != -1) {
-							vSpecialF = self.backendApi.model.layout.percentcellformat || '0,00%';
-							vColumnNum = ApplyPreMask(vSpecialF, ConceptMatrixPivot[nmrows2][nMeasures22]);
+						if (vColumnText.substring(0, 1) == '%') {
+							vColumnNum = ApplyPreMask('0,00%', ConceptMatrixPivot[nmrows2][nMeasures22]);
+							var vSpecialF = '0,00%';
 						}else{
 							switch (MeasuresFormat[nMeasure72].substr(MeasuresFormat[nMeasure72].length - 1))
 							{
@@ -1827,8 +1859,9 @@ define(["jquery","text!./PLSmartPivot.css"], function(e,t) {'use strict';
 				}
 				}
 			}
-				
-			//render data			
+			}	
+			//render data
+			function RenderData(){
 			var nMerge = 0;
 			if (measure_count == 0) {
 				nMerge = 1
@@ -1891,10 +1924,9 @@ define(["jquery","text!./PLSmartPivot.css"], function(e,t) {'use strict';
 			),
 			
 			//allow making selections inside the table
-			e(".data-table td").on("click",function() {
-				if (!self.backendApi.model.layout.filteroncellclick)
+			e(".data-table td").on("click",function(){
+				if (self.backendApi.model.layout.filteroncellclick == false)
 					return;
-
 				var indextr = e(this).parent().parent().children().index(e(this).parent()); //identifica la row
 				var indextd = e(this).parent().children().index(e(this)); //identifica la col
 				
@@ -2032,6 +2064,7 @@ define(["jquery","text!./PLSmartPivot.css"], function(e,t) {'use strict';
 			e(".kpi-table .header-wrapper tr").each(function(){
 			    e(this).find("th:not(.fdim-cells)").remove()
 			    });
+			}
 			
 			// PYJAMAS
 			function ApplyStandardAttributes(strow){
@@ -2250,48 +2283,8 @@ define(["jquery","text!./PLSmartPivot.css"], function(e,t) {'use strict';
 				}
 			}
 			
-			//This function opens a csv file that contains the parameters for the custom mode
-			//this will prevent consuming to many dimensions, as there allowed only 10 columns between
-			//dimensions and metrics
-			function ReadCustomSchema() {
-				
-				$(document).ready(function() {
-				$.ajax({
-				    type: "GET",
-				    url: "/Extensions/PLSmartPivot/" + vCustomFile,
-				    dataType: "text",				    
-				    async: false,
-				    success: function(data) {
-					processData(data);					
-				    }
-				 });
-				}
-				
-				);
-				
-				
-				function processData(allText) {
-				    
-				    var allTextLines = allText.split(/\r\n|\n/);
-				    var headers = allTextLines[0].split(';');
-				    vNumCustomHeaders = headers.length;
-				    
-				    for (var i=0; i<allTextLines.length; i++) {					
-					CustomArray[i] = new Array(headers.length);
-				        var data = allTextLines[i].split(';');
-					
-				        if (data.length == headers.length) {
-
-				            for (var j=0; j<headers.length; j++) {
-						
-						CustomArrayBasic[i] = data[0];
-				                CustomArray[i][j]=data[j];																
-				            }					    
-				        }					
-				    }
-				    
-				}										
-			};
+			
+			
 			function ApplyPreMask(mask, value){//aqui
 				if (mask.indexOf(';') >= 0) {
 					if (value >=0) {
