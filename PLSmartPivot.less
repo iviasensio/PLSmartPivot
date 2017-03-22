@@ -1,220 +1,216 @@
 @TableBorder: 1px solid #d3d3d3;
 @KpiTableWidth: 230px;
-
 ._cell(@Width: 50px) {
-	min-width: @Width!important;
-	max-width: @Width!important;
-	cursor: pointer;
-	line-height: 1em!important;
+    cursor: pointer;
+    line-height: 1em !important;
+    max-width: @Width !important;
+    min-width: @Width !important;
 }
-
 .qv-object-PLSmartPivot {
-	* {
-		box-sizing: border-box;
-	}
-
-	div.qv-object-content-container {
-		overflow-x: scroll;
-		overflow-y: hidden;
-		z-index: 110;
-	}
-
-	.icon-xls {
-		text-align: left;
-	}
-
-	button {
-		width: 100%;
-	}
-
-	table {
-		border-collapse: collapse;
-		border-spacing: 0;
-		width: auto;
-		border-left: @TableBorder;
-		border-right: @TableBorder;
-		border-top: @TableBorder;
-	}
-
-	td, th {
-		border: 1px solid #ffffff;
-		padding: 5px;
-		border-collapse: collapse;
-		white-space: nowrap;
-		overflow: hidden;
-		text-overflow: ellipsis;
-		vertical-align: middle;
-		cursor: default;
-	}
-
-	.empty {
-		width: 3%;
-		background: #ffffff;
-		min-width: 4px !important;
-		max-width: 4px !important;
-	}
-
-	th.main-kpi {
-		text-align: center;
-		vertical-align: middle;
-		border-bottom: @TableBorder;
-	}
-
-	.numeric {
-		text-align: right;
-	}
-	/*This is for wrap text in headers*/
-	.wrapclass25 {
-		width: 100%;
-		height: 25px;
-		white-space: pre-line;
-		overflow: hidden;
-		display: block;
-	}
-
-	.wrapclass45 {
-		width: 100%;
-		height: 45px;
-		white-space: pre-line;
-		overflow: hidden;
-		display: block;
-	}
-
-	.wrapclass70 {
-		width: 100%;
-		height: 70px;
-		white-space: pre-line;
-		overflow: hidden;
-		display: inline-block;
-		vertical-align: middle;
-		line-height: 20px;
-	}
-
-	.wrapclassEmpty {
-		width: 100%;
-	}
-	/*******************/
-	/* Medium column size*/
-	/*******************/
-	.grid-cells { ._cell(70px); }
-	.grid-cells2 { ._cell(70px); }
-	.grid-cells-small { ._cell(52px); }
-	.grid-cells2-small { ._cell(52px); }
-	/*******************/
-	/* Small column size*/
-	/*******************/
-	.grid-cells-s { ._cell(67px); }
-	.grid-cells2-s { ._cell(67px); }
-	.grid-cells-small-s { ._cell(52px); }
-	.grid-cells2-small-s { ._cell(52px); }
-	/*******************/
-	/* large column size*/
-	/*******************/
-	.grid-cells-l { ._cell(82px); }
-	.grid-cells2-l { ._cell(82px); }
-	.grid-cells-small-l { ._cell(66px); }
-	.grid-cells2-small-l { ._cell(66px); }
-
-	/*END OF GRID CELLS*/
-	/*First Column*/
-	.fdim-cells {
-		min-width: 230px !Important;
-		max-width: 230px !Important;
-		cursor: pointer;
-		background-color: white;
-	}
-
-	.fdim-cells:hover {
-		/*cursor: default;*/
-		background-color: #808080 !important;
-		color: #ffffff;
-	}
-
-	tbody tr:hover {
-		cursor: default;
-		background-color: #808080 !important;
-		color: #ffffff;
-	}
-
-	.grid-cells-header {
-		padding: 0px;
-	}
-
-	.grid-cells-title {
-		min-width: 522px;
-	}
-
-	.grid-cells:before {
-		content: "\00a0";
-	}
+    * {
+        box-sizing: border-box;
+    }
+    .qv-object-content-container {
+        overflow-x: scroll;
+        overflow-y: hidden;
+        z-index: 110;
+    }
+    .icon-xls {
+        text-align: left;
+    }
+    button {
+        width: 100%;
+    }
+    table {
+        border-collapse: collapse;
+        border-left: @TableBorder;
+        border-right: @TableBorder;
+        border-spacing: 0;
+        border-top: @TableBorder;
+        width: auto;
+    }
+    td, th {
+        border: 1px solid #fff;
+        border-collapse: collapse;
+        cursor: default;
+        overflow: hidden;
+        padding: 5px;
+        text-overflow: ellipsis;
+        vertical-align: middle;
+        white-space: nowrap;
+    }
+    .empty {
+        background: #fff;
+        max-width: 4px !important;
+        min-width: 4px !important;
+        width: 3%;
+    }
+    .main-kpi {
+        border-bottom: @TableBorder;
+        text-align: center;
+        vertical-align: middle;
+    }
+    .numeric {
+        text-align: right;
+    }
+    /*This is for wrap text in headers*/
+    .wrapclass25 {
+        display: block;
+        height: 25px;
+        overflow: hidden;
+        white-space: pre-line;
+        width: 100%;
+    }
+    .wrapclass45 {
+        display: block;
+        height: 45px;
+        overflow: hidden;
+        white-space: pre-line;
+        width: 100%;
+    }
+    .wrapclass70 {
+        display: inline-block;
+        height: 70px;
+        line-height: 20px;
+        overflow: hidden;
+        vertical-align: middle;
+        white-space: pre-line;
+        width: 100%;
+    }
+    .wrapclassEmpty {
+        width: 100%;
+    }
+    /*******************/
+    /* Medium column size*/
+    /*******************/
+    .grid-cells {
+        ._cell(70px);
+    }
+    .grid-cells2 {
+        ._cell(70px);
+    }
+    .grid-cells-small {
+        ._cell(52px);
+    }
+    .grid-cells2-small {
+        ._cell(52px);
+    }
+    /*******************/
+    /* Small column size*/
+    /*******************/
+    .grid-cells-s {
+        ._cell(67px);
+    }
+    .grid-cells2-s {
+        ._cell(67px);
+    }
+    .grid-cells-small-s {
+        ._cell(52px);
+    }
+    .grid-cells2-small-s {
+        ._cell(52px);
+    }
+    /*******************/
+    /* large column size*/
+    /*******************/
+    .grid-cells-l {
+        ._cell(82px);
+    }
+    .grid-cells2-l {
+        ._cell(82px);
+    }
+    .grid-cells-small-l {
+        ._cell(66px);
+    }
+    .grid-cells2-small-l {
+        ._cell(66px);
+    }
+    /*END OF GRID CELLS*/
+    /*First Column*/
+    .fdim-cells {
+        background-color: #fff;
+        cursor: pointer;
+        max-width: 230px !important;
+        min-width: 230px !important;
+    }
+    .fdim-cells:hover {
+        /*cursor: default;*/
+        background-color: #808080 !important;
+        color: #fff;
+    }
+    tbody tr:hover {
+        background-color: #808080 !important;
+        color: #fff;
+        cursor: default;
+    }
+    .grid-cells-header {
+        padding: 0;
+    }
+    .grid-cells-title {
+        min-width: 522px;
+    }
+    .grid-cells:before {
+        content: '\00a0';
+    }
 }
-
 .grid {
-	height: 50px;
-	width: 350px;
+    height: 50px;
+    width: 350px;
 }
-
 .header-wrapper {
-	position: absolute;
-	top: 0;
-	z-index: 1;
+    position: absolute;
+    top: 0;
+    z-index: 1;
 }
 /*popups for headers*/
 .tooltip {
-	position: fixed !important;
-	color: RGB(70,70,70);
-	background-color: RGB(245,239,207);
-	text-align: center;
-	border: groove;
+    background-color: #f5efcf;
+    border: groove;
+    color: #464646;
+    position: fixed !important;
+    text-align: center;
 }
 /*end popups*/
 .row-wrapper {
-	position: absolute;
-	top: 97px;
-	height: 100% !Important;
-	overflow-x: hidden;
-	overflow-y: scroll;
-	padding: 0;
-	margin-top: 0;
+    height: 100% !important;
+    margin-top: 0;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    padding: 0;
+    position: absolute;
+    top: 97px;
 }
-
-/*estos dos hcen referencia a la primera columna*/
+/*These two refer to the first column*/
 .kpi-table .fdim-cells {
-	line-height: 1em!important;
+    line-height: 1em !important;
 }
-
 .data-table .fdim-cells {
-	display: none;
+    display: none;
 }
-
 .kpi-table {
-	width: @KpiTableWidth !important;
-	overflow: hidden !important;
-	display: table;
-	height: 100%;
-	z-index: 100;
-	left: 258px;
-	margin: 0;
-	padding: 0;
-	z-index: 999;
-	position: absolute;
-	top: 0;
-	left: 0;
-	border-right: 1px solid white;
-	box-shadow: 4px 2px 8px #e1e1e1;
+    border-right: 1px solid #fff;
+    box-shadow: 4px 2px 8px #e1e1e1;
+    display: table;
+    height: 100%;
+    left: 258px;
+    margin: 0;
+    overflow: hidden !important;
+    padding: 0;
+    position: absolute;
+    top: 0;
+    width: @KpiTableWidth !important;
+    z-index: 100;
 }
-
 .kpi-table .row-wrapper {
-	overflow: hidden;
+    overflow: hidden;
 }
-
 .data-table {
-	width: 272px !important;
-	float: left;
-	display: table;
-	height: 100%;
-	z-index: 90;
-	position: absolute;
-	margin-left: @KpiTableWidth + 13px;
-	-ms-overflow-style: none;
+    display: table;
+    float: left;
+    height: 100%;
+    margin-left: @KpiTableWidth + 13px;
+    -ms-overflow-style: none;
+    position: absolute;
+    width: 272px !important;
+    z-index: 90;
 }
