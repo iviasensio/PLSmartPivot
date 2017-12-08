@@ -563,16 +563,22 @@ define(["jquery","text!./PLSmartPivot.css"], function(e,t) {'use strict';
 								ColorStatus1: {
 									ref: "colorstatus1",
 									label: "Critic Color Fill",
-									type: "integer",  
+									type: "object",  
 									component: "color-picker",  
-									defaultValue: 7
+									defaultValue: {  
+										index: 7,  
+										color: "#f93f17"  
+									}  
 								},
 								ColorStatus1Text: {
 									ref: "colorstatus1text",
 									label: "Critic Color Text",
-									type: "integer",  
+									type: "object",  
 									component: "color-picker",  
-									defaultValue: 10
+									defaultValue: {  
+										index: 10,  
+										color: "#ffffff"  
+									}  
 								},								
 								MetricStatus2: {
 									ref: "metricsstatus2",
@@ -583,30 +589,42 @@ define(["jquery","text!./PLSmartPivot.css"], function(e,t) {'use strict';
 								ColorStatus2: {
 									ref: "colorstatus2",
 									label: "Medium Color Fill",
-									type: "integer",  
+									type: "object",  
 									component: "color-picker",  
-									defaultValue: 8
+									defaultValue: {  
+										index: 8,  
+										color: "#ffcf02"  
+									}  
 								},
 								ColorStatus2Text: {
 									ref: "colorstatus2text",
 									label: "Medium Color Text",
-									type: "integer",  
+									type: "object",  
 									component: "color-picker",  
-									defaultValue: 11
+									defaultValue: {  
+										index: 11,  
+										color: "#000000"  
+									}  
 								},
 								ColorStatus3: {
 									ref: "colorstatus3",
 									label: "Success Color Fill",
-									type: "integer",  
+									type: "object",  
 									component: "color-picker",  
-									defaultValue: 6
+									defaultValue: {  
+										index: 9,  
+										color: "#276e27"  
+									}  
 								},
 								ColorStatus3Text: {
 									ref: "colorstatus3text",
 									label: "Success Color Text",
-									type: "integer",  
+									type: "object",  
 									component: "color-picker",  
-									defaultValue: 11
+									defaultValue: {  
+										index: 10,  
+										color: "#ffffff"  
+									}  
 								},
 								
 							}
@@ -932,262 +950,14 @@ define(["jquery","text!./PLSmartPivot.css"], function(e,t) {'use strict';
 			var vAllMetrics = this.backendApi.model.layout.allmetrics;
 			var MetricsAffectedMatrix = JSON.parse("[" + this.backendApi.model.layout.metricssemaphore + "]");				
 						
-			var vColorMetric1 = '';
-			var vColorMetric2 = '';
-			var vColorMetric3 = '';
-			var vColorMetric1Text = '';
-			var vColorMetric2Text = '';
-			var vColorMetric3Text = '';
+			var vColorMetric1 = this.backendApi.model.layout.colorstatus1.color;
+			var vColorMetric2 = this.backendApi.model.layout.colorstatus2.color;
+			var vColorMetric3 = this.backendApi.model.layout.colorstatus3.color;
+			var vColorMetric1Text = this.backendApi.model.layout.colorstatus1text.color;
+			var vColorMetric2Text = this.backendApi.model.layout.colorstatus2text.color;
+			var vColorMetric3Text = this.backendApi.model.layout.colorstatus3text.color;
 			var vColorSemaphore = '';
-			var vColorSemaphoreText = '';
-			
-			switch (this.backendApi.model.layout.colorstatus1){
-				case 0:
-				vColorMetric1 = '#b0afae';
-				break;
-				case 1:
-				vColorMetric1 = '#7b7a78';
-				break;
-				case 2:
-				vColorMetric1 = '#545352';
-				break;
-				case 3:
-				vColorMetric1 = '#4477aa';
-				break;
-				case 4:
-				vColorMetric1 = '#7db8da';
-				break;
-				case 5:
-				vColorMetric1 = '#b6d7ea';
-				break;
-				case 6:
-				vColorMetric1 = '#46c646';
-				break;
-				case 7:
-				vColorMetric1 = '#f93f17';
-				break;
-				case 8:
-				vColorMetric1 = '#ffcf02';
-				break;
-				case 9:
-				vColorMetric1 = '#276e27';
-				break;
-				case 10:
-				vColorMetric1 = '#ffffff';
-				break;
-				case 11:
-				vColorMetric1 = '#000000';
-				break;
-				default:
-				vColorMetric1 = '#ffffff';
-				break;
-			}
-			switch (this.backendApi.model.layout.colorstatus2){
-				case 0:
-				vColorMetric2 = '#b0afae';
-				break;
-				case 1:
-				vColorMetric2 = '#7b7a78';
-				break;
-				case 2:
-				vColorMetric2 = '#545352';
-				break;
-				case 3:
-				vColorMetric2 = '#4477aa';
-				break;
-				case 4:
-				vColorMetric2 = '#7db8da';
-				break;
-				case 5:
-				vColorMetric2 = '#b6d7ea';
-				break;
-				case 6:
-				vColorMetric2 = '#46c646';
-				break;
-				case 7:
-				vColorMetric2 = '#f93f17';
-				break;
-				case 8:
-				vColorMetric2 = '#ffcf02';
-				break;
-				case 9:
-				vColorMetric2 = '#276e27';
-				break;
-				case 10:
-				vColorMetric2 = '#ffffff';
-				break;
-				case 11:
-				vColorMetric2 = '#000000';
-				break;
-				default:
-				vColorMetric2 = '#ffffff';
-				break;
-			}
-			switch (this.backendApi.model.layout.colorstatus3){
-				case 0:
-				vColorMetric3 = '#b0afae';
-				break;
-				case 1:
-				vColorMetric3 = '#7b7a78';
-				break;
-				case 2:
-				vColorMetric3 = '#545352';
-				break;
-				case 3:
-				vColorMetric3 = '#4477aa';
-				break;
-				case 4:
-				vColorMetric3 = '#7db8da';
-				break;
-				case 5:
-				vColorMetric3 = '#b6d7ea';
-				break;
-				case 6:
-				vColorMetric3 = '#46c646';
-				break;
-				case 7:
-				vColorMetric3 = '#f93f17';
-				break;
-				case 8:
-				vColorMetric3 = '#ffcf02';
-				break;
-				case 9:
-				vColorMetric3 = '#276e27';
-				break;
-				case 10:
-				vColorMetric3 = '#ffffff';
-				break;
-				case 11:
-				vColorMetric3 = '#000000';
-				break;
-				default:
-				vColorMetric3 = '#ffffff';
-				break;
-			}
-			
-			switch (this.backendApi.model.layout.colorstatus1text){
-				case 0:
-				vColorMetric1Text = '#b0afae';
-				break;
-				case 1:
-				vColorMetric1Text = '#7b7a78';
-				break;
-				case 2:
-				vColorMetric1Text = '#545352';
-				break;
-				case 3:
-				vColorMetric1Text = '#4477aa';
-				break;
-				case 4:
-				vColorMetric1Text = '#7db8da';
-				break;
-				case 5:
-				vColorMetric1Text = '#b6d7ea';
-				break;
-				case 6:
-				vColorMetric1Text = '#46c646';
-				break;
-				case 7:
-				vColorMetric1Text = '#f93f17';
-				break;
-				case 8:
-				vColorMetric1Text = '#ffcf02';
-				break;
-				case 9:
-				vColorMetric1Text = '#276e27';
-				break;
-				case 10:
-				vColorMetric1Text = '#ffffff';
-				break;
-				case 11:
-				vColorMetric1Text = '#000000';
-				break;
-				default:
-				vColorMetric1Text = '#000000';
-				break;
-			}
-			switch (this.backendApi.model.layout.colorstatus2text){
-				case 0:
-				vColorMetric2Text = '#b0afae';
-				break;
-				case 1:
-				vColorMetric2Text = '#7b7a78';
-				break;
-				case 2:
-				vColorMetric2Text = '#545352';
-				break;
-				case 3:
-				vColorMetric2Text = '#4477aa';
-				break;
-				case 4:
-				vColorMetric2Text = '#7db8da';
-				break;
-				case 5:
-				vColorMetric2Text = '#b6d7ea';
-				break;
-				case 6:
-				vColorMetric2Text = '#46c646';
-				break;
-				case 7:
-				vColorMetric2Text = '#f93f17';
-				break;
-				case 8:
-				vColorMetric2Text = '#ffcf02';
-				break;
-				case 9:
-				vColorMetric2Text = '#276e27';
-				break;
-				case 10:
-				vColorMetric2Text = '#ffffff';
-				break;
-				case 11:
-				vColorMetric2Text = '#000000';
-				break;
-				default:
-				vColorMetric2Text = '#000000';
-				break;
-			}
-			switch (this.backendApi.model.layout.colorstatus3text){
-				case 0:
-				vColorMetric3Text = '#b0afae';
-				break;
-				case 1:
-				vColorMetric3Text = '#7b7a78';
-				break;
-				case 2:
-				vColorMetric3Text = '#545352';
-				break;
-				case 3:
-				vColorMetric3Text = '#4477aa';
-				break;
-				case 4:
-				vColorMetric3Text = '#7db8da';
-				break;
-				case 5:
-				vColorMetric3Text = '#b6d7ea';
-				break;
-				case 6:
-				vColorMetric3Text = '#46c646';
-				break;
-				case 7:
-				vColorMetric3Text = '#f93f17';
-				break;
-				case 8:
-				vColorMetric3Text = '#ffcf02';
-				break;
-				case 9:
-				vColorMetric3Text = '#276e27';
-				break;
-				case 10:
-				vColorMetric3Text = '#ffffff';
-				break;
-				case 11:
-				vColorMetric3Text = '#000000';
-				break;
-				default:
-				vColorMetric3Text = '#000000';
-				break;
-			}
+			var vColorSemaphoreText = '';						
 			
 			var vCritic = this.backendApi.model.layout.metricsstatus1;
 			var vMMedium = this.backendApi.model.layout.metricsstatus2;
@@ -1257,6 +1027,7 @@ define(["jquery","text!./PLSmartPivot.css"], function(e,t) {'use strict';
 				}
 			});
 			e.each(this.backendApi.getMeasureInfos(),function(e,t) {
+				
 				vDimName = t.qFallbackTitle;
 				LabelsArray.push(vDimName);
 				var mfor = "";
@@ -1945,7 +1716,7 @@ define(["jquery","text!./PLSmartPivot.css"], function(e,t) {'use strict';
 				if(vNumDims > 1 && indextd > 0){
 					if (ArrayGetSelectedCount[1] > 0) {
 						
-						var SelectB = JSON.parse(JSON.stringify(ConceptMatrixColElemTable));
+						var SelectB = JSON.parse(JSON.stringify(ConceptMatrixColElemTable));						
 						self.backendApi.selectValues(1,SelectB,true);
 						e(this).toggleClass("selected");							
 					}
