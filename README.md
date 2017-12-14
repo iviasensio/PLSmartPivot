@@ -5,7 +5,8 @@ P&L Smart Pivot, a Qlik Sense Extension for Financial reporting
 
 Available in https://github.com/iviasensio/PLSmartPivot
 
-Current version 2.0. Compatible with QS 3.2
+Current version 2.1. Compatible with QS Sep 2017
+(from sep'17 color-picker is no more an integer but an object)
 
 Based on P&LSmart.
 
