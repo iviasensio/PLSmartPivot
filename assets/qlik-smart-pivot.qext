@@ -1,0 +1,16 @@
+{
+	"name": "Smart pivot",
+	"description": "Formatted table for P&L reports.",
+	"type": "visualization",
+	"version": "X.Y.Z",
+	"icon": "table",
+	"preview": "",
+	"author": "Ivan Felipe Asensio <ivan.felipe@qlik.com>",
+	"homepage": "",
+	"keywords": "qlik-sense, visualization",
+	"license": "MIT",
+	"repository": "https://github.com/qlik-oss/PLSmartPivot",
+	"dependencies": {
+		"qlik-sense": ">=5.5.x"
+	}
+}
