@@ -1,4 +1,5 @@
 # P&L Smart Pivot, a Qlik Sense Extension for Financial reporting
+[![CircleCI](https://circleci.com/gh/qlik-oss/PLSmartPivot.svg?style=svg)](https://circleci.com/gh/qlik-oss/PLSmartPivot)
 
 This extension is useful to create reports where the look&feel is rellevantand and pivot a second dimension is needed. Based on P&L Smart.
 
