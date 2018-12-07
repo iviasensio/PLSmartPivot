@@ -1,6 +1,6 @@
 /* global $ */
 
-define(['jquery', 'text!./PLSmartPivot.css'], function (e, t) {
+define(['jquery', 'text-loader!./PLSmartPivot.css'], function (e, t) {
   'use strict';
   return e('<style>').html(t).appendTo('head'), {
     initialProperties: {
