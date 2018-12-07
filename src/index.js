@@ -97,13 +97,36 @@ define(['jquery', 'text-loader!./PLSmartPivot.css'], function (e, t) {
     var vColLibVioleteP = this.backendApi.model.layout.collibvioletep;
     var vColLibCustomP = this.backendApi.model.layout.collibcustomp;
 
+    const colors = {
+      vColLibClean,
+      vColLibSoft,
+      vColLibDark,
+      vColLibNight,
+      vColLibRed,
+      vColLibOrange,
+      vColLibBlue,
+      vColLibGreen,
+      vColLibViolete,
+      vColLibCustom,
+      vColLibCleanP,
+      vColLibSoftP,
+      vColLibDarkP,
+      vColLibNightP,
+      vColLibRedP,
+      vColLibOrangeP,
+      vColLibBlueP,
+      vColLibGreenP,
+      vColLibVioleteP,
+      vColLibCustomP,
+    };
+
     var vDynamicColorHeader = 'vColLib' + this.backendApi.model.layout.HeaderColorSchema;
     var vDynamicColorBody = 'vColLib' + this.backendApi.model.layout.ColorSchema;
     var vDynamicColorBodyP = 'vColLib' + this.backendApi.model.layout.ColorSchema + 'P';
 
-    var vHeaderColorSchema = eval(vDynamicColorHeader);
-    var vColorSchema = eval(vDynamicColorBody);
-    var vColorSchemaP = eval(vDynamicColorBodyP);
+    var vHeaderColorSchema = colors[vDynamicColorHeader];
+    var vColorSchema = colors[vDynamicColorBody];
+    var vColorSchemaP = colors[vDynamicColorBodyP];
 
     var vExportToExcel = this.backendApi.model.layout.allowexportxls;
     var vFontFamily = this.backendApi.model.layout.FontFamily;

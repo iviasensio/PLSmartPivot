@@ -53,7 +53,7 @@ module.exports = {
     "padded-blocks": ["warn", { "blocks": "never", "switches": "never", "classes": "never" }],
     "semi": ["error", "always"],
     "valid-typeof": ["warn"],
-    "no-eval": ["warn"],
+    "no-eval": ["error"],
     "no-implied-eval": ["error"],
     "no-debugger": ["warn"],
     "no-unreachable": ["warn"],
