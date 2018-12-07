@@ -54,7 +54,13 @@ const config = {
     new CopyWebpackPlugin([
       'assets/' + settings.name + '.qext',
       'assets/' + settings.name + '.png',
-      'assets/wbfolder.wbl'
+      'assets/wbfolder.wbl',
+
+      // TODO: remove entries below this line
+      'resources/Accounts.csv',
+      'resources/Accounts2.csv',
+      'resources/QlikLook.csv',
+      'resources/Excel.png',
     ], {}),
     new StyleLintPlugin()
   ]
