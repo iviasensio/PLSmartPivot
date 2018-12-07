@@ -26,10 +26,10 @@ const config = {
   module: {
     rules: [
       {
-        enforce: "pre",
+        enforce: 'pre',
         test: /\.js$/,
         exclude: /(node_modules|Library)/,
-        loader: "eslint-loader",
+        loader: 'eslint-loader',
         options: {
           failOnError: true
         }

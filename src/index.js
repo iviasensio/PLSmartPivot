@@ -777,7 +777,7 @@ export default {
   controller: [
     '$scope',
     '$timeout',
-    function (e, t) { }
+    function () { }
   ],
   paint: function ($element) {
     try {

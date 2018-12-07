@@ -45,8 +45,6 @@ export default function paint($element, component) {
     myFootNote += '</p>';
   }
 
-  var vNumberFormat = '';
-
   var vMaxLoops = component.backendApi.model.layout.maxloops;
   var vErrorMessage = component.backendApi.model.layout.errormessage;
 
@@ -66,11 +64,8 @@ export default function paint($element, component) {
   var vGlobalComment = 0;
   var vGlobalCommentColor = '';
   var vGlobalFontSize = 0;
-  var vOKCustom = 0;
   var vComas = 0;
   var vMedium = false;
-
-  var vPaginationLoop = 0;
 
   var vHeaderAlign = component.backendApi.model.layout.HeaderAlign;
 
@@ -175,8 +170,6 @@ export default function paint($element, component) {
       break;
   }
 
-  var vIndent = '';
-
   var vSymbolForNulls = component.backendApi.model.layout.symbolfornulls;
 
   var vAllSemaphores = component.backendApi.model.layout.allsemaphores;
@@ -209,13 +202,10 @@ export default function paint($element, component) {
   var vCritic = component.backendApi.model.layout.metricsstatus1;
   var vMMedium = component.backendApi.model.layout.metricsstatus2;
 
-  var vBoldFlag = '';
   var vDimName = '';
   var CustomArray = new Array();
   var CustomArrayBasic = new Array();
   var vNumCustomHeaders = 0;
-
-
 
   var ConceptMatrix = new Array();
   var ConceptMatrixFirst = new Array();
@@ -229,25 +219,20 @@ export default function paint($element, component) {
 
   var vColumnText = '';
   var vColumnNum = '';
-  var vPercent = false;
   var vMaskNum = 0;
-  var html2 = '';
   var StyleTags = '';
 
   var vNumDims = 0;
   var vNumMeasures = 0;
-  var vNumMeasures2 = 0;//sirve para multiplicar num medidas por num elementos de la 2ª dimensión
-  var SecondHeaderLength = 0;//sirve para determinar cuántos elementos hay en la 2ª dimensión
-  var vNumMeasuresCheckLevels = 2;
-  var vNumCols = 0;
+  var vNumMeasures2 = 0;
+  var SecondHeaderLength = 0;
   var MeasuresFormat = new Array();
   var LabelsArray = new Array();
   var ExtraLabelsArray = new Array();
   var vExtraLabel = '';
-  var vMoreButtonCode = '';
   var vExcelButtonCode = '';
 
-  var self = this, lastrow = 0, morebutton = false;
+  var self = this, lastrow = 0;
   var f = '';
 
   var nRows = component.backendApi.getRowCount();
@@ -312,7 +297,6 @@ export default function paint($element, component) {
         break;
     }
     vNumMeasures++;
-    vNumMeasuresCheckLevels++;
     if (dim_count == 1) {
       if (((t.qFallbackTitle + vExtraLabel).length > 11 && vLetterSizeHeader == 0)
         || ((t.qFallbackTitle + vExtraLabel).length > 12 && vLetterSizeHeader == -2)) {
@@ -324,28 +308,11 @@ export default function paint($element, component) {
     }
   });
 
-  var vColumnTextUpper = '';
-
   //order the info in particular arrays
   component.backendApi.eachDataRow(function (t, a) {
     lastrow = t;
 
-    var vColumn = 0;
-    var vColumnP = 0;
-
-
-    var vColumnNumber = 0;
-
-    var vStartsRight = 0;
-
-    var vBoldNumber = 0;
-    var vTagText = '';
-    var vComment = 0;
-
-    var dim = a[0];
-
     var vNumMeasuresPlus = vNumMeasures + 1;
-    var vNumMeasuresPlus2 = vNumMeasures + 2;
 
     ConceptMatrix[t] = new Array();
     ConceptMatrix[t][0] = a[0].qText;
@@ -368,7 +335,6 @@ export default function paint($element, component) {
     }
   });
   if (nRows > (lastrow + 1) && nRows <= (vMaxLoops * 1000)) {
-    vPaginationLoop++;
     var requestPage = [{
       qTop: lastrow + 1,
       qLeft: 0,
@@ -376,7 +342,7 @@ export default function paint($element, component) {
       qHeight: Math.min(1000, nRows - lastrow)
     }];
 
-    component.backendApi.getData(requestPage).then(function (dataPages) {
+    component.backendApi.getData(requestPage).then(function () {
       self.paint($element);
     });
   }
@@ -1069,11 +1035,7 @@ export default function paint($element, component) {
         break;
     }
   }
-  function ApplyComment(vCustomAttributes, vCustomComas) {
-    var vPuntoComa = '';
-    if (vCustomComas > 0) {
-      vPuntoComa = ';';
-    }
+  function ApplyComment(vCustomAttributes) {
     switch (vCustomAttributes) {
       case '<comment>':
         vGlobalComment = 1;
