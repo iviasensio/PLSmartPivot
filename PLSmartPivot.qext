@@ -1,9 +1,0 @@
-{
-	"name" : "P&L Smart Pivot",
-	"description" : "Formatted table for P&L reports",
-	"icon" : "table",
-	"type" : "visualization",
-	"version": "1.0",
-	"preview" : "table",
-	"author": "Ivan Felipe - QlikTech Iberia"
-}

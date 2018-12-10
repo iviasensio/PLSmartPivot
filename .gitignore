@@ -17,6 +17,11 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
+# Temporary build files
+node_modules/
+build/
+BUMPED_VERSION
+
 # =========================
 # Operating System Files
 # =========================
@@ -41,4 +46,3 @@ $RECYCLE.BIN/
 Network Trash Folder
 Temporary Items
 .apdisk
-dist/

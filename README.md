@@ -1,24 +1,7 @@
-P&L Smart Pivot, a Qlik Sense Extension for Financial reporting 
-
+# P&L Smart Pivot, a Qlik Sense Extension for Financial reporting
 [![CircleCI](https://circleci.com/gh/qlik-oss/PLSmartPivot.svg?style=svg)](https://circleci.com/gh/qlik-oss/PLSmartPivot)
 
-=============================
-==================================
-
-Available in https://github.com/iviasensio/PLSmartPivot
-
-Current version 2.1. Compatible with QS Sep 2017
-(from sep'17 color-picker is no more an integer but an object)
-
-Based on P&LSmart.
-
-Author Ivan Felipe Asensio QlikTech Iberia,s.l.
-
-
-
-This extension is useful to create reports where the look&feel is rellevantand and pivot a second dimension is needed.
-
-
+This extension is useful to create reports where the look&feel is rellevantand and pivot a second dimension is needed. Based on P&L Smart.
 
 It's specifically focused on financial reports, trying to solve some common needs of this area:
 - smart export to excel
@@ -27,28 +10,48 @@ It's specifically focused on financial reports, trying to solve some common need
 - selections inside the reports
 - custom external templates
 - analytical reports
-- ...
 
 
-
-You'll find a manual 'P&LSmart Pivot Extension Manual.pdf' and one app example 'P&LSmartPivot_demo.qvf
-
-'.
+# Manual
+You'll find a manual [Qlik Sense P&LSmart Pivot Extension Manual.pdf](resources/Qlik Sense P&LSmart Pivot Extension Manual.pdf) and one app example [P&LSmartPivot_demo.qvf](resources/P&LSmartPivot_demo.qvf).
 
 
-
-*Install in Server:
-- before import the extension from the server remember to remove all the non functional files.
-- remove:
-.gitattributes,
-.gitignore, P&LSmartPivot_demo.qvf, 'Qlik Sense P&LSmart Pivot Extension Manual.pdf' 
+# If the import does not work at first time
+- remove [Accounts.csv](resources/Accounts.csv), [Accounts2.csv](resources/Accounts2.csv) and [Excel.png](resources/Excel.png), zip it again and import.
+- Then reintroduce [Accounts.csv](resources/Accounts.csv), [Accounts2.csv](resources/Accounts2.csv) and [Excel.png](resources/Excel.png), zip it again and import.
 
 
-**If the import does not work at first time:
-- remove Accounts.csv, Accounts2.csv and Excel.png, zip it again and import.
-- Then reintroduce Accounts.csv, Accounts2.csv and Excel.png, zip it again and import.
+# Installation
+
+1. Download the extension zip, `qlik-smart-pivot_<version>.zip`, from the latest release(https://github.com/qlik-oss/PLSmartPivot/releases/latest)
+2. Install the extension:
+
+   a. **Qlik Sense Desktop**: unzip to a directory under [My Documents]/Qlik/Sense/Extensions.
+
+   b. **Qlik Sense Server**: import the zip file in the QMC.
 
 
-*Install in Desktop
-- unzip and copy the folder in C:\Users\'username'\Documents\Qlik\Sense\Extensions
-- copy the example P&LSmartPivot_demo.qvf in C:\Users\'username'\Documents\Qlik\Sense\Apps
+# Developing the extension
+
+If you want to do code changes to the extension follow these simple steps to get going.
+
+1. Get Qlik Sense Desktop
+1. Create a new app and add the extension to a sheet.
+2. Clone the repository
+3. Run `npm install`
+4. Set the environment variable `BUILD_PATH` to your extensions directory. It will be something like `C:/Users/<user>/Documents/Qlik/Sense/Extensions/<extension_name>`.
+5. You now have two options. Either run the watch task or the build task. They are explained below. Both of them default to development mode but can be run in production by setting `NODE_ENV=production` before running the npm task.
+
+   a. **Watch**: `npm run watch`. This will start a watcher which will rebuild the extension and output all needed files to the `buildFolder` for each code change you make. See your changes directly in your Qlik Sense app.
+
+   b. **Build**: `npm run build`. If you want to build the extension package. The output zip-file can be found in the `buildFolder`.
+
+
+# Original authors
+
+[github.com/iviasensio](https://github.com/iviasensio)
+
+
+# License
+
+Released under the [MIT License](LICENSE).
