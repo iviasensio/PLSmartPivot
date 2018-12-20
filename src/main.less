@@ -1,14 +1,14 @@
-@TableBorder: 1px solid #d3d3d3;
-@KpiTableWidth: 230px;
+.qv-object-qlik-smart-pivot {
+  @TableBorder: 1px solid #d3d3d3;
+  @KpiTableWidth: 230px;
 
-._cell(@Width: 50px) {
-	min-width: @Width!important;
-	max-width: @Width!important;
-	cursor: pointer;
-	line-height: 1em!important;
-}
+  ._cell(@Width: 50px) {
+  	min-width: @Width!important;
+  	max-width: @Width!important;
+  	cursor: pointer;
+  	line-height: 1em!important;
+  }
 
-.qv-object-PLSmartPivot {
 	* {
 		box-sizing: border-box;
 	}
@@ -147,74 +147,73 @@
 	.grid-cells:before {
 		content: "\00a0";
 	}
-}
 
-.grid {
-	height: 50px;
-	width: 350px;
-}
+  .grid {
+  	height: 50px;
+  	width: 350px;
+  }
 
-.header-wrapper {
-	position: absolute;
-	top: 0;
-	z-index: 1;
-}
-/*popups for headers*/
-.tooltip {
-	position: fixed !important;
-	color: RGB(70,70,70);
-	background-color: RGB(245,239,207);
-	text-align: center;
-	border: groove;
-}
-/*end popups*/
-.row-wrapper {
-	position: absolute;
-	top: 97px;
-	height: 100% !Important;
-	overflow-x: hidden;
-	overflow-y: scroll;
-	padding: 0;
-	margin-top: 0;
-}
+  .header-wrapper {
+  	position: absolute;
+  	top: 0;
+  	z-index: 1;
+  }
 
-/*estos dos hcen referencia a la primera columna*/
-.kpi-table .fdim-cells {
-	line-height: 1em!important;
-}
+  /*popups for headers*/
+  .tooltip {
+  	position: fixed !important;
+  	color: RGB(70,70,70);
+  	background-color: RGB(245,239,207);
+  	text-align: center;
+  	border: groove;
+  }
 
-.data-table .fdim-cells {
-	display: none;
-}
+  /*end popups*/
+  .row-wrapper {
+  	position: absolute;
+  	top: 97px;
+  	height: 100% !Important;
+  	overflow-x: hidden;
+  	overflow-y: scroll;
+  	padding: 0;
+  	margin-top: 0;
+  }
 
-.kpi-table {
-	width: @KpiTableWidth !important;
-	overflow: hidden !important;
-	display: table;
-	height: 100%;
-	z-index: 100;
-	left: 258px;
-	margin: 0;
-	padding: 0;
-	z-index: 999;
-	position: absolute;
-	top: 0;
-	left: 0;
-	border-right: 1px solid white;
-	box-shadow: 4px 2px 8px #e1e1e1;
-}
+  .kpi-table .fdim-cells {
+  	line-height: 1em!important;
+  }
 
-.kpi-table .row-wrapper {
-	overflow: hidden;
-}
+  .data-table .fdim-cells {
+  	display: none;
+  }
 
-.data-table {
-	width: 272px !important;
-	float: left;
-	display: table;
-	height: 100%;
-	z-index: 90;
-	position: absolute;
-	margin-left: @KpiTableWidth + 13px;
-	-ms-overflow-style: none;
+  .kpi-table {
+  	width: @KpiTableWidth !important;
+  	overflow: hidden !important;
+  	display: table;
+  	height: 100%;
+  	margin: 0;
+  	padding: 0;
+  	z-index: 999;
+  	position: absolute;
+  	top: 0;
+  	left: 0;
+  	border-right: 1px solid white;
+  	box-shadow: 4px 2px 8px #e1e1e1;
+  }
+
+  .kpi-table .row-wrapper {
+  	overflow: hidden;
+  }
+
+  .data-table {
+  	width: 272px !important;
+  	float: left;
+  	display: table;
+  	height: 100%;
+  	z-index: 90;
+  	position: absolute;
+  	margin-left: @KpiTableWidth + 13px;
+  	-ms-overflow-style: none;
+  }
 }
