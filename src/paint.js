@@ -1,14 +1,12 @@
-
 import $ from 'jquery';
+import { addSeparators, onlyUnique } from './utilities';
+import { ApplyPreMask } from './masking';
+import { enableExcelExport } from './excel-export';
 
-export default function paint($element, component) {
-  var isIE = /*@cc_on!@*/false || !!document.documentMode;
-  var isChrome = !!window.chrome && !!window.chrome.webstore;
-  var isSafari = Object.prototype.toString.call(window.HTMLElement).indexOf('Constructor') > 0;
-  var isFirefox = typeof InstallTrigger !== 'undefined';
+export default function paint($element, layout, component) {
   var sufixCells = '';
   var sufixWrap = '';
-  switch (component.backendApi.model.layout.columnwidthslider) {
+  switch (layout.columnwidthslider) {
     case 1:
       sufixCells += '-s';
       break;
@@ -23,40 +21,21 @@ export default function paint($element, component) {
       break;
   }
 
-  var dim_count = component.backendApi.model.layout.qHyperCube.qDimensionInfo.length;
-  var measure_count = component.backendApi.model.layout.qHyperCube.qMeasureInfo.length;
+  var dim_count = layout.qHyperCube.qDimensionInfo.length;
+  var measure_count = layout.qHyperCube.qMeasureInfo.length;
 
-  var myTitle = '';
-  var mySubTitle = '';
-  var myFootNote = '';
-  if (component.backendApi.model.layout.title.length > 0) {
-    myTitle += '<p style="font-size:15pt"><b>';
-    myTitle += component.backendApi.model.layout.title;
-    myTitle += '</b></p>';
-  }
-  if (component.backendApi.model.layout.subtitle.length > 0) {
-    mySubTitle += '<p style="font-size:11pt">';
-    mySubTitle += component.backendApi.model.layout.subtitle;
-    mySubTitle += '</p>';
-  }
-  if (component.backendApi.model.layout.footnote.length > 0) {
-    myFootNote += '<p style="font-size:11pt"><i>Note:</i>';
-    myFootNote += component.backendApi.model.layout.footnote;
-    myFootNote += '</p>';
-  }
+  var vMaxLoops = layout.maxloops;
+  var vErrorMessage = layout.errormessage;
 
-  var vMaxLoops = component.backendApi.model.layout.maxloops;
-  var vErrorMessage = component.backendApi.model.layout.errormessage;
-
-  var vSeparatorCols = component.backendApi.model.layout.separatorcols;
+  var vSeparatorCols = layout.separatorcols;
   if (dim_count == 1) {
     vSeparatorCols = false;
   }
 
-  var vCustomFileBool = component.backendApi.model.layout.customfilebool;
-  var vCustomFile = component.backendApi.model.layout.customfile;
+  var vCustomFileBool = layout.customfilebool;
+  var vCustomFile = layout.customfile;
 
-  var vPadding = component.backendApi.model.layout.indentbool;
+  var vPadding = layout.indentbool;
   var vPaddingText = '';
 
   var vGlobalComas = 0;
@@ -67,70 +46,48 @@ export default function paint($element, component) {
   var vComas = 0;
   var vMedium = false;
 
-  var vHeaderAlign = component.backendApi.model.layout.HeaderAlign;
-
-  var vColLibClean = component.backendApi.model.layout.collibclean;
-  var vColLibSoft = component.backendApi.model.layout.collibsoft;
-  var vColLibDark = component.backendApi.model.layout.collibdark;
-  var vColLibNight = component.backendApi.model.layout.collibnight;
-  var vColLibRed = component.backendApi.model.layout.collibred;
-  var vColLibOrange = component.backendApi.model.layout.colliborange;
-  var vColLibBlue = component.backendApi.model.layout.collibblue;
-  var vColLibGreen = component.backendApi.model.layout.collibgreen;
-  var vColLibViolete = component.backendApi.model.layout.collibviolete;
-  var vColLibCustom = component.backendApi.model.layout.collibcustom;
-
-  var vColLibCleanP = component.backendApi.model.layout.collibcleanp;
-  var vColLibSoftP = component.backendApi.model.layout.collibsoftp;
-  var vColLibDarkP = component.backendApi.model.layout.collibdarkp;
-  var vColLibNightP = component.backendApi.model.layout.collibnightp;
-  var vColLibRedP = component.backendApi.model.layout.collibredp;
-  var vColLibOrangeP = component.backendApi.model.layout.colliborangep;
-  var vColLibBlueP = component.backendApi.model.layout.collibbluep;
-  var vColLibGreenP = component.backendApi.model.layout.collibgreenp;
-  var vColLibVioleteP = component.backendApi.model.layout.collibvioletep;
-  var vColLibCustomP = component.backendApi.model.layout.collibcustomp;
+  var vHeaderAlign = layout.HeaderAlign;
 
   const colors = {
-    vColLibClean,
-    vColLibSoft,
-    vColLibDark,
-    vColLibNight,
-    vColLibRed,
-    vColLibOrange,
-    vColLibBlue,
-    vColLibGreen,
-    vColLibViolete,
-    vColLibCustom,
-    vColLibCleanP,
-    vColLibSoftP,
-    vColLibDarkP,
-    vColLibNightP,
-    vColLibRedP,
-    vColLibOrangeP,
-    vColLibBlueP,
-    vColLibGreenP,
-    vColLibVioleteP,
-    vColLibCustomP,
+    vColLibClean: layout.collibclean,
+    vColLibSoft: layout.collibsoft,
+    vColLibDark: layout.collibdark,
+    vColLibNight: layout.collibnight,
+    vColLibRed: layout.collibred,
+    vColLibOrange: layout.colliborange,
+    vColLibBlue: layout.collibblue,
+    vColLibGreen: layout.collibgreen,
+    vColLibViolete: layout.collibviolete,
+    vColLibCustom: layout.collibcustom,
+    vColLibCleanP: layout.collibcleanp,
+    vColLibSoftP: layout.collibsoftp,
+    vColLibDarkP: layout.collibdarkp,
+    vColLibNightP: layout.collibnightp,
+    vColLibRedP: layout.collibredp,
+    vColLibOrangeP: layout.colliborangep,
+    vColLibBlueP: layout.collibbluep,
+    vColLibGreenP: layout.collibgreenp,
+    vColLibVioleteP: layout.collibvioletep,
+    vColLibCustomP: layout.collibcustomp
   };
 
-  var vDynamicColorHeader = 'vColLib' + component.backendApi.model.layout.HeaderColorSchema;
-  var vDynamicColorBody = 'vColLib' + component.backendApi.model.layout.ColorSchema;
-  var vDynamicColorBodyP = 'vColLib' + component.backendApi.model.layout.ColorSchema + 'P';
+  var vDynamicColorHeader = 'vColLib' + layout.HeaderColorSchema;
+  var vDynamicColorBody = 'vColLib' + layout.ColorSchema;
+  var vDynamicColorBodyP = 'vColLib' + layout.ColorSchema + 'P';
 
   var vHeaderColorSchema = colors[vDynamicColorHeader];
   var vColorSchema = colors[vDynamicColorBody];
   var vColorSchemaP = colors[vDynamicColorBodyP];
 
-  var vExportToExcel = component.backendApi.model.layout.allowexportxls;
-  var vFontFamily = component.backendApi.model.layout.FontFamily;
+  var vExportToExcel = layout.allowexportxls;
+  var vFontFamily = layout.FontFamily;
   var vFontSize = '';
 
-  var vColorText = component.backendApi.model.layout.BodyTextColorSchema;
+  var vColorText = layout.BodyTextColorSchema;
   var vDivide = 1;
   var nMeasAux = 0;
 
-  var vHeaderColorText = component.backendApi.model.layout.HeaderTextColorSchema;
+  var vHeaderColorText = layout.HeaderTextColorSchema;
 
   var vHeaderAlignText = '';
   switch (vHeaderAlign) {
@@ -147,7 +104,7 @@ export default function paint($element, component) {
 
   var vLetterSize = 0;
   var vLetterSizeHeader = 0;
-  switch (component.backendApi.model.layout.lettersizeheader) {
+  switch (layout.lettersizeheader) {
     case 1:
       vLetterSizeHeader = -2;
       break;
@@ -158,7 +115,7 @@ export default function paint($element, component) {
       vLetterSizeHeader = 2;
       break;
   }
-  switch (component.backendApi.model.layout.lettersize) {
+  switch (layout.lettersize) {
     case 1:
       vLetterSize = -2;
       break;
@@ -170,37 +127,37 @@ export default function paint($element, component) {
       break;
   }
 
-  var vSymbolForNulls = component.backendApi.model.layout.symbolfornulls;
+  var vSymbolForNulls = layout.symbolfornulls;
 
-  var vAllSemaphores = component.backendApi.model.layout.allsemaphores;
+  var vAllSemaphores = layout.allsemaphores;
   var ConceptsAffectedMatrix = new Array(10);
   if (vAllSemaphores == false) {
-    ConceptsAffectedMatrix[0] = component.backendApi.model.layout.conceptsemaphore1;
-    ConceptsAffectedMatrix[1] = component.backendApi.model.layout.conceptsemaphore2;
-    ConceptsAffectedMatrix[2] = component.backendApi.model.layout.conceptsemaphore3;
-    ConceptsAffectedMatrix[3] = component.backendApi.model.layout.conceptsemaphore4;
-    ConceptsAffectedMatrix[4] = component.backendApi.model.layout.conceptsemaphore5;
-    ConceptsAffectedMatrix[5] = component.backendApi.model.layout.conceptsemaphore6;
-    ConceptsAffectedMatrix[6] = component.backendApi.model.layout.conceptsemaphore7;
-    ConceptsAffectedMatrix[7] = component.backendApi.model.layout.conceptsemaphore8;
-    ConceptsAffectedMatrix[8] = component.backendApi.model.layout.conceptsemaphore9;
-    ConceptsAffectedMatrix[9] = component.backendApi.model.layout.conceptsemaphore10;
+    ConceptsAffectedMatrix[0] = layout.conceptsemaphore1;
+    ConceptsAffectedMatrix[1] = layout.conceptsemaphore2;
+    ConceptsAffectedMatrix[2] = layout.conceptsemaphore3;
+    ConceptsAffectedMatrix[3] = layout.conceptsemaphore4;
+    ConceptsAffectedMatrix[4] = layout.conceptsemaphore5;
+    ConceptsAffectedMatrix[5] = layout.conceptsemaphore6;
+    ConceptsAffectedMatrix[6] = layout.conceptsemaphore7;
+    ConceptsAffectedMatrix[7] = layout.conceptsemaphore8;
+    ConceptsAffectedMatrix[8] = layout.conceptsemaphore9;
+    ConceptsAffectedMatrix[9] = layout.conceptsemaphore10;
   }
 
-  var vAllMetrics = component.backendApi.model.layout.allmetrics;
-  var MetricsAffectedMatrix = JSON.parse('[' + component.backendApi.model.layout.metricssemaphore + ']');
+  var vAllMetrics = layout.allmetrics;
+  var MetricsAffectedMatrix = JSON.parse('[' + layout.metricssemaphore + ']');
 
-  var vColorMetric1 = component.backendApi.model.layout.colorstatus1.color;
-  var vColorMetric2 = component.backendApi.model.layout.colorstatus2.color;
-  var vColorMetric3 = component.backendApi.model.layout.colorstatus3.color;
-  var vColorMetric1Text = component.backendApi.model.layout.colorstatus1text.color;
-  var vColorMetric2Text = component.backendApi.model.layout.colorstatus2text.color;
-  var vColorMetric3Text = component.backendApi.model.layout.colorstatus3text.color;
+  var vColorMetric1 = layout.colorstatus1.color;
+  var vColorMetric2 = layout.colorstatus2.color;
+  var vColorMetric3 = layout.colorstatus3.color;
+  var vColorMetric1Text = layout.colorstatus1text.color;
+  var vColorMetric2Text = layout.colorstatus2text.color;
+  var vColorMetric3Text = layout.colorstatus3text.color;
   var vColorSemaphore = '';
   var vColorSemaphoreText = '';
 
-  var vCritic = component.backendApi.model.layout.metricsstatus1;
-  var vMMedium = component.backendApi.model.layout.metricsstatus2;
+  var vCritic = layout.metricsstatus1;
+  var vMMedium = layout.metricsstatus2;
 
   var vDimName = '';
   var CustomArray = new Array();
@@ -232,12 +189,11 @@ export default function paint($element, component) {
   var vExtraLabel = '';
   var vExcelButtonCode = '';
 
-  var self = this, lastrow = 0;
+  var lastrow = 0;
   var f = '';
 
   var nRows = component.backendApi.getRowCount();
   f += "<div class='header-wrapper'> <table class='header'><tr>";
-
 
   //render titles
   $.each(component.backendApi.getDimensionInfos(), function (e, t) {
@@ -343,7 +299,7 @@ export default function paint($element, component) {
     }];
 
     component.backendApi.getData(requestPage).then(function () {
-      self.paint($element);
+      component.paint($element);
     });
   }
 
@@ -813,47 +769,35 @@ export default function paint($element, component) {
   }
   //render data
   function RenderData() {
-    var nMerge = 0;
-    if (measure_count == 0) {
-      nMerge = 1;
-    } else {
-      if (vSeparatorCols) {
-        nMerge = (measure_count + 2);
-      } else {
-        nMerge = (measure_count + 1);
-      }
-    }
     f += '</table>';
-
     f += '</div>';
 
     // freeze header and first column
     var x = "<div class='kpi-table'>";
-    x += f,
-    x += '</div>',
-    x += "<div class='data-table'>",
-    x += f,
-    x += '</div>',
+    x += f;
+    x += '</div>';
+    x += "<div class='data-table'>";
+    x += f;
+    x += '</div>';
 
-    $element.html(x),
+    $element.html(x);
 
     $('.data-table .row-wrapper').on('scroll', function () {
       $('.kpi-table .row-wrapper').scrollTop($(this).scrollTop()),
       $(this).scrollTop() > 50 ? (
-        angular.element(document.querySelector('.data-table .row-wrapper')).css('top', '0'), angular.element(document.querySelector('.kpi-table .row-wrapper')).css('top', '0')
+        angular.element(document.querySelector('.data-table .row-wrapper')).css('top', '0'),
+        angular.element(document.querySelector('.kpi-table .row-wrapper')).css('top', '0')
       ) : (
         angular.element(document.querySelector('.data-table .row-wrapper')).css('top', '97px'),//97px
         angular.element(document.querySelector('.kpi-table .row-wrapper')).css('top', '97px')//97px
       );
-    }
-    ),
+    });
 
     //on hover popup with cell value, only in headers
     $('.header-wrapper th').hover(function () {
       $('.tooltip').delay(500).show(0);
       $('.header-wrapper th').children('.tooltip').remove();
 
-      //var element = e(this);
       var element = $(this);
       var offset = element.offset();
       var toolTip = $("<div class='tooltip'></div>");
@@ -868,12 +812,11 @@ export default function paint($element, component) {
       $('.header-wrapper th').append(toolTip);
     }, function () {
       $('.tooltip').delay(0).hide(0);
-    }
-    ),
+    });
 
     //allow making selections inside the table
     $('.data-table td').on('click', function () {
-      if (self.backendApi.model.layout.filteroncellclick == false)
+      if (layout.filteroncellclick == false)
         return;
       var indextr = $(this).parent().parent().children().index($(this).parent()); //identifica la row
       var indextd = $(this).parent().children().index($(this)); //identifica la col
@@ -882,7 +825,6 @@ export default function paint($element, component) {
       var SelectCol = 0;
 
       SelectRow = ConceptMatrixRowElem[(indextr)];
-
 
       // este if verifica primero si hay selecciones hechas en la dimensión, si las hay
       // las reselecciona para poder borrar antes de poder seleccionar lo que quiero
@@ -893,23 +835,23 @@ export default function paint($element, component) {
       if (vNumDims > 1 && indextd > 0) {
         if (ArrayGetSelectedCount[1] > 0) {
           var SelectB = JSON.parse(JSON.stringify(ConceptMatrixColElemTable));
-          self.backendApi.selectValues(1, SelectB, true);
+          component.backendApi.selectValues(1, SelectB, true);
           $(this).toggleClass('selected');
         }
         SelectCol = ConceptMatrixColElemTable[(indextd)];
 
-        self.backendApi.selectValues(1, [SelectCol], true);
+        component.backendApi.selectValues(1, [SelectCol], true);
         $(this).toggleClass('selected');
       }
 
       if (indextd > 0 && ArrayGetSelectedCount[0] > 0) {
         var SelectA = JSON.parse(JSON.stringify(ConceptMatrixRowElem));
-        self.backendApi.selectValues(0, SelectA, true);
+        component.backendApi.selectValues(0, SelectA, true);
         $(this).toggleClass('selected');
       }
 
       if (indextd > 0) {
-        self.backendApi.selectValues(0, [SelectRow], true);
+        component.backendApi.selectValues(0, [SelectRow], true);
         $(this).toggleClass('selected');
       }
     }),
@@ -922,7 +864,7 @@ export default function paint($element, component) {
       if (vNumDims > 1 && indextd > 0) {
         if (ArrayGetSelectedCount[1] > 0) {
           var SelectB = JSON.parse(JSON.stringify(ConceptMatrixColElem));
-          self.backendApi.selectValues(1, SelectB, true);
+          component.backendApi.selectValues(1, SelectB, true);
           $(this).toggleClass('selected');
         }
         if (vSeparatorCols) {
@@ -931,7 +873,7 @@ export default function paint($element, component) {
           SelectCol = ConceptMatrixColElem[(Math.round(indextd) - 1)];
         }
 
-        self.backendApi.selectValues(1, [SelectCol], true);
+        component.backendApi.selectValues(1, [SelectCol], true);
         $(this).toggleClass('selected');
       }
     }),
@@ -943,65 +885,24 @@ export default function paint($element, component) {
 
       if (ArrayGetSelectedCount[0] > 0) {
         var SelectA = JSON.parse(JSON.stringify(ConceptMatrixRowElem));
-        self.backendApi.selectValues(0, SelectA, true);
+        component.backendApi.selectValues(0, SelectA, true);
         $(this).toggleClass('selected');
       }
 
-      self.backendApi.selectValues(0, [SelectRow], true);
+      component.backendApi.selectValues(0, [SelectRow], true);
       $(this).toggleClass('selected');
-    }),
-    $('.icon-xls').on('click', function () {
-      $('.header-wrapper th').children('.tooltip').remove();// remove some popup effects when exporting
-      $('.header-wrapper th').children('.icon-xls').remove();// remove the xls icon when exporting
-      if (isChrome || isSafari) {
-        var $clonedDiv = $('.data-table').clone(true);//.kpi-table a secas exporta la 1ªcol
-        var vEncodeHead = '<html><head><meta charset="UTF-8"></head>';
-        vEncodeHead += myTitle + mySubTitle + myFootNote;
-        var vEncode = encodeURIComponent($clonedDiv.html());
-        var vDecode = vEncodeHead + vEncode + '</html>';
+    });
 
-        $clonedDiv.find('tr.header');
-        vDecode = vDecode.split('%3E.%3C').join('%3E%3C');
-        window.open('data:application/vnd.ms-excel,' + vDecode);
-        $.preventDefault();
-      }
-      if (isIE) {
-        var a = '<html><head><meta charset="UTF-8"></head>';
-        a += myTitle + mySubTitle + myFootNote;
-        a += f;
-        a = a.split('>.<').join('><');
-        a += '</html>';
-
-        var w = window.open();
-        w.document.open();
-        w.document.write(a);
-        w.document.close();
-        w.document.execCommand('SaveAs', true, 'Analysis.xls' || 'c:\TMP');
-        w.close();
-      }
-
-      if (isFirefox) {
-        var $clonedDiv = $('.data-table').clone(true);//.kpi-table a secas exporta la 1ªcol
-        var vEncodeHead = '<html><head><meta charset="UTF-8"></head>';
-        vEncodeHead += myTitle + mySubTitle + myFootNote;
-        var vEncode = encodeURIComponent($clonedDiv.html());
-        var vDecode = vEncodeHead + vEncode + '</html>';
-
-        $clonedDiv.find('tr.header');
-        vDecode = vDecode.split('>.<').join('><');
-        window.open('data:application/vnd.ms-excel,' + vDecode);
-        $.preventDefault();
-      }
-    }),
+    enableExcelExport(layout, f);
 
     // freeze first column
     $('.qv-object-content-container').on('scroll', function (t) {
       $('.kpi-table').css('left', Math.round(t.target.scrollLeft) + 'px');
-    }),
+    });
     $('.kpi-table .row-wrapper tr').each(function () {
       $(this).find('th:not(.fdim-cells)').remove(),
       $(this).find('td:not(.fdim-cells)').remove();
-    }),
+    });
     $('.kpi-table .header-wrapper tr').each(function () {
       $(this).find('th:not(.fdim-cells)').remove();
     });
@@ -1076,59 +977,59 @@ export default function paint($element, component) {
     }
     switch (vCustomAttributes) {
       case '<dark>':
-        StyleTags += vPuntoComa + 'background-color:' + vColLibDark;
+        StyleTags += vPuntoComa + 'background-color:' + colors.vColLibDark;
         vGlobalComas = 1;
         vGlobalComas2 = 1;
-        vGlobalCommentColor = vColLibDark;
+        vGlobalCommentColor = colors.vColLibDark;
         break;
 
       case '<night>':
-        StyleTags += vPuntoComa + 'background-color:' + vColLibNight;
+        StyleTags += vPuntoComa + 'background-color:' + colors.vColLibNight;
         vGlobalComas = 1;
         vGlobalComas2 = 1;
-        vGlobalCommentColor = vColLibNight;
+        vGlobalCommentColor = colors.vColLibNight;
         break;
 
       case '<soft>':
-        StyleTags += vPuntoComa + 'background-color:' + vColLibSoft;
+        StyleTags += vPuntoComa + 'background-color:' + colors.vColLibSoft;
         vGlobalComas = 1;
         vGlobalComas2 = 1;
-        vGlobalCommentColor = vColLibSoft;
+        vGlobalCommentColor = colors.vColLibSoft;
         break;
 
       case '<red>':
-        StyleTags += vPuntoComa + 'background-color:' + vColLibRed;
+        StyleTags += vPuntoComa + 'background-color:' + colors.vColLibRed;
         vGlobalComas = 1;
         vGlobalComas2 = 1;
-        vGlobalCommentColor = vColLibRed;
+        vGlobalCommentColor = colors.vColLibRed;
         break;
 
       case '<orange>':
-        StyleTags += vPuntoComa + 'background-color:' + vColLibOrange;
+        StyleTags += vPuntoComa + 'background-color:' + colors.vColLibOrange;
         vGlobalComas = 1;
         vGlobalComas2 = 1;
-        vGlobalCommentColor = vColLibOrange;
+        vGlobalCommentColor = colors.vColLibOrange;
         break;
 
       case '<violete>':
-        StyleTags += vPuntoComa + 'background-color:' + vColLibViolete;
+        StyleTags += vPuntoComa + 'background-color:' + colors.vColLibViolete;
         vGlobalComas = 1;
         vGlobalComas2 = 1;
-        vGlobalCommentColor = vColLibViolete;
+        vGlobalCommentColor = colors.vColLibViolete;
         break;
 
       case '<blue>':
-        StyleTags += vPuntoComa + 'background-color:' + vColLibBlue;
+        StyleTags += vPuntoComa + 'background-color:' + colors.vColLibBlue;
         vGlobalComas = 1;
         vGlobalComas2 = 1;
-        vGlobalCommentColor = vColLibBlue;
+        vGlobalCommentColor = colors.vColLibBlue;
         break;
 
       case '<green>':
-        StyleTags += vPuntoComa + 'background-color:' + vColLibGreen;
+        StyleTags += vPuntoComa + 'background-color:' + colors.vColLibGreen;
         vGlobalComas = 1;
         vGlobalComas2 = 1;
-        vGlobalCommentColor = vColLibGreen;
+        vGlobalCommentColor = colors.vColLibGreen;
         break;
 
       default:
@@ -1146,18 +1047,10 @@ export default function paint($element, component) {
     if (vCustomComas > 0) {
       vPuntoComa = ';';
     }
-    switch (vCustomAttributes) {
-      case '<white>':
-        if (vGlobalComment == 0) {
-          StyleTags += vPuntoComa + 'color:white';
-          vGlobalComas = 1;
-          vGlobalComas2 = 1;
-          break;
-        }
-
-      default:
-        StyleTags += '';
-        break;
+    if (vCustomAttributes === '<white>' && vGlobalComment == 0) {
+      StyleTags += vPuntoComa + 'color:white';
+      vGlobalComas = 1;
+      vGlobalComas2 = 1;
     }
   }
   function ApplyFontSize(vCustomAttributes, vCustomComas) {
@@ -1211,163 +1104,5 @@ export default function paint($element, component) {
         StyleTags += '';
         break;
     }
-  }
-
-
-
-  function ApplyPreMask(mask, value) {//aqui
-    if (mask.indexOf(';') >= 0) {
-      if (value >= 0) {
-        switch (mask.substring(0, mask.indexOf(';'))) {
-          case '#.##0':
-            return (addSeparators(value, '.', ',', 0));
-            break;
-          case '#,##0':
-            return (addSeparators(value, ',', '.', 0));
-            break;
-          case '+#.##0':
-            return (addSeparators(value, '.', ',', 0));
-            break;
-          case '+#,##0':
-            return (addSeparators(value, ',', '.', 0));
-            break;
-          default:
-            return (ApplyMask(mask.substring(0, mask.indexOf(';')), value));
-            break;
-        }
-      } else {
-        var vMyValue = value * -1;
-        var vMyMask = mask.substring(mask.indexOf(';') + 1, mask.length);
-        vMyMask = vMyMask.replace('(', '');
-        vMyMask = vMyMask.replace(')', '');
-        switch (vMyMask) {
-          case '#.##0':
-            return ('(' + addSeparators(vMyValue, '.', ',', 0) + ')');
-            break;
-          case '#,##0':
-            return ('(' + addSeparators(vMyValue, ',', '.', 0) + ')');
-            break;
-          case '-#.##0':
-            return ('(' + addSeparators(vMyValue, '.', ',', 0) + ')');
-            break;
-          case '-#,##0':
-            return ('(' + addSeparators(vMyValue, ',', '.', 0) + ')');
-            break;
-          default:
-            return ('(' + ApplyMask(vMyMask, vMyValue) + ')');
-            break;
-        }
-      }
-    } else {
-      return (ApplyMask(mask, value));
-    }
-  }
-  function ApplyMask(mask, value) {
-    'use strict';
-    if (!mask || isNaN(+value)) {
-      return value; // return as it is.
-    }
-
-    var isNegative, result, decimal, group, posLeadZero, posTrailZero, posSeparator,
-      part, szSep, integer,
-
-      // find prefix/suffix
-      len = mask.length,
-      start = mask.search(/[0-9\-\+#]/),
-      prefix = start > 0 ? mask.substring(0, start) : '',
-      // reverse string: not an ideal method if there are surrogate pairs
-      str = mask.split('').reverse().join(''),
-      end = str.search(/[0-9\-\+#]/),
-      offset = len - end,
-      substr = mask.substring(offset, offset + 1),
-      indx = offset + ((substr === '.' || (substr === ',')) ? 1 : 0),
-      suffix = end > 0 ? mask.substring(indx, len) : '';
-
-    // mask with prefix & suffix removed
-    mask = mask.substring(start, indx);
-
-    // convert any string to number according to formation sign.
-    value = mask.charAt(0) === '-' ? -value : +value;
-    isNegative = value < 0 ? value = -value : 0; // process only abs(), and turn on flag.
-
-    // search for separator for grp & decimal, anything not digit, not +/- sign, not #.
-    result = mask.match(/[^\d\-\+#]/g);
-    decimal = (result && result[result.length - 1]) || '.'; // treat the right most symbol as decimal
-    group = (result && result[1] && result[0]) || ','; // treat the left most symbol as group separator
-
-    // split the decimal for the format string if any.
-    mask = mask.split(decimal);
-    // Fix the decimal first, toFixed will auto fill trailing zero.
-    value = value.toFixed(mask[1] && mask[1].length);
-    value = +(value) + ''; // convert number to string to trim off *all* trailing decimal zero(es)
-
-    // fill back any trailing zero according to format
-    posTrailZero = mask[1] && mask[1].lastIndexOf('0'); // look for last zero in format
-    part = value.split('.');
-    // integer will get !part[1]
-    if (!part[1] || (part[1] && part[1].length <= posTrailZero)) {
-      value = (+value).toFixed(posTrailZero + 1);
-    }
-    szSep = mask[0].split(group); // look for separator
-    mask[0] = szSep.join(''); // join back without separator for counting the pos of any leading 0.
-
-    posLeadZero = mask[0] && mask[0].indexOf('0');
-    if (posLeadZero > -1) {
-      while (part[0].length < (mask[0].length - posLeadZero)) {
-        part[0] = '0' + part[0];
-      }
-    } else if (+part[0] === 0) {
-      part[0] = '';
-    }
-
-    value = value.split('.');
-    value[0] = part[0];
-
-    // process the first group separator from decimal (.) only, the rest ignore.
-    // get the length of the last slice of split result.
-    posSeparator = (szSep[1] && szSep[szSep.length - 1].length);
-    if (posSeparator) {
-      integer = value[0];
-      str = '';
-      offset = integer.length % posSeparator;
-      len = integer.length;
-      for (indx = 0; indx < len; indx++) {
-        str += integer.charAt(indx); // ie6 only support charAt for sz.
-        // -posSeparator so that won't trail separator on full length
-        //jshint -W018
-        if (!((indx - offset + 1) % posSeparator) && indx < len - posSeparator) {
-          str += group;
-        }
-      }
-      value[0] = str;
-    }
-    value[1] = (mask[1] && value[1]) ? decimal + value[1] : '';
-
-    // remove negative sign if result is zero
-    result = value.join('');
-    if (result === '0' || result === '') {
-      // remove negative sign if result is zero
-      isNegative = false;
-    }
-
-    // put back any negation, combine integer and fraction, and add back prefix & suffix
-    return prefix + ((isNegative ? '-' : '') + result) + suffix;
-  }
-
-
-  function onlyUnique(value, index, self) {
-    return self.indexOf(value) === index;
-  }
-  function addSeparators(nStr, thousandsSep, decimalSep, numDecimals) {
-    var rgx, x, x1, x2;
-    nStr = nStr.toFixed(numDecimals);
-    x = nStr.split('.');
-    x1 = x[0];
-    x2 = x.length > 1 ? decimalSep + x[1] : '';
-    rgx = /(\d+)(\d{3})/;
-    while (rgx.test(x1)) {
-      x1 = x1.replace(rgx, '$1' + thousandsSep + '$2');
-    }
-    return x1 + x2;
   }
 }

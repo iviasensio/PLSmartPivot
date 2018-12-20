@@ -1,9 +1,5 @@
-
-import $ from 'jquery';
-import style from 'text-loader!./PLSmartPivot.css';
 import paint from './paint';
-
-$('<style>').html(style).appendTo('head');
+import './main.less';
 
 export default {
   initialProperties: {
@@ -34,7 +30,6 @@ export default {
       sorting: {
         uses: 'sorting'
       },
-
       settings: {
         uses: 'settings',
         items: {
@@ -47,8 +42,8 @@ export default {
                 type: 'number',
                 component: 'dropdown',
                 label: 'Max Pagination Loops',
-                options:
-                  [{
+                options: [
+                  {
                     value: 1,
                     label: '10k cells'
                   }, {
@@ -79,8 +74,7 @@ export default {
                     value: 10,
                     label: '100k cells'
                   }
-
-                  ],
+                ],
                 defaultValue: 2,
               },
               ErrorMessage: {
@@ -117,8 +111,8 @@ export default {
                 type: 'string',
                 component: 'dropdown',
                 label: 'BackGround Header Color',
-                options:
-                  [{
+                options: [
+                  {
                     value: 'Clean',
                     label: 'Clean'
                   }, {
@@ -149,8 +143,7 @@ export default {
                     value: 'Custom',
                     label: 'Custom'
                   }
-
-                  ],
+                ],
                 defaultValue: 'Night',
               },
               HeaderTextColor: {
@@ -158,8 +151,8 @@ export default {
                 type: 'string',
                 component: 'dropdown',
                 label: 'Text Header Color',
-                options:
-                  [{
+                options: [
+                  {
                     value: 'Black',
                     label: 'Black'
                   }, {
@@ -190,7 +183,7 @@ export default {
                     value: 'YellowGreen',
                     label: 'YellowGreen'
                   }
-                  ],
+                ],
                 defaultValue: 'WhiteSmoke',
               },
               HeaderFontSize: {
@@ -198,16 +191,15 @@ export default {
                 translation: 'Font Size',
                 type: 'number',
                 component: 'buttongroup',
-                options: [{
-                  value: 1,
-                  label: 'Small'
-                }, {
-                  value: 2,
-                  label: 'Medium'
-                  //}, {
-                  //	value: 3,
-                  //	label: "Large"
-                }],
+                options: [
+                  {
+                    value: 1,
+                    label: 'Small'
+                  }, {
+                    value: 2,
+                    label: 'Medium'
+                  }
+                ],
                 defaultValue: 2
               },
             }
@@ -248,8 +240,8 @@ export default {
                 type: 'string',
                 component: 'dropdown',
                 label: 'BackGround Style',
-                options:
-                  [{
+                options: [
+                  {
                     value: 'Clean',
                     label: 'Clean'
                   }, {
@@ -280,8 +272,7 @@ export default {
                     value: 'Custom',
                     label: 'Custom'
                   }
-
-                  ],
+                ],
                 defaultValue: 'Clean',
                 show: function (data) {
                   return data.customfilebool == false;
@@ -292,8 +283,8 @@ export default {
                 type: 'string',
                 component: 'dropdown',
                 label: 'Text Body Color',
-                options:
-                  [{
+                options: [
+                  {
                     value: 'Black',
                     label: 'Black'
                   }, {
@@ -324,7 +315,7 @@ export default {
                     value: 'YellowGreen',
                     label: 'YellowGreen'
                   }
-                  ],
+                ],
                 defaultValue: 'Black',
                 show: function (data) {
                   return data.customfilebool == false;
@@ -335,8 +326,8 @@ export default {
                 type: 'string',
                 component: 'dropdown',
                 label: 'FontFamily',
-                options:
-                  [{
+                options: [
+                  {
                     value: 'Arial',
                     label: 'Arial'
                   }, {
@@ -355,9 +346,7 @@ export default {
                     value: 'Verdana',
                     label: 'Verdana'
                   }
-
-
-                  ],
+                ],
                 defaultValue: 'Calibri'
               },
               DataFontSize: {
@@ -365,16 +354,15 @@ export default {
                 translation: 'Font Size',
                 type: 'number',
                 component: 'buttongroup',
-                options: [{
-                  value: 1,
-                  label: 'Small'
-                }, {
-                  value: 2,
-                  label: 'Medium'
-                  //}, {
-                  //	value: 3,
-                  //	label: "Large"
-                }],
+                options: [
+                  {
+                    value: 1,
+                    label: 'Small'
+                  }, {
+                    value: 2,
+                    label: 'Medium'
+                  }
+                ],
                 defaultValue: 2
               },
               ColumnWidthSlider: {
@@ -412,13 +400,15 @@ export default {
                 type: 'boolean',
                 component: 'switch',
                 label: 'Filter data when cell clicked',
-                options: [{
-                  value: true,
-                  label: 'On'
-                }, {
-                  value: false,
-                  label: 'Off'
-                }],
+                options: [
+                  {
+                    value: true,
+                    label: 'On'
+                  }, {
+                    value: false,
+                    label: 'Off'
+                  }
+                ],
                 defaultValue: true
               }
             }
@@ -432,13 +422,15 @@ export default {
                 type: 'boolean',
                 component: 'switch',
                 label: 'All concepts affected',
-                options: [{
-                  value: true,
-                  label: 'On'
-                }, {
-                  value: false,
-                  label: 'Off'
-                }],
+                options: [
+                  {
+                    value: true,
+                    label: 'On'
+                  }, {
+                    value: false,
+                    label: 'Off'
+                  }
+                ],
                 defaultValue: true
               },
               ConceptsAffected1: {
@@ -542,13 +534,15 @@ export default {
                 type: 'boolean',
                 component: 'switch',
                 label: 'All metrics affected',
-                options: [{
-                  value: true,
-                  label: 'On'
-                }, {
-                  value: false,
-                  label: 'Off'
-                }],
+                options: [
+                  {
+                    value: true,
+                    label: 'On'
+                  }, {
+                    value: false,
+                    label: 'Off'
+                  }
+                ],
                 defaultValue: false
               },
               MetricsAffected: {
@@ -632,7 +626,6 @@ export default {
                   color: '#ffffff'
                 }
               },
-
             }
           },
           ColorLibrary: {
@@ -779,9 +772,9 @@ export default {
     '$timeout',
     function () { }
   ],
-  paint: function ($element) {
+  paint: function ($element, layout) {
     try {
-      paint($element, this);
+      paint($element, layout, this);
     }
     catch (e) {
       console.error(e); // eslint-disable-line no-console
