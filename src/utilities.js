@@ -14,3 +14,10 @@ export function addSeparators(nStr, thousandsSep, decimalSep, numDecimals) {
   }
   return x1 + x2;
 }
+
+export function Deferred () {
+  this.promise = new Promise((resolve, reject) => {
+    this.resolve = resolve;
+    this.reject = reject;
+  });
+}
