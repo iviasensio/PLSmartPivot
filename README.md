@@ -38,12 +38,11 @@ You'll find a manual 'P&LSmart Pivot Extension Manual.pdf' and one app example '
 
 
 *Install in Server:
-- open the folder PLSmartPivot v3.0
-- you'll find a zip to import PLSmartPivot.zip
+- download the file 'PLSmartPivot v3.0.zip' and import it from QMC
 - Import P&LDemo2.qvf as well, as it's a valid example with the new features 
 - There is a PDF manual 'Qlik Sense P&LSmart Pivot Extension Manual.pdf' and a What's new document
 
 
 *Install in Desktop
-- unzip PLSmartPivot.zip and copy the folder in C:\Users\'username'\Documents\Qlik\Sense\Extensions
+- unzip PLSmartPivot v3.0.zip and copy the folder in C:\Users\'username'\Documents\Qlik\Sense\Extensions
 - copy the example P&LDemo2.qvf in C:\Users\'username'\Documents\Qlik\Sense\Apps
