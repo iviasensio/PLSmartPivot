@@ -1,5 +1,6 @@
 import paint from './paint';
 import './main.less';
+import '@babel/polyfill';
 
 export default {
   initialProperties: {
@@ -13,6 +14,7 @@ export default {
       }]
     },
   },
+  // TODO: make definition folder where root of this is index.js and each settings item  is a seperate file
   definition: {
     type: 'items',
     component: 'accordion',

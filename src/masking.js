@@ -6,19 +6,14 @@ export function ApplyPreMask(mask, value) {//aqui
       switch (mask.substring(0, mask.indexOf(';'))) {
         case '#.##0':
           return (addSeparators(value, '.', ',', 0));
-          break;
         case '#,##0':
           return (addSeparators(value, ',', '.', 0));
-          break;
         case '+#.##0':
           return (addSeparators(value, '.', ',', 0));
-          break;
         case '+#,##0':
           return (addSeparators(value, ',', '.', 0));
-          break;
         default:
           return (ApplyMask(mask.substring(0, mask.indexOf(';')), value));
-          break;
       }
     } else {
       var vMyValue = value * -1;
@@ -28,19 +23,14 @@ export function ApplyPreMask(mask, value) {//aqui
       switch (vMyMask) {
         case '#.##0':
           return ('(' + addSeparators(vMyValue, '.', ',', 0) + ')');
-          break;
         case '#,##0':
           return ('(' + addSeparators(vMyValue, ',', '.', 0) + ')');
-          break;
         case '-#.##0':
           return ('(' + addSeparators(vMyValue, '.', ',', 0) + ')');
-          break;
         case '-#,##0':
           return ('(' + addSeparators(vMyValue, ',', '.', 0) + ')');
-          break;
         default:
           return ('(' + ApplyMask(vMyMask, vMyValue) + ')');
-          break;
       }
     }
   } else {

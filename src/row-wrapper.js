@@ -2,7 +2,7 @@ import $ from 'jquery';
 import { addSeparators, Deferred } from './utilities';
 import { ApplyPreMask } from './masking';
 
-export function generateRowWrapper (
+export function generateRowWrapper ({
   layout,
   colors,
   nMeasAux,
@@ -19,7 +19,7 @@ export function generateRowWrapper (
   ConceptMatrixFirstClean,
   vLetterSize,
   ConceptMatrixPivot
-) {
+}) {
   var vCustomFileBool = layout.customfilebool;
   var vCustomFile = layout.customfile;
   var vPadding = layout.indentbool;

@@ -60,6 +60,7 @@ module.exports = {
     "quotes": ["warn", "single", { "avoidEscape": true }]
   },
   extends: [
-    "eslint:recommended"
+    "eslint:recommended",
+    "plugin:react/recommended"
   ]
 }

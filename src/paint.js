@@ -1,86 +1,36 @@
 import $ from 'jquery';
 import { enableExcelExport } from './excel-export';
-import { generateHeaderWrapper } from './header-wrapper';
+import { generateHeaderWrapper } from './header-wrapper.jsx';
 import { generateRowWrapper } from './row-wrapper';
+import initializeStore from './store';
 
-export default function paint($element, layout, component) {
-  const colors = {
-    vColLibClean: layout.collibclean,
-    vColLibSoft: layout.collibsoft,
-    vColLibDark: layout.collibdark,
-    vColLibNight: layout.collibnight,
-    vColLibRed: layout.collibred,
-    vColLibOrange: layout.colliborange,
-    vColLibBlue: layout.collibblue,
-    vColLibGreen: layout.collibgreen,
-    vColLibViolete: layout.collibviolete,
-    vColLibCustom: layout.collibcustom,
-    vColLibCleanP: layout.collibcleanp,
-    vColLibSoftP: layout.collibsoftp,
-    vColLibDarkP: layout.collibdarkp,
-    vColLibNightP: layout.collibnightp,
-    vColLibRedP: layout.collibredp,
-    vColLibOrangeP: layout.colliborangep,
-    vColLibBlueP: layout.collibbluep,
-    vColLibGreenP: layout.collibgreenp,
-    vColLibVioleteP: layout.collibvioletep,
-    vColLibCustomP: layout.collibcustomp
-  };
-
-  let {
-    html: headerWrapperHTML,
-    nMeasAux,
+export default async function paint($element, layout, component) {
+  const state = initializeStore({ $element, layout, component });
+  const {
     ArrayGetSelectedCount,
     vNumDims,
-    measure_count,
-    MeasuresFormat,
-    vNumMeasures,
-    vNumMeasures2,
-    sufixCells,
-    vFontFamily,
-    lastrow,
-    ConceptMatrix,
     ConceptMatrixColElem,
     ConceptMatrixColElemTable,
     ConceptMatrixRowElem,
-    ConceptMatrixFirstClean,
     vSeparatorCols,
-    vLetterSize,
-    ConceptMatrixPivot
-  } = generateHeaderWrapper(
-    $element,
-    layout,
-    component,
-    colors
-  );
+  } = state.properties;
 
-  let html = headerWrapperHTML;
+  let html = await generateHeaderWrapper({ state });
 
-  generateRowWrapper(
+  const rowWrapperHTML = await generateRowWrapper({
     layout,
-    colors,
-    nMeasAux,
-    vNumDims,
-    measure_count,
-    MeasuresFormat,
-    vNumMeasures,
-    vNumMeasures2,
-    sufixCells,
-    vFontFamily,
-    vSeparatorCols,
-    lastrow,
-    ConceptMatrix,
-    ConceptMatrixFirstClean,
-    vLetterSize,
-    ConceptMatrixPivot
-  ).then(rowWrapperHTML => {
-    html += rowWrapperHTML;
-    RenderData();
+    colors: state.colors,
+    ...state.properties
   });
+
+  html += rowWrapperHTML;
+  RenderData();
+
 
   //render data
   function RenderData() {
     // freeze header and first column
+    // TODO: Note that the full table is mounted twice here, there's then some jquery down below that removes data from kpi-table and headers from data-table
     var x = "<div class='kpi-table'>";
     x += html;
     x += '</div>';
@@ -90,6 +40,7 @@ export default function paint($element, layout, component) {
 
     $element.html(x);
 
+    // TODO: move jquery interactions into their respective components
     $('.data-table .row-wrapper').on('scroll', function () {
       $('.kpi-table .row-wrapper').scrollTop($(this).scrollTop()),
       $(this).scrollTop() > 50 ? (

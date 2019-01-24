@@ -27,7 +27,7 @@ const config = {
     rules: [
       {
         enforce: 'pre',
-        test: /\.js$/,
+        test: /\.(js|jsx)$/,
         exclude: /(node_modules|Library)/,
         loader: 'eslint-loader',
         options: {
@@ -35,12 +35,16 @@ const config = {
         }
       },
       {
-        test: /.js$/,
+        test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         use: {
           loader: 'babel-loader',
           options: {
-            presets: ['@babel/preset-env']
+            plugins: ['@babel/plugin-transform-async-to-generator'],
+            presets: [
+              '@babel/preset-env',
+              '@babel/preset-react'
+            ]
           }
         }
       },
