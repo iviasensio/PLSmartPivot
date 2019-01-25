@@ -22,6 +22,7 @@
 *.scss  text eol=lf
 *.html  text eol=lf
 *.js    text eol=lf
+*.jsx   text eol=lf
 *.json  text eol=lf
 *.md    text eol=lf
 *.sh    text eol=lf
