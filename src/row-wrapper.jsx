@@ -2,27 +2,34 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { renderToStaticMarkup } from 'react-dom/server';
 import $ from 'jquery';
-import SingleDimensionRowList from './single-dimension-row-list';
-import ElseDimensionRowList from './single-dimension-row-list';
+import RowList from './row-list';
+import SingleDimensionMeasures from './single-dimension-measures';
+import ElseDimensionMeasures from './single-dimension-measures';
 
 // TableBody?
 class RowWrapper extends React.PureComponent {
-  generateDimensionRowList () {
-    if (this.props.vNumDims === 1) {
-      return (
-        <SingleDimensionRowList {...this.props} />
-      );
-    } else {
-      return (
-        <ElseDimensionRowList {...this.props} />
-      );
-    }
-  }
   render () {
+    const {
+      ConceptMatrix,
+      ConceptMatrixPivot
+    } = this.props;
+    let tableData, measurementsComponent;
+    if (this.props.vNumDims === 1) {
+      tableData = ConceptMatrix;
+      measurementsComponent = SingleDimensionMeasures;
+    } else {
+      tableData = ConceptMatrixPivot;
+      measurementsComponent = ElseDimensionMeasures;
+    }
+
     return (
       <div className='row-wrapper'>
         <table>
-          {this.generateDimensionRowList()}
+          <RowList
+            tableData={tableData}
+            measurementsComponent={measurementsComponent}
+            {...this.props}
+          />
         </table>
       </div>
     );
@@ -30,7 +37,8 @@ class RowWrapper extends React.PureComponent {
 }
 
 RowWrapper.propTypes = {
-
+  ConceptMatrix: PropTypes.Array.isRequired,
+  ConceptMatrixPivot: PropTypes.Array.isRequired
 };
 
 async function prepareProps ({ state }) {

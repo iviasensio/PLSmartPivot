@@ -1,8 +1,12 @@
+/*
+  DO NOT USE
+  should use row-list component instead, this is just left in here until testing conversion
+*/
+
 import React from 'react';
 import PropTypes from 'prop-types';
-import { ApplyPreMask } from './masking';
-import { addSeparators } from './utilities';
 import StyleBuilder from './style-builder';
+import SingleDimensionMeasures from './single-dimension-measures';
 
 // TODO: everything except cell rendering is pretty much identical to ElseDimensionRowList
 // extract cells into subcomponents and merge to generic rowlist
@@ -21,7 +25,6 @@ class SingleDimensionRowList extends React.PureComponent {
       return null;
     }
   }
-  // <SingleDimensionMeasures />
   generateRows () {
     const {
       vLetterSize,
@@ -52,13 +55,16 @@ class SingleDimensionRowList extends React.PureComponent {
           ...styleBuilder.getStyle()
         };
         const paddingTextElement = this.generatePaddingTextElement(styleBuilder.hasCustomFileStyle());
-        const cells = this.generateCells(rowNumber, columnText, styleBuilder);
+        const measurementsProps = { rowNumber, columnText, styleBuilder };
         const rowElement = (
           <tr>
             <td class="fdim-cells" style={rowStyle}>
               {paddingTextElement}{columnText}
             </td>
-            {cells}
+            <SingleDimensionMeasures
+              {...this.props}
+              {...measurementsProps}
+            />
           </tr>
         );
 
