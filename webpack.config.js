@@ -23,6 +23,10 @@ const config = {
       root: '_'
     },
   },
+  // TODO: breaks core-js for some reason
+  // resolve: {
+  //   extensions: ['js', 'jsx']
+  // },
   module: {
     rules: [
       {

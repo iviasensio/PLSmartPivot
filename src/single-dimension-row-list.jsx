@@ -58,7 +58,7 @@ class SingleDimensionRowList extends React.PureComponent {
         const measurementsProps = { rowNumber, columnText, styleBuilder };
         const rowElement = (
           <tr>
-            <td class="fdim-cells" style={rowStyle}>
+            <td className="fdim-cells" style={rowStyle}>
               {paddingTextElement}{columnText}
             </td>
             <SingleDimensionMeasures

@@ -214,11 +214,13 @@ function initialize ({ $element, layout, component }) {
   var MeasurePos = 0;
   for (var nPivotElems = 0; nPivotElems <= lastrow; nPivotElems++) {
     ConceptMatrixPivot[nPivotElems] = new Array();
+    // TODO: ConceptMatrixFirstClean is empty at this point when building new application
     ConceptPos = ConceptMatrixFirstClean.indexOf(ConceptMatrix[nPivotElems][0]);
     ConceptMatrixPivot[ConceptPos][0] = ConceptMatrix[nPivotElems][0];
 
     for (var nMeas2 = 1; nMeas2 <= measure_count; nMeas2++) {
       nMeas3 = nMeas2 + 1;
+      // TODO: SecondHeader is undefined at this point when building new application
       vHeaderIndex = (SecondHeader.indexOf(ConceptMatrix[nPivotElems][1]) + 1);
       MeasurePos = (vHeaderIndex * measure_count) + (nMeas2 - measure_count);
       ConceptMatrixPivot[ConceptPos][MeasurePos] = ConceptMatrix[nPivotElems][nMeas3];

@@ -105,7 +105,7 @@ class ElseDimensionMeasures extends React.PureComponent {
           fontSize: (12 + vLetterSize) + 'px'
         };
         const seperatorElement = (
-          <th class = "empty" style={seperatorStyle}>*</th>
+          <th key={nMeasures22} className="empty" style={seperatorStyle}>*</th>
         );
         measurementCells.push(seperatorElement);
         nMeasure7 = 1;
@@ -147,13 +147,13 @@ class ElseDimensionMeasures extends React.PureComponent {
         };
         if (vSpecialF.substring(vSpecialF.length - 1) == '%' && vNumMeasures > 1) {
           cellElement = (
-            <td className={'grid-cells-small' + sufixCells} style={cellStyle}>
+            <td key={nMeasures22} className={'grid-cells-small' + sufixCells} style={cellStyle}>
               {columnNumber}
             </td>
           );
         } else {
           cellElement = (
-            <td className={'grid-cells' + sufixCells} style={cellStyle}>
+            <td key={nMeasures22} className={'grid-cells' + sufixCells} style={cellStyle}>
               {columnNumber}
             </td>
           );
@@ -167,13 +167,13 @@ class ElseDimensionMeasures extends React.PureComponent {
         };
         if (vSpecialF.substring(vSpecialF.length - 1) == '%' && vNumMeasures > 1) {
           cellElement = (
-            <td className={'grid-cells-small' + sufixCells} style={cellStyle}>
+            <td key={nMeasures22} className={'grid-cells-small' + sufixCells} style={cellStyle}>
               {columnNumber}
             </td>
           );
         } else {
           cellElement = (
-            <td className={'grid-cells' + sufixCells} style={cellStyle}>
+            <td key={nMeasures22} className={'grid-cells' + sufixCells} style={cellStyle}>
               {columnNumber}
             </td>
           );
@@ -186,10 +186,36 @@ class ElseDimensionMeasures extends React.PureComponent {
       <React.Fragment>
         {measurementCells}
       </React.Fragment>
-    )
+    );
   }
 }
 
-ElseDimensionMeasures.propTypes = {};
+ElseDimensionMeasures.propTypes = {
+  vFontFamily: PropTypes.any,
+  vSeparatorCols: PropTypes.any,
+  measure_count: PropTypes.any,
+  sufixCells: PropTypes.any,
+  vSymbolForNulls: PropTypes.any,
+  vLetterSize: PropTypes.any,
+  vColorMetric1: PropTypes.any,
+  vColorMetric1Text: PropTypes.any,
+  vColorMetric2: PropTypes.any,
+  vColorMetric2Text: PropTypes.any,
+  vColorMetric3: PropTypes.any,
+  vColorMetric3Text: PropTypes.any,
+  vAllSemaphores: PropTypes.any,
+  ConceptMatrixPivot: PropTypes.any,
+  ConceptsAffectedMatrix: PropTypes.any,
+  vAllMetrics: PropTypes.any,
+  MetricsAffectedMatrix: PropTypes.any,
+  vCritic: PropTypes.any,
+  vMMedium: PropTypes.any,
+  vNumMeasures: PropTypes.any,
+  vNumMeasures2: PropTypes.any,
+  MeasuresFormat: PropTypes.any,
+  rowNumber: PropTypes.any,
+  columnText: PropTypes.any,
+  styleBuilder: PropTypes.any
+};
 
 export default ElseDimensionMeasures;

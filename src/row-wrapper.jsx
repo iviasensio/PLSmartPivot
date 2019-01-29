@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { renderToStaticMarkup } from 'react-dom/server';
 import $ from 'jquery';
-import RowList from './row-list';
-import SingleDimensionMeasures from './single-dimension-measures';
-import ElseDimensionMeasures from './single-dimension-measures';
+import RowList from './row-list.jsx';
+import SingleDimensionMeasures from './single-dimension-measures.jsx';
+import ElseDimensionMeasures from './else-dimension-measures.jsx';
 
 // TableBody?
 class RowWrapper extends React.PureComponent {
@@ -13,13 +13,13 @@ class RowWrapper extends React.PureComponent {
       ConceptMatrix,
       ConceptMatrixPivot
     } = this.props;
-    let tableData, measurementsComponent;
+    let tableData, MeasurementsComponent;
     if (this.props.vNumDims === 1) {
       tableData = ConceptMatrix;
-      measurementsComponent = SingleDimensionMeasures;
+      MeasurementsComponent = SingleDimensionMeasures;
     } else {
-      tableData = ConceptMatrixPivot;
-      measurementsComponent = ElseDimensionMeasures;
+      tableData = ConceptMatrixPivot.filter(array => array.length);
+      MeasurementsComponent = ElseDimensionMeasures;
     }
 
     return (
@@ -27,7 +27,7 @@ class RowWrapper extends React.PureComponent {
         <table>
           <RowList
             tableData={tableData}
-            measurementsComponent={measurementsComponent}
+            MeasurementsComponent={MeasurementsComponent}
             {...this.props}
           />
         </table>
@@ -37,13 +37,14 @@ class RowWrapper extends React.PureComponent {
 }
 
 RowWrapper.propTypes = {
-  ConceptMatrix: PropTypes.Array.isRequired,
-  ConceptMatrixPivot: PropTypes.Array.isRequired
+  ConceptMatrix: PropTypes.array.isRequired,
+  ConceptMatrixPivot: PropTypes.array.isRequired
 };
 
 async function prepareProps ({ state }) {
   const { colors, layout, vAllSemaphores, vDynamicColorBody, vDynamicColorBodyP } = state;
   const props = {
+    colors,
     vCustomFileBool: layout.customfilebool,
     vCustomFile: layout.customfile,
     vPadding: layout.indentbool,
@@ -126,7 +127,7 @@ async function prepareProps ({ state }) {
   return props;
 }
 
-export async function generateRowWrapper ({ state }) {
+export async function generateRowWrapper (state) {
   const preparedProps = await prepareProps({ state });
   const html = renderToStaticMarkup(
     <RowWrapper

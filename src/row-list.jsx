@@ -24,13 +24,13 @@ class RowList extends React.PureComponent {
       vCustomFileBool,
       vFontFamily,
       tableData, //ConceptMatrix,
-      measuresComponent
+      MeasurementsComponent
     } = this.props;
 
     return (
       <React.Fragment>
         {tableData.map((row, rowNumber) => {
-          const rowHeaderText = row[0];
+          const rowHeaderText = row[0] || '';
           if (rowHeaderText === '-') {
             return null;
           }
@@ -50,11 +50,12 @@ class RowList extends React.PureComponent {
           const paddingTextElement = this.generatePaddingTextElement(styleBuilder.hasCustomFileStyle());
           const measurementsProps = { rowNumber, rowHeaderText, styleBuilder };
           return (
-            <tr>
-              <td class="fdim-cells" style={rowStyle}>
+            <tr key={rowNumber}>
+              <td className="fdim-cells" style={rowStyle}>
                 {paddingTextElement}{rowHeaderText}
               </td>
-              <measuresComponent
+              <MeasurementsComponent
+                columnText={rowHeaderText}
                 {...this.props}
                 {...measurementsProps}
               />
@@ -67,7 +68,7 @@ class RowList extends React.PureComponent {
 }
 
 RowList.propTypes = {
-  tableData: PropTypes.Array.isRequired
+  tableData: PropTypes.array.isRequired
 };
 
 export default RowList;

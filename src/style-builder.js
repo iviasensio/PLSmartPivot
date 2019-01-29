@@ -9,7 +9,9 @@ function StyleBuilder (state) {
     vLetterSize,
     colors
   } = state;
-  let style = {};
+  let style = {
+    fontSize: (14 + vLetterSize) + 'px'
+  };
   let hasComments = false; // vGlobalComment
   let commentColor; // vGlobalCommentColor
   let hasCustomFileStyle = false; // vGlobalComas, vGlobalComas2
@@ -55,18 +57,22 @@ function StyleBuilder (state) {
   function isCSSColor (property) {
     const isHexColor = property.substring(0, 1) == '#';
     const isRGBColor = property.substring(0, 3).toUpperCase() == 'RGB';
+
     return isHexColor || isRGBColor;
   }
 
   function applyProperty (property) {
+    if (!property || property === 'none') {
+      return;
+    }
+    if (isCSSColor(property)) {
+      applyColor(property);
+      return;
+    }
     if (properties[property]) {
       properties[property]();
     } else {
       console.error(`Custom property ${property} does not exist`); // eslint-disable-line no-console
-    }
-
-    if (isCSSColor(property)) {
-      applyColor(property);
     }
   }
 
@@ -87,15 +93,6 @@ function StyleBuilder (state) {
         customAttribute = CustomArray[CustomArrayBasic.indexOf(columnText)][csvAttribute];
       }
       applyProperty(customAttribute);
-    }
-
-    // TODO: rework hasStyle so that defaults can be on style from start
-    // Apply defaults
-    if (!style.color) {
-      style.color = 'white';
-    }
-    if (!style.fontSize) {
-      style.fontSize = (14 + vLetterSize) + 'px';
     }
   }
 

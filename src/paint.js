@@ -1,7 +1,7 @@
 import $ from 'jquery';
 import { enableExcelExport } from './excel-export';
 import { generateHeaderWrapper } from './header-wrapper.jsx';
-import { generateRowWrapper } from './row-wrapper';
+import { generateRowWrapper } from './row-wrapper.jsx';
 import initializeStore from './store';
 
 export default async function paint($element, layout, component) {
@@ -16,7 +16,6 @@ export default async function paint($element, layout, component) {
   } = state.properties;
 
   let html = await generateHeaderWrapper({ state });
-
   const rowWrapperHTML = await generateRowWrapper({
     layout,
     colors: state.colors,

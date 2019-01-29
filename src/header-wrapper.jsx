@@ -185,7 +185,7 @@ class HeaderWrapper extends PureComponent {
                 verticalAlign: 'middle'
               };
               return (
-                <th className={'grid-cells2' + sufixCells} style={cells2Style}>
+                <th key={measureFormatIndex} className={'grid-cells2' + sufixCells} style={cells2Style}>
                   <span className="wrapclass25">
                     {LabelsArray[measureFormatIndex + 1]} {ExtraLabelsArray[measureFormatIndex]}
                   </span>
@@ -224,7 +224,7 @@ class HeaderWrapper extends PureComponent {
         };
         return (
           <th key={measureInfoIndex} className={'grid-cells2' + sufixCells} style={thStyle}>
-            <span className={'wrapclass' + sufixWrap} style={ 'font-family:' + vFontFamily}>
+            <span className={'wrapclass' + sufixWrap} style={{ fontFamily: vFontFamily }}>
               {measureInfo.qFallbackTitle + vExtraLabel}
             </span>
           </th>

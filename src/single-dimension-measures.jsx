@@ -133,6 +133,27 @@ class SingleDimensionMeasures extends React.PureComponent {
   }
 }
 
-SingleDimensionMeasures.propTypes = {};
+SingleDimensionMeasures.propTypes = {
+  vFontFamily: PropTypes.any,
+  vSymbolForNulls: PropTypes.any,
+  vColorMetric1: PropTypes.any,
+  vColorMetric1Text: PropTypes.any,
+  vColorMetric2: PropTypes.any,
+  vColorMetric2Text: PropTypes.any,
+  vColorMetric3: PropTypes.any,
+  vColorMetric3Text: PropTypes.any,
+  ConceptMatrix: PropTypes.any,
+  vAllSemaphores: PropTypes.any,
+  ConceptsAffectedMatrix: PropTypes.any,
+  vAllMetrics: PropTypes.any,
+  MetricsAffectedMatrix: PropTypes.any,
+  vCritic: PropTypes.any,
+  vMMedium: PropTypes.any,
+  vNumMeasures: PropTypes.any,
+  MeasuresFormat: PropTypes.any,
+  rowNumber: PropTypes.any,
+  columnText: PropTypes.any,
+  styleBuilder: PropTypes.any
+};
 
 export default SingleDimensionMeasures;
