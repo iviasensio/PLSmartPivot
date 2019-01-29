@@ -24,15 +24,15 @@ function initialize ({ $element, layout, component }) {
     vColLibCustomP: layout.collibcustomp
   };
 
-  var nMeasAux = 0;
-  var vMaxLoops = layout.maxloops;
-  var vErrorMessage = layout.errormessage;
-  var vDynamicColorHeader = 'vColLib' + layout.HeaderColorSchema;
-  var vHeaderColorSchema = colors[vDynamicColorHeader];
-  var vExportToExcel = layout.allowexportxls;
-  var vHeaderColorText = layout.HeaderTextColorSchema;
-  var vHeaderAlign = layout.HeaderAlign;
-  var vHeaderAlignText = '';
+  const nMeasAux = 0;
+  const vMaxLoops = layout.maxloops;
+  const vErrorMessage = layout.errormessage;
+  const vDynamicColorHeader = `vColLib${layout.HeaderColorSchema}`;
+  const vHeaderColorSchema = colors[vDynamicColorHeader];
+  const vExportToExcel = layout.allowexportxls;
+  const vHeaderColorText = layout.HeaderTextColorSchema;
+  const vHeaderAlign = layout.HeaderAlign;
+  let vHeaderAlignText = '';
   switch (vHeaderAlign) {
     case 1:
       vHeaderAlignText = 'left';
@@ -44,7 +44,7 @@ function initialize ({ $element, layout, component }) {
       vHeaderAlignText = 'right';
       break;
   }
-  var vLetterSizeHeader = 0;
+  let vLetterSizeHeader = 0;
   switch (layout.lettersizeheader) {
     case 1:
       vLetterSizeHeader = -2;
@@ -56,49 +56,49 @@ function initialize ({ $element, layout, component }) {
       vLetterSizeHeader = 2;
       break;
   }
-  var vDimName = '';
-  var ConceptMatrixFirst = new Array();
-  var ConceptMatrixSecond = new Array();
-  var SecondHeaderLength = 0;
-  var LabelsArray = new Array();
-  var ExtraLabelsArray = new Array();
-  var vExtraLabel = '';
-  var vExcelButtonCode = '';
-  var ArrayGetSelectedCount = new Array();
-  var vNumDims = 0;
-  var vNumMeasures = 0;
-  var vNumMeasures2 = 0;
-  var MeasuresFormat = new Array();
-  var sufixCells = '';
+  let vDimName = '';
+  const ConceptMatrixFirst = new Array();
+  const ConceptMatrixSecond = new Array();
+  let SecondHeaderLength = 0;
+  const LabelsArray = new Array();
+  const ExtraLabelsArray = new Array();
+  let vExtraLabel = '';
+  const vExcelButtonCode = '';
+  const ArrayGetSelectedCount = new Array();
+  let vNumDims = 0;
+  let vNumMeasures = 0;
+  let vNumMeasures2 = 0;
+  const MeasuresFormat = new Array();
+  let sufixCells = '';
   switch (layout.columnwidthslider) {
     case 1:
       sufixCells += '-s';
       break;
     case 2:
-      sufixCells += '';
+      sufixCells = String(sufixCells);
       break;
     case 3:
       sufixCells += '-l';
       break;
     default:
-      sufixCells += '';
+      sufixCells = String(sufixCells);
       break;
   }
-  var dim_count = layout.qHyperCube.qDimensionInfo.length;
-  var measure_count = layout.qHyperCube.qMeasureInfo.length;
-  var vSeparatorCols = layout.separatorcols;
+  const dim_count = layout.qHyperCube.qDimensionInfo.length;
+  const measure_count = layout.qHyperCube.qMeasureInfo.length;
+  let vSeparatorCols = layout.separatorcols;
   if (dim_count == 1) {
     vSeparatorCols = false;
   }
-  var vFontFamily = layout.FontFamily;
-  var lastrow = 0;
-  var ConceptMatrix = new Array();
-  var ConceptMatrixRowElem = new Array();
-  var ConceptMatrixColElem = new Array();
-  var ConceptMatrixColElemTable = new Array();
-  var ConceptMatrixPivot = new Array();
-  var ConceptMatrixFirstClean = new Array();
-  var vLetterSize = 0;
+  const vFontFamily = layout.FontFamily;
+  let lastrow = 0;
+  const ConceptMatrix = new Array();
+  let ConceptMatrixRowElem = new Array();
+  let ConceptMatrixColElem = new Array();
+  const ConceptMatrixColElemTable = new Array();
+  const ConceptMatrixPivot = new Array();
+  let ConceptMatrixFirstClean = new Array();
+  let vLetterSize = 0;
   switch (layout.lettersize) {
     case 1:
       vLetterSize = -2;
@@ -121,17 +121,15 @@ function initialize ({ $element, layout, component }) {
   measureInfos.forEach(measureInfo => {
     vDimName = measureInfo.qFallbackTitle;
     LabelsArray.push(vDimName);
-    var mfor = '';
+    let mfor = '';
 
     if (measureInfo.qNumFormat.qType == 'U' || measureInfo.qNumFormat.qFmt == '##############') {
-      mfor = '#.##0'; //in case of undefined
+      mfor = '#.##0'; // in case of undefined
+    } else if (measureInfo.qNumFormat.qType == 'R') {
+      mfor = measureInfo.qNumFormat.qFmt;
+      mfor = mfor.replace(/(|)/gi, '');
     } else {
-      if (measureInfo.qNumFormat.qType == 'R') {
-        mfor = measureInfo.qNumFormat.qFmt;
-        mfor = mfor.replace(/(|)/gi, '');
-      } else {
-        mfor = measureInfo.qNumFormat.qFmt;
-      }
+      mfor = measureInfo.qNumFormat.qFmt;
     }
 
     MeasuresFormat.push(mfor);
@@ -153,17 +151,17 @@ function initialize ({ $element, layout, component }) {
     vNumMeasures++;
   });
 
-  component.backendApi.eachDataRow(function (t, a) {
+  component.backendApi.eachDataRow((t, a) => {
     lastrow = t;
 
-    var vNumMeasuresPlus = vNumMeasures + 1;
+    const vNumMeasuresPlus = vNumMeasures + 1;
 
     ConceptMatrix[t] = new Array();
     ConceptMatrix[t][0] = a[0].qText;
 
     ConceptMatrixFirst[t] = a[0].qText;
     ConceptMatrixRowElem[t] = a[0].qElemNumber;
-    var nMeasures = 0;
+    let nMeasures = 0;
     if (vNumDims == 1) {
       for (nMeasures = 1; nMeasures <= vNumMeasures; nMeasures++) {
         ConceptMatrix[t][nMeasures] = a[nMeasures].qNum;
@@ -179,62 +177,63 @@ function initialize ({ $element, layout, component }) {
     }
   });
 
+  ConceptMatrixFirstClean = ConceptMatrixFirst.filter(onlyUnique);
+
   if (nRows >= (vMaxLoops * 1000)) {
     alert(vErrorMessage);
   }
 
   if (vNumDims == 2) {
-    //new array with unique values for 2nd dim
-    var SecondHeader = ConceptMatrixSecond.filter(onlyUnique);//second dimension concepts
-    ConceptMatrixRowElem = ConceptMatrixRowElem.filter(onlyUnique);//first dimension concepts
-    ConceptMatrixColElem = ConceptMatrixColElem.filter(onlyUnique);//dimension code for further selections
-    var eo = ConceptMatrixColElem.length;
-    var vLoopColsMeasures = 1;
+    // new array with unique values for 2nd dim
+    var SecondHeader = ConceptMatrixSecond.filter(onlyUnique);// second dimension concepts
+    ConceptMatrixRowElem = ConceptMatrixRowElem.filter(onlyUnique);// first dimension concepts
+    ConceptMatrixColElem = ConceptMatrixColElem.filter(onlyUnique);// dimension code for further selections
+    const eo = ConceptMatrixColElem.length;
+    let vLoopColsMeasures = 1;
     ConceptMatrixColElemTable[0] = ConceptMatrixColElem[0];
-    for (var xx = 0; xx < eo; xx++) {
+    for (let xx = 0; xx < eo; xx++) {
       if (vSeparatorCols && xx > 0) {
         ConceptMatrixColElemTable[vLoopColsMeasures] = ConceptMatrixColElem[xx];
         vLoopColsMeasures++;
       }
 
-      for (var xxx = 0; xxx < vNumMeasures; xxx++) {
+      for (let xxx = 0; xxx < vNumMeasures; xxx++) {
         ConceptMatrixColElemTable[vLoopColsMeasures] = ConceptMatrixColElem[xx];
         vLoopColsMeasures++;
       }
     }
 
-    ConceptMatrixFirstClean = ConceptMatrixFirst.filter(onlyUnique);
     SecondHeaderLength = SecondHeader.length;
     vNumMeasures2 = vNumMeasures * SecondHeaderLength;
-  }
 
-  var ConceptPos = 0;
-  var nMeas3 = 0;
-  var vHeaderIndex = 0;
-  var MeasurePos = 0;
-  for (var nPivotElems = 0; nPivotElems <= lastrow; nPivotElems++) {
-    ConceptMatrixPivot[nPivotElems] = new Array();
-    // TODO: ConceptMatrixFirstClean is empty at this point when building new application
-    ConceptPos = ConceptMatrixFirstClean.indexOf(ConceptMatrix[nPivotElems][0]);
-    ConceptMatrixPivot[ConceptPos][0] = ConceptMatrix[nPivotElems][0];
+    let ConceptPos = 0;
+    let nMeas3 = 0;
+    let vHeaderIndex = 0;
+    let MeasurePos = 0;
+    for (let nPivotElems = 0; nPivotElems <= lastrow; nPivotElems++) {
+      ConceptMatrixPivot[nPivotElems] = new Array();
+      ConceptPos = ConceptMatrixFirstClean.indexOf(ConceptMatrix[nPivotElems][0]);
+      ConceptMatrixPivot[ConceptPos][0] = ConceptMatrix[nPivotElems][0];
 
-    for (var nMeas2 = 1; nMeas2 <= measure_count; nMeas2++) {
-      nMeas3 = nMeas2 + 1;
-      // TODO: SecondHeader is undefined at this point when building new application
-      vHeaderIndex = (SecondHeader.indexOf(ConceptMatrix[nPivotElems][1]) + 1);
-      MeasurePos = (vHeaderIndex * measure_count) + (nMeas2 - measure_count);
-      ConceptMatrixPivot[ConceptPos][MeasurePos] = ConceptMatrix[nPivotElems][nMeas3];
+      for (let nMeas2 = 1; nMeas2 <= measure_count; nMeas2++) {
+        nMeas3 = nMeas2 + 1;
+        vHeaderIndex = (SecondHeader.indexOf(ConceptMatrix[nPivotElems][1]) + 1);
+        MeasurePos = (vHeaderIndex * measure_count) + (nMeas2 - measure_count);
+        ConceptMatrixPivot[ConceptPos][MeasurePos] = ConceptMatrix[nPivotElems][nMeas3];
+      }
     }
   }
 
   if (nRows > (lastrow + 1) && nRows <= (vMaxLoops * 1000)) {
-    var requestPage = [{
-      qTop: lastrow + 1,
-      qLeft: 0,
-      qWidth: 10, //should be # of columns
-      qHeight: Math.min(1000, nRows - lastrow)
-    }];
-    component.backendApi.getData(requestPage).then(function () {
+    const requestPage = [
+      {
+        qTop: lastrow + 1,
+        qLeft: 0,
+        qWidth: 10, // should be # of columns
+        qHeight: Math.min(1000, nRows - lastrow)
+      }
+    ];
+    component.backendApi.getData(requestPage).then(() => {
       component.paint($element);
     });
   }

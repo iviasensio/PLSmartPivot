@@ -112,12 +112,12 @@ class SingleDimensionMeasures extends React.PureComponent {
           fontFamily: vFontFamily,
           textAlign: 'right',
           paddingLeft: '4px',
-          ...styleBuilder.getStyle() // TODO: this will explode since styletags are currently a string
+          ...styleBuilder.getStyle()
         };
       }
 
       const measurementCell = (
-        <td className="grid-cells' + sufixCells + '" style={cellStyle}>
+        <td key={nMeasures2} className="grid-cells' + sufixCells + '" style={cellStyle}>
           {vColumnNum}
         </td>
       );

@@ -2,33 +2,32 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import StyleBuilder from './style-builder';
 
-// TODO: everything except cell rendering is pretty much identical to ElseDimensionRowList
 class RowList extends React.PureComponent {
   generatePaddingTextElement (hasCustomFileStyle) {
     const { vPadding, vFontFamily } = this.props;
     if (vPadding && !hasCustomFileStyle) {
       const paddingStyle = {
-        marginLeft: '15px',
-        fontFamily: vFontFamily
+        fontFamily: vFontFamily,
+        marginLeft: '15px'
       };
       return (
-        <span style={paddingStyle}></span>
+        <span style={paddingStyle} />
       );
-    } else {
-      return null;
     }
+    return null;
   }
+
   render () {
     const {
       vLetterSize,
       vCustomFileBool,
       vFontFamily,
-      tableData, //ConceptMatrix,
+      tableData,
       MeasurementsComponent
     } = this.props;
 
     return (
-      <React.Fragment>
+      <tbody>
         {tableData.map((row, rowNumber) => {
           const rowHeaderText = row[0] || '';
           if (rowHeaderText === '-') {
@@ -36,7 +35,7 @@ class RowList extends React.PureComponent {
           }
           const styleBuilder = new StyleBuilder(this.props);
           if (vCustomFileBool) {
-            styleBuilder.parseCustomFileStyle(rowHeaderText); // TODO: parseCSVStyle?
+            styleBuilder.parseCustomFileStyle(rowHeaderText);
           } else {
             styleBuilder.applyStandardAttributes(rowNumber);
             styleBuilder.applyCustomStyle({ fontSize: (14 + vLetterSize) + 'px' });
@@ -48,11 +47,19 @@ class RowList extends React.PureComponent {
             ...styleBuilder.getStyle()
           };
           const paddingTextElement = this.generatePaddingTextElement(styleBuilder.hasCustomFileStyle());
-          const measurementsProps = { rowNumber, rowHeaderText, styleBuilder };
+          const measurementsProps = {
+            rowHeaderText,
+            rowNumber,
+            styleBuilder
+          };
           return (
             <tr key={rowNumber}>
-              <td className="fdim-cells" style={rowStyle}>
-                {paddingTextElement}{rowHeaderText}
+              <td
+                className="fdim-cells"
+                style={rowStyle}
+              >
+                {paddingTextElement}
+                {rowHeaderText}
               </td>
               <MeasurementsComponent
                 columnText={rowHeaderText}
@@ -62,7 +69,7 @@ class RowList extends React.PureComponent {
             </tr>
           );
         })}
-      </React.Fragment>
+      </tbody>
     );
   }
 }

@@ -1,47 +1,48 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { renderToStaticMarkup } from 'react-dom/server';
 import $ from 'jquery';
+import PropTypes from 'prop-types';
+import React from 'react';
+
+import ElseDimensionMeasures from './else-dimension-measures.jsx';
 import RowList from './row-list.jsx';
 import SingleDimensionMeasures from './single-dimension-measures.jsx';
-import ElseDimensionMeasures from './else-dimension-measures.jsx';
 
-// TableBody?
-class RowWrapper extends React.PureComponent {
-  render () {
-    const {
-      ConceptMatrix,
-      ConceptMatrixPivot
-    } = this.props;
-    let tableData, MeasurementsComponent;
-    if (this.props.vNumDims === 1) {
-      tableData = ConceptMatrix;
-      MeasurementsComponent = SingleDimensionMeasures;
-    } else {
-      tableData = ConceptMatrixPivot.filter(array => array.length);
-      MeasurementsComponent = ElseDimensionMeasures;
-    }
-
-    return (
-      <div className='row-wrapper'>
-        <table>
-          <RowList
-            tableData={tableData}
-            MeasurementsComponent={MeasurementsComponent}
-            {...this.props}
-          />
-        </table>
-      </div>
-    );
+const RowWrapper = props => {
+  const {
+    ConceptMatrix,
+    ConceptMatrixPivot,
+    vNumDims
+  } = props;
+  let MeasurementsComponent,
+    tableData;
+  if (vNumDims === 1) {
+    tableData = ConceptMatrix;
+    MeasurementsComponent = SingleDimensionMeasures;
+  } else {
+    tableData = ConceptMatrixPivot.filter(array => array.length);
+    MeasurementsComponent = ElseDimensionMeasures;
   }
-}
+
+  return (
+    <div className="row-wrapper">
+      <table>
+        <RowList
+          MeasurementsComponent={MeasurementsComponent}
+          tableData={tableData}
+          {...props}
+        />
+      </table>
+    </div>
+  );
+};
 
 RowWrapper.propTypes = {
   ConceptMatrix: PropTypes.array.isRequired,
   ConceptMatrixPivot: PropTypes.array.isRequired
 };
 
-async function prepareProps ({ state }) {
+export default RowWrapper;
+
+export async function prepareProps ({ state }) {
   const { colors, layout, vAllSemaphores, vDynamicColorBody, vDynamicColorBodyP } = state;
   const props = {
     colors,
@@ -99,7 +100,7 @@ async function prepareProps ({ state }) {
     props.ConceptsAffectedMatrix[9] = layout.conceptsemaphore10;
   }
 
-  function ReadCustomSchema() {
+  function ReadCustomSchema () {
     var Url = '/Extensions/PLSmartPivot/' + props.vCustomFile;
     return $.get(Url).then(function (response) {
       var allTextLines = response.split(/\r\n|\n/);
@@ -125,15 +126,4 @@ async function prepareProps ({ state }) {
   await schemaPromise;
 
   return props;
-}
-
-export async function generateRowWrapper (state) {
-  const preparedProps = await prepareProps({ state });
-  const html = renderToStaticMarkup(
-    <RowWrapper
-      {...state}
-      {...preparedProps}
-    />
-  );
-  return html;
 }

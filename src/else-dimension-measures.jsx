@@ -38,8 +38,7 @@ class ElseDimensionMeasures extends React.PureComponent {
       vMaskNum,
       vColorSemaphore,
       vColorSemaphoreText,
-      vDivide
-    ;
+      vDivide;
 
     const measurementCells = [];
 
@@ -50,7 +49,7 @@ class ElseDimensionMeasures extends React.PureComponent {
     for (var nMeasures22 = 1; nMeasures22 <= vNumMeasures2; nMeasures22++) {
       nMeasure7++;
       nMeasure72++;
-      if (columnText.substring(0, 1) == '%') {
+      if (columnText.substring(0, 1) === '%') {
         columnNumber = ApplyPreMask('0,00%', ConceptMatrixPivot[rowNumber][nMeasures22]);
         var vSpecialF = '0,00%';
       } else {
@@ -78,7 +77,7 @@ class ElseDimensionMeasures extends React.PureComponent {
         var vSpecialF = MeasuresFormat[nMeasure72].replace(/k|K|m|M/gi, '');
         if (!isNaN(ConceptMatrixPivot[rowNumber][nMeasures22])) {
           vMaskNum = ConceptMatrixPivot[rowNumber][nMeasures22];
-          if (vSpecialF.substring(vSpecialF.length - 1) == '%') {
+          if (vSpecialF.substring(vSpecialF.length - 1) === '%') {
             vMaskNum = vMaskNum * 100;
           }
 
@@ -98,19 +97,21 @@ class ElseDimensionMeasures extends React.PureComponent {
         }
       }
 
-      if (vSeparatorCols && nMeasure7 == (measure_count + 1)) {
+      if (vSeparatorCols && nMeasure7 === (measure_count + 1)) {
         const seperatorStyle = {
           color: 'white',
           fontFamily: vFontFamily,
           fontSize: (12 + vLetterSize) + 'px'
         };
         const seperatorElement = (
-          <th key={nMeasures22} className="empty" style={seperatorStyle}>*</th>
+          <th key={`${nMeasures22}-header`} className="empty" style={seperatorStyle}>
+            *
+          </th>
         );
         measurementCells.push(seperatorElement);
         nMeasure7 = 1;
       }
-      if (nMeasure72 == (measure_count - 1)) {
+      if (nMeasure72 === (measure_count - 1)) {
         nMeasure72 = -1;
         nMeasure72Semaphore = measure_count;
       } else {
@@ -145,7 +146,7 @@ class ElseDimensionMeasures extends React.PureComponent {
           textAlign: 'right',
           paddingLeft: '4px'
         };
-        if (vSpecialF.substring(vSpecialF.length - 1) == '%' && vNumMeasures > 1) {
+        if (vSpecialF.substring(vSpecialF.length - 1) === '%' && vNumMeasures > 1) {
           cellElement = (
             <td key={nMeasures22} className={'grid-cells-small' + sufixCells} style={cellStyle}>
               {columnNumber}
@@ -165,7 +166,7 @@ class ElseDimensionMeasures extends React.PureComponent {
           textAlign: 'right',
           paddingRight: '4px'
         };
-        if (vSpecialF.substring(vSpecialF.length - 1) == '%' && vNumMeasures > 1) {
+        if (vSpecialF.substring(vSpecialF.length - 1) === '%' && vNumMeasures > 1) {
           cellElement = (
             <td key={nMeasures22} className={'grid-cells-small' + sufixCells} style={cellStyle}>
               {columnNumber}

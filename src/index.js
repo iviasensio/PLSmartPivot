@@ -8,11 +8,13 @@ export default {
     qHyperCubeDef: {
       qDimensions: [],
       qMeasures: [],
-      qInitialDataFetch: [{
-        qWidth: 10,
-        qHeight: 1000
-      }]
-    },
+      qInitialDataFetch: [
+        {
+          qWidth: 10,
+          qHeight: 1000
+        }
+      ]
+    }
   },
   // TODO: make definition folder where root of this is index.js and each settings item  is a seperate file
   definition: {
@@ -48,44 +50,53 @@ export default {
                   {
                     value: 1,
                     label: '10k cells'
-                  }, {
+                  },
+                  {
                     value: 2,
                     label: '20k cells'
-                  }, {
+                  },
+                  {
                     value: 3,
                     label: '30k cells'
-                  }, {
+                  },
+                  {
                     value: 4,
                     label: '40k cells'
-                  }, {
+                  },
+                  {
                     value: 5,
                     label: '50k cells'
-                  }, {
+                  },
+                  {
                     value: 6,
                     label: '60k cells'
-                  }, {
+                  },
+                  {
                     value: 7,
                     label: '70k cells'
-                  }, {
+                  },
+                  {
                     value: 8,
                     label: '80k cells'
-                  }, {
+                  },
+                  {
                     value: 9,
                     label: '90k cells'
-                  }, {
+                  },
+                  {
                     value: 10,
                     label: '100k cells'
                   }
                 ],
-                defaultValue: 2,
+                defaultValue: 2
               },
               ErrorMessage: {
                 ref: 'errormessage',
                 label: 'Default error message',
                 type: 'string',
-                defaultValue: 'Ups! It seems you asked for too many data. Please filter more to see the whole picture.',
-              },
-            },
+                defaultValue: 'Ups! It seems you asked for too many data. Please filter more to see the whole picture.'
+              }
+            }
           },
           Header: {
             type: 'items',
@@ -96,17 +107,21 @@ export default {
                 translation: 'Header Alignment',
                 type: 'number',
                 component: 'buttongroup',
-                options: [{
-                  value: 1,
-                  label: 'Left'
-                }, {
-                  value: 2,
-                  label: 'Center'
-                }, {
-                  value: 3,
-                  label: 'Right'
-                }],
-                defaultValue: 2,
+                options: [
+                  {
+                    value: 1,
+                    label: 'Left'
+                  },
+                  {
+                    value: 2,
+                    label: 'Center'
+                  },
+                  {
+                    value: 3,
+                    label: 'Right'
+                  }
+                ],
+                defaultValue: 2
               },
               headercolors: {
                 ref: 'HeaderColorSchema',
@@ -117,36 +132,45 @@ export default {
                   {
                     value: 'Clean',
                     label: 'Clean'
-                  }, {
+                  },
+                  {
                     value: 'Soft',
                     label: 'Soft'
-                  }, {
+                  },
+                  {
                     value: 'Dark',
                     label: 'Dark'
-                  }, {
+                  },
+                  {
                     value: 'Night',
                     label: 'Night'
-                  }, {
+                  },
+                  {
                     value: 'Blue',
                     label: 'Blue'
-                  }, {
+                  },
+                  {
                     value: 'Orange',
                     label: 'Orange'
-                  }, {
+                  },
+                  {
                     value: 'Red',
                     label: 'Red'
-                  }, {
+                  },
+                  {
                     value: 'Green',
                     label: 'Green'
-                  }, {
+                  },
+                  {
                     value: 'Violete',
                     label: 'Violete'
-                  }, {
+                  },
+                  {
                     value: 'Custom',
                     label: 'Custom'
                   }
                 ],
-                defaultValue: 'Night',
+                defaultValue: 'Night'
               },
               HeaderTextColor: {
                 ref: 'HeaderTextColorSchema',
@@ -157,36 +181,45 @@ export default {
                   {
                     value: 'Black',
                     label: 'Black'
-                  }, {
+                  },
+                  {
                     value: 'DimGray',
                     label: 'DimGray'
-                  }, {
+                  },
+                  {
                     value: 'ForestGreen',
                     label: 'ForestGreen'
-                  }, {
+                  },
+                  {
                     value: 'Gainsboro',
                     label: 'Gainsboro'
-                  }, {
+                  },
+                  {
                     value: 'Indigo',
                     label: 'Indigo'
-                  }, {
+                  },
+                  {
                     value: 'Navy',
                     label: 'Navy'
-                  }, {
+                  },
+                  {
                     value: 'Purple',
                     label: 'Purple'
-                  }, {
+                  },
+                  {
                     value: 'WhiteSmoke',
                     label: 'WhiteSmoke'
-                  }, {
+                  },
+                  {
                     value: 'White',
                     label: 'White'
-                  }, {
+                  },
+                  {
                     value: 'YellowGreen',
                     label: 'YellowGreen'
                   }
                 ],
-                defaultValue: 'WhiteSmoke',
+                defaultValue: 'WhiteSmoke'
               },
               HeaderFontSize: {
                 ref: 'lettersizeheader',
@@ -197,13 +230,14 @@ export default {
                   {
                     value: 1,
                     label: 'Small'
-                  }, {
+                  },
+                  {
                     value: 2,
                     label: 'Medium'
                   }
                 ],
                 defaultValue: 2
-              },
+              }
             }
           },
           Formatted: {
@@ -233,7 +267,7 @@ export default {
                 label: 'Name of CSV file (; separated)',
                 type: 'string',
                 defaultValue: '',
-                show: function (data) {
+                show (data) {
                   return data.customfilebool;
                 }
               },
@@ -246,37 +280,46 @@ export default {
                   {
                     value: 'Clean',
                     label: 'Clean'
-                  }, {
+                  },
+                  {
                     value: 'Soft',
                     label: 'Soft'
-                  }, {
+                  },
+                  {
                     value: 'Dark',
                     label: 'Dark'
-                  }, {
+                  },
+                  {
                     value: 'Night',
                     label: 'Night'
-                  }, {
+                  },
+                  {
                     value: 'Blue',
                     label: 'Blue'
-                  }, {
+                  },
+                  {
                     value: 'Orange',
                     label: 'Orange'
-                  }, {
+                  },
+                  {
                     value: 'Red',
                     label: 'Red'
-                  }, {
+                  },
+                  {
                     value: 'Green',
                     label: 'Green'
-                  }, {
+                  },
+                  {
                     value: 'Violete',
                     label: 'Violete'
-                  }, {
+                  },
+                  {
                     value: 'Custom',
                     label: 'Custom'
                   }
                 ],
                 defaultValue: 'Clean',
-                show: function (data) {
+                show (data) {
                   return data.customfilebool == false;
                 }
               },
@@ -289,37 +332,46 @@ export default {
                   {
                     value: 'Black',
                     label: 'Black'
-                  }, {
+                  },
+                  {
                     value: 'DimGray',
                     label: 'DimGray'
-                  }, {
+                  },
+                  {
                     value: 'ForestGreen',
                     label: 'ForestGreen'
-                  }, {
+                  },
+                  {
                     value: 'Gainsboro',
                     label: 'Gainsboro'
-                  }, {
+                  },
+                  {
                     value: 'Indigo',
                     label: 'Indigo'
-                  }, {
+                  },
+                  {
                     value: 'Navy',
                     label: 'Navy'
-                  }, {
+                  },
+                  {
                     value: 'Purple',
                     label: 'Purple'
-                  }, {
+                  },
+                  {
                     value: 'WhiteSmoke',
                     label: 'WhiteSmoke'
-                  }, {
+                  },
+                  {
                     value: 'White',
                     label: 'White'
-                  }, {
+                  },
+                  {
                     value: 'YellowGreen',
                     label: 'YellowGreen'
                   }
                 ],
                 defaultValue: 'Black',
-                show: function (data) {
+                show (data) {
                   return data.customfilebool == false;
                 }
               },
@@ -332,19 +384,24 @@ export default {
                   {
                     value: 'Arial',
                     label: 'Arial'
-                  }, {
+                  },
+                  {
                     value: 'Calibri',
                     label: 'Calibri'
-                  }, {
+                  },
+                  {
                     value: 'Comic Sans MS',
                     label: 'Comic Sans MS'
-                  }, {
+                  },
+                  {
                     value: 'MS Sans Serif',
                     label: 'MS Sans Serif'
-                  }, {
+                  },
+                  {
                     value: 'Tahoma',
                     label: 'Tahoma'
-                  }, {
+                  },
+                  {
                     value: 'Verdana',
                     label: 'Verdana'
                   }
@@ -360,7 +417,8 @@ export default {
                   {
                     value: 1,
                     label: 'Small'
-                  }, {
+                  },
+                  {
                     value: 2,
                     label: 'Medium'
                   }
@@ -388,13 +446,16 @@ export default {
                 type: 'boolean',
                 component: 'switch',
                 label: 'Allow export to Excel',
-                options: [{
-                  value: true,
-                  label: 'On'
-                }, {
-                  value: false,
-                  label: 'Off'
-                }],
+                options: [
+                  {
+                    value: true,
+                    label: 'On'
+                  },
+                  {
+                    value: false,
+                    label: 'Off'
+                  }
+                ],
                 defaultValue: true
               },
               FilterOnCellClick: {
@@ -406,7 +467,8 @@ export default {
                   {
                     value: true,
                     label: 'On'
-                  }, {
+                  },
+                  {
                     value: false,
                     label: 'Off'
                   }
@@ -428,7 +490,8 @@ export default {
                   {
                     value: true,
                     label: 'On'
-                  }, {
+                  },
+                  {
                     value: false,
                     label: 'Off'
                   }
@@ -440,7 +503,7 @@ export default {
                 translation: 'Concept 1',
                 type: 'string',
                 defaultValue: '',
-                show: function (data) {
+                show (data) {
                   return data.allsemaphores == false;
                 }
               },
@@ -449,7 +512,7 @@ export default {
                 translation: 'Concept 2',
                 type: 'string',
                 defaultValue: '',
-                show: function (data) {
+                show (data) {
                   return data.allsemaphores == false;
                 }
               },
@@ -458,7 +521,7 @@ export default {
                 translation: 'Concept 3',
                 type: 'string',
                 defaultValue: '',
-                show: function (data) {
+                show (data) {
                   return data.allsemaphores == false;
                 }
               },
@@ -467,7 +530,7 @@ export default {
                 translation: 'Concept 4',
                 type: 'string',
                 defaultValue: '',
-                show: function (data) {
+                show (data) {
                   return data.allsemaphores == false;
                 }
               },
@@ -476,7 +539,7 @@ export default {
                 translation: 'Concept 5',
                 type: 'string',
                 defaultValue: '',
-                show: function (data) {
+                show (data) {
                   return data.allsemaphores == false;
                 }
               },
@@ -485,7 +548,7 @@ export default {
                 translation: 'Concept 6',
                 type: 'string',
                 defaultValue: '',
-                show: function (data) {
+                show (data) {
                   return data.allsemaphores == false;
                 }
               },
@@ -494,7 +557,7 @@ export default {
                 translation: 'Concept 7',
                 type: 'string',
                 defaultValue: '',
-                show: function (data) {
+                show (data) {
                   return data.allsemaphores == false;
                 }
               },
@@ -503,7 +566,7 @@ export default {
                 translation: 'Concept 8',
                 type: 'string',
                 defaultValue: '',
-                show: function (data) {
+                show (data) {
                   return data.allsemaphores == false;
                 }
               },
@@ -512,7 +575,7 @@ export default {
                 translation: 'Concept 9',
                 type: 'string',
                 defaultValue: '',
-                show: function (data) {
+                show (data) {
                   return data.allsemaphores == false;
                 }
               },
@@ -521,10 +584,10 @@ export default {
                 translation: 'Concept 10',
                 type: 'string',
                 defaultValue: '',
-                show: function (data) {
+                show (data) {
                   return data.allsemaphores == false;
                 }
-              },
+              }
             }
           },
           MetricSemaphores: {
@@ -540,7 +603,8 @@ export default {
                   {
                     value: true,
                     label: 'On'
-                  }, {
+                  },
+                  {
                     value: false,
                     label: 'Off'
                   }
@@ -552,7 +616,7 @@ export default {
                 translation: 'Metrics affected (1,2,4,...)',
                 type: 'string',
                 defaultValue: '0',
-                show: function (data) {
+                show (data) {
                   return data.allmetrics == false;
                 }
               },
@@ -627,7 +691,7 @@ export default {
                   index: 10,
                   color: '#ffffff'
                 }
-              },
+              }
             }
           },
           ColorLibrary: {
@@ -638,62 +702,62 @@ export default {
                 ref: 'collibclean',
                 translation: 'Clean',
                 type: 'string',
-                defaultValue: '#ffffff',
+                defaultValue: '#ffffff'
               },
               ColLibSoft: {
                 ref: 'collibsoft',
                 translation: 'Soft',
                 type: 'string',
-                defaultValue: '#efefef',
+                defaultValue: '#efefef'
               },
               ColLibDark: {
                 ref: 'collibdark',
                 translation: 'Dark',
                 type: 'string',
-                defaultValue: '#c4c4c4',
+                defaultValue: '#c4c4c4'
               },
               ColLibNight: {
                 ref: 'collibnight',
                 translation: 'Night',
                 type: 'string',
-                defaultValue: '#808080',
+                defaultValue: '#808080'
               },
               ColLibRed: {
                 ref: 'collibred',
                 translation: 'Red',
                 type: 'string',
-                defaultValue: '#d58b94',
+                defaultValue: '#d58b94'
               },
               ColLibOrange: {
                 ref: 'colliborange',
                 translation: 'Orange',
                 type: 'string',
-                defaultValue: '#fd6600',
+                defaultValue: '#fd6600'
               },
               ColLibViolete: {
                 ref: 'collibviolete',
                 translation: 'Violete',
                 type: 'string',
-                defaultValue: '#ccc0ff',
+                defaultValue: '#ccc0ff'
               },
               ColLibBlue: {
                 ref: 'collibblue',
                 translation: 'Blue',
                 type: 'string',
-                defaultValue: '#4575b4',
+                defaultValue: '#4575b4'
               },
               ColLibGreen: {
                 ref: 'collibgreen',
                 translation: 'Green',
                 type: 'string',
-                defaultValue: '#7bb51c',
+                defaultValue: '#7bb51c'
               },
               ColLibCustom: {
                 ref: 'collibcustom',
                 label: 'Custom',
                 type: 'string',
-                defaultValue: '#ffcccc',
-              },
+                defaultValue: '#ffcccc'
+              }
             }
           },
           PijamaColorLibrary: {
@@ -704,62 +768,62 @@ export default {
                 ref: 'collibcleanp',
                 translation: 'Clean',
                 type: 'string',
-                defaultValue: '#ffffff',
+                defaultValue: '#ffffff'
               },
               ColLibSoftP: {
                 ref: 'collibsoftp',
                 translation: 'Soft',
                 type: 'string',
-                defaultValue: '#ffffff',
+                defaultValue: '#ffffff'
               },
               ColLibDarkP: {
                 ref: 'collibdarkp',
                 translation: 'Dark',
                 type: 'string',
-                defaultValue: '#efefef',
+                defaultValue: '#efefef'
               },
               ColLibNightP: {
                 ref: 'collibnightp',
                 translation: 'Night',
                 type: 'string',
-                defaultValue: '#c4c4c4',
+                defaultValue: '#c4c4c4'
               },
               ColLibRedP: {
                 ref: 'collibredp',
                 translation: 'Red',
                 type: 'string',
-                defaultValue: '#ffcccc',
+                defaultValue: '#ffcccc'
               },
               ColLibOrangeP: {
                 ref: 'colliborangep',
                 translation: 'Orange',
                 type: 'string',
-                defaultValue: '#ffcc66',
+                defaultValue: '#ffcc66'
               },
               ColLibVioleteP: {
                 ref: 'collibvioletep',
                 translation: 'Violete',
                 type: 'string',
-                defaultValue: '#e6e6ff',
+                defaultValue: '#e6e6ff'
               },
               ColLibBlueP: {
                 ref: 'collibbluep',
                 translation: 'Blue',
                 type: 'string',
-                defaultValue: '#b3d9ff',
+                defaultValue: '#b3d9ff'
               },
               ColLibGreenP: {
                 ref: 'collibgreenp',
                 translation: 'Green',
                 type: 'string',
-                defaultValue: '#98fb98',
+                defaultValue: '#98fb98'
               },
               ColLibCustomP: {
                 ref: 'collibcustomp',
                 label: 'Custom',
                 type: 'string',
-                defaultValue: '#ffffff',
-              },
+                defaultValue: '#ffffff'
+              }
             }
           }
         }
@@ -774,11 +838,10 @@ export default {
     '$timeout',
     function () { }
   ],
-  paint: function ($element, layout) {
+  paint ($element, layout) {
     try {
       paint($element, layout, this);
-    }
-    catch (e) {
+    } catch (e) {
       console.error(e); // eslint-disable-line no-console
       throw e;
     }

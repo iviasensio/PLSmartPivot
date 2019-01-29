@@ -10,17 +10,17 @@ function StyleBuilder (state) {
     colors
   } = state;
   let style = {
-    fontSize: (14 + vLetterSize) + 'px'
+    fontSize: `${14 + vLetterSize}px`
   };
-  let hasComments = false; // vGlobalComment
-  let commentColor; // vGlobalCommentColor
-  let hasCustomFileStyle = false; // vGlobalComas, vGlobalComas2
+  let hasComments = false;
+  let commentColor;
+  let hasCustomFileStyle = false;
 
   function applyStandardAttributes (rowNumber) {
     const isEven = rowNumber % 2 === 0;
     style.backgroundColor = isEven ? vColorSchema : vColorSchemaP;
     style.color = vColorText;
-    style.fontSize = (14 + vLetterSize) + 'px';
+    style.fontSize = `${14 + vLetterSize}px`;
   }
 
   function applyColor (color) {
@@ -46,9 +46,9 @@ function StyleBuilder (state) {
     // font color TODO: this is a color just like the others, but it applies to text instead.. any way to make it less weird?
     '<white>': () => { style.color = 'white'; },
     // font size
-    '<large>': () => { style.fontSize = (15 + vLetterSize) + 'px'; },
-    '<medium>': () => { style.fontSize = (14 + vLetterSize) + 'px'; },
-    '<small>': () => { style.fontSize = (13 + vLetterSize) + 'px'; },
+    '<large>': () => { style.fontSize = `${15 + vLetterSize}px`; },
+    '<medium>': () => { style.fontSize = `${14 + vLetterSize}px`; },
+    '<small>': () => { style.fontSize = `${13 + vLetterSize}px`; },
     // text alignment
     '<center>': () => { style.textAlign = 'center'; }
   };
@@ -76,7 +76,7 @@ function StyleBuilder (state) {
     }
   }
 
-  function applyCustomStyle(customStyle) {
+  function applyCustomStyle (customStyle) {
     style = {
       ...style,
       ...customStyle
@@ -88,7 +88,7 @@ function StyleBuilder (state) {
     for (let csvAttribute = 1; csvAttribute < vNumCustomHeaders; csvAttribute += 1) {
       let customAttribute = '';
       if (CustomArrayBasic.indexOf(columnText) < 0) {
-        customAttribute = 'none'; // TODO: is this used anywhere?
+        customAttribute = 'none';
       } else {
         customAttribute = CustomArray[CustomArrayBasic.indexOf(columnText)][csvAttribute];
       }
@@ -99,8 +99,8 @@ function StyleBuilder (state) {
   return {
     getCommentColor: () => commentColor,
     getStyle: () => style,
-    hasCustomFileStyle: () => hasCustomFileStyle, // to replace vGlobalComas and vGlobalComas2
-    hasFontSize: () => !!style.fontSize, // to vGlobalFontSize (vFontSize should just grab from style object or something)
+    hasCustomFileStyle: () => hasCustomFileStyle,
+    hasFontSize: () => Boolean(style.fontSize),
     hasComments: () => hasComments,
     applyStandardAttributes,
     applyProperty,

@@ -1,6 +1,6 @@
 import { addSeparators } from './utilities';
 
-export function ApplyPreMask(mask, value) {//aqui
+export function ApplyPreMask (mask, value) { // aqui
   if (mask.indexOf(';') >= 0) {
     if (value >= 0) {
       switch (mask.substring(0, mask.indexOf(';'))) {
@@ -16,21 +16,21 @@ export function ApplyPreMask(mask, value) {//aqui
           return (ApplyMask(mask.substring(0, mask.indexOf(';')), value));
       }
     } else {
-      var vMyValue = value * -1;
-      var vMyMask = mask.substring(mask.indexOf(';') + 1, mask.length);
+      const vMyValue = value * -1;
+      let vMyMask = mask.substring(mask.indexOf(';') + 1, mask.length);
       vMyMask = vMyMask.replace('(', '');
       vMyMask = vMyMask.replace(')', '');
       switch (vMyMask) {
         case '#.##0':
-          return ('(' + addSeparators(vMyValue, '.', ',', 0) + ')');
+          return (`(${addSeparators(vMyValue, '.', ',', 0)})`);
         case '#,##0':
-          return ('(' + addSeparators(vMyValue, ',', '.', 0) + ')');
+          return (`(${addSeparators(vMyValue, ',', '.', 0)})`);
         case '-#.##0':
-          return ('(' + addSeparators(vMyValue, '.', ',', 0) + ')');
+          return (`(${addSeparators(vMyValue, '.', ',', 0)})`);
         case '-#,##0':
-          return ('(' + addSeparators(vMyValue, ',', '.', 0) + ')');
+          return (`(${addSeparators(vMyValue, ',', '.', 0)})`);
         default:
-          return ('(' + ApplyMask(vMyMask, vMyValue) + ')');
+          return (`(${ApplyMask(vMyMask, vMyValue)})`);
       }
     }
   } else {
@@ -38,13 +38,12 @@ export function ApplyPreMask(mask, value) {//aqui
   }
 }
 
-function ApplyMask(mask, value) {
-  'use strict';
-  if (!mask || isNaN(+value)) {
+function ApplyMask (mask, value) {
+  if (!mask || isNaN(Number(value))) {
     return value; // return as it is.
   }
 
-  var isNegative, result, decimal, group, posLeadZero, posTrailZero, posSeparator,
+  let isNegative, result, decimal, group, posLeadZero, posTrailZero, posSeparator,
     part, szSep, integer,
 
     // find prefix/suffix
@@ -52,7 +51,8 @@ function ApplyMask(mask, value) {
     start = mask.search(/[0-9\-\+#]/),
     prefix = start > 0 ? mask.substring(0, start) : '',
     // reverse string: not an ideal method if there are surrogate pairs
-    str = mask.split('').reverse().join(''),
+    str = mask.split('').reverse()
+      .join(''),
     end = str.search(/[0-9\-\+#]/),
     offset = len - end,
     substr = mask.substring(offset, offset + 1),
@@ -63,7 +63,7 @@ function ApplyMask(mask, value) {
   mask = mask.substring(start, indx);
 
   // convert any string to number according to formation sign.
-  value = mask.charAt(0) === '-' ? -value : +value;
+  value = mask.charAt(0) === '-' ? -value : Number(value);
   isNegative = value < 0 ? value = -value : 0; // process only abs(), and turn on flag.
 
   // search for separator for grp & decimal, anything not digit, not +/- sign, not #.
@@ -75,14 +75,14 @@ function ApplyMask(mask, value) {
   mask = mask.split(decimal);
   // Fix the decimal first, toFixed will auto fill trailing zero.
   value = value.toFixed(mask[1] && mask[1].length);
-  value = +(value) + ''; // convert number to string to trim off *all* trailing decimal zero(es)
+  value = String(Number(value)); // convert number to string to trim off *all* trailing decimal zero(es)
 
   // fill back any trailing zero according to format
   posTrailZero = mask[1] && mask[1].lastIndexOf('0'); // look for last zero in format
   part = value.split('.');
   // integer will get !part[1]
   if (!part[1] || (part[1] && part[1].length <= posTrailZero)) {
-    value = (+value).toFixed(posTrailZero + 1);
+    value = (Number(value)).toFixed(posTrailZero + 1);
   }
   szSep = mask[0].split(group); // look for separator
   mask[0] = szSep.join(''); // join back without separator for counting the pos of any leading 0.
@@ -90,9 +90,9 @@ function ApplyMask(mask, value) {
   posLeadZero = mask[0] && mask[0].indexOf('0');
   if (posLeadZero > -1) {
     while (part[0].length < (mask[0].length - posLeadZero)) {
-      part[0] = '0' + part[0];
+      part[0] = `0${part[0]}`;
     }
-  } else if (+part[0] === 0) {
+  } else if (Number(part[0]) === 0) {
     part[0] = '';
   }
 
@@ -110,7 +110,7 @@ function ApplyMask(mask, value) {
     for (indx = 0; indx < len; indx++) {
       str += integer.charAt(indx); // ie6 only support charAt for sz.
       // -posSeparator so that won't trail separator on full length
-      //jshint -W018
+      // jshint -W018
       if (!((indx - offset + 1) % posSeparator) && indx < len - posSeparator) {
         str += group;
       }

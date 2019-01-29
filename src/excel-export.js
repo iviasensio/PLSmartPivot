@@ -1,7 +1,7 @@
 import $ from 'jquery';
 
-const isIE = /*@cc_on!@*/false || !!document.documentMode;
-const isChrome = !!window.chrome && !!window.chrome.webstore;
+const isIE = /* @cc_on!@*/false || Boolean(document.documentMode);
+const isChrome = Boolean(window.chrome) && Boolean(window.chrome.webstore);
 const isSafari = Object.prototype.toString.call(window.HTMLElement).indexOf('Constructor') > 0;
 const isFirefox = typeof InstallTrigger !== 'undefined';
 
@@ -25,19 +25,21 @@ export function enableExcelExport (layout, f) {
     myFootNote += '</p>';
   }
 
-  $('.icon-xls').on('click', function () {
-    $('.header-wrapper th').children('.tooltip').remove();// remove some popup effects when exporting
-    $('.header-wrapper th').children('.icon-xls').remove();// remove the xls icon when exporting
+  $('.icon-xls').on('click', () => {
+    $('.header-wrapper th').children('.tooltip')
+      .remove(); // remove some popup effects when exporting
+    $('.header-wrapper th').children('.icon-xls')
+      .remove(); // remove the xls icon when exporting
     if (isChrome || isSafari) {
-      const $clonedDiv = $('.data-table').clone(true);//.kpi-table a secas exporta la 1ªcol
+      const $clonedDiv = $('.data-table').clone(true); // .kpi-table a secas exporta la 1ªcol
       let vEncodeHead = '<html><head><meta charset="UTF-8"></head>';
       vEncodeHead += myTitle + mySubTitle + myFootNote;
       const vEncode = encodeURIComponent($clonedDiv.html());
-      let vDecode = vEncodeHead + vEncode + '</html>';
+      let vDecode = `${vEncodeHead + vEncode}</html>`;
 
       $clonedDiv.find('tr.header');
       vDecode = vDecode.split('%3E.%3C').join('%3E%3C');
-      window.open('data:application/vnd.ms-excel,' + vDecode);
+      window.open(`data:application/vnd.ms-excel,${vDecode}`);
       $.preventDefault();
     }
     if (isIE) {
@@ -56,15 +58,15 @@ export function enableExcelExport (layout, f) {
     }
 
     if (isFirefox) {
-      const $clonedDiv = $('.data-table').clone(true);//.kpi-table a secas exporta la 1ªcol
+      const $clonedDiv = $('.data-table').clone(true);// .kpi-table a secas exporta la 1ªcol
       let vEncodeHead = '<html><head><meta charset="UTF-8"></head>';
       vEncodeHead += myTitle + mySubTitle + myFootNote;
       const vEncode = encodeURIComponent($clonedDiv.html());
-      let vDecode = vEncodeHead + vEncode + '</html>';
+      let vDecode = `${vEncodeHead + vEncode}</html>`;
 
       $clonedDiv.find('tr.header');
       vDecode = vDecode.split('>.<').join('><');
-      window.open('data:application/vnd.ms-excel,' + vDecode);
+      window.open(`data:application/vnd.ms-excel,${vDecode}`);
       $.preventDefault();
     }
   });
