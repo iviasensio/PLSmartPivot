@@ -16,8 +16,10 @@
   },
   "devDependencies": {
     "@babel/core": "7.1.2",
+    "@babel/plugin-transform-async-to-generator": "7.1.0",
     "@babel/polyfill": "7.0.0",
     "@babel/preset-env": "7.1.0",
+    "@babel/preset-react": "7.0.0",
     "babel-eslint": "10.0.1",
     "babel-loader": "8.0.4",
     "copy-webpack-plugin": "4.5.3",
@@ -25,11 +27,11 @@
     "del": "2.0.2",
     "eslint": "5.7.0",
     "eslint-loader": "2.1.1",
+    "eslint-plugin-react": "7.11.1",
     "gulp": "4.0.0",
     "gulp-json-editor": "2.4.3",
     "gulp-zip": "3.0.2",
     "jasmine-core": "3.2.1",
-    "jquery": "3.3.1",
     "karma": "3.0.0",
     "karma-chrome-launcher": "2.2.0",
     "karma-jasmine": "1.1.2",
@@ -44,5 +46,10 @@
     "webpack": "4.20.2",
     "webpack-cli": "3.1.2",
     "webpack-dev-server": "3.1.10"
+  },
+  "dependencies": {
+    "prop-types": "15.6.2",
+    "react": "16.7.0",
+    "react-dom": "16.7.0"
   }
 }
