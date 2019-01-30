@@ -96,75 +96,75 @@ class HeaderWrapper extends PureComponent {
           </Fragment>
         );
       }
-    }
-    const fDimCellsStyle = {
-      ...baseCSS,
-      cursor: 'default',
-      fontSize: `${16 + vLetterSizeHeader} px`,
-      height: '70px',
-      verticalAlign: 'middle',
-      width: '230px'
-    };
+      const fDimCellsStyle = {
+        ...baseCSS,
+        cursor: 'default',
+        fontSize: `${16 + vLetterSizeHeader} px`,
+        height: '70px',
+        verticalAlign: 'middle',
+        width: '230px'
+      };
 
-    return (
-      <Fragment>
-        <th
-          className="fdim-cells"
-          style={fDimCellsStyle}
-        >
-          <ExportButton excelExport={vExportToExcel} />
-          {LabelsArray[0] + ExtraLabelsArray[0]}
-        </th>
-        {SecondHeader.map((entry, entryIndex) => {
-          // TODO: seperator element is reused a bunch, only difference being font-size
-          const hasSeperator = vSeparatorCols && nSecond > 0;
-          const seperatorStyle = {
-            color: 'white',
-            fontFamily: vFontFamily,
-            fontSize: `${12 + vLetterSize} px`
-          };
-          const seperatorElement = (
-            <th
-              className="empty"
-              style={seperatorStyle}
-            >
-              *
-            </th>
-          );
-          let sufixWrap = '';
-          if ((entry.length > 11 && vLetterSizeHeader === 0) || (entry.length > 12 && vLetterSizeHeader === -2)) {
-            sufixWrap = '70';
-          } else {
-            sufixWrap = 'Empty';
-          }
-          const gridCells2Style = {
-            ...baseCSS,
-            fontSize: `${14 + vLetterSizeHeader} px`,
-            height: '70px',
-            verticalAlign: 'middle'
-          };
-          const wrapStyle = {
-            fontFamily: vFontFamily
-          };
-          return (
-            <Fragment key={entryIndex}>
-              {hasSeperator && seperatorElement}
+      return (
+        <Fragment>
+          <th
+            className="fdim-cells"
+            style={fDimCellsStyle}
+          >
+            <ExportButton excelExport={vExportToExcel} />
+            {LabelsArray[0] + ExtraLabelsArray[0]}
+          </th>
+          {SecondHeader.map((entry, entryIndex) => {
+            // TODO: seperator element is reused a bunch, only difference being font-size
+            const hasSeperator = vSeparatorCols && nSecond > 0;
+            const seperatorStyle = {
+              color: 'white',
+              fontFamily: vFontFamily,
+              fontSize: `${12 + vLetterSize} px`
+            };
+            const seperatorElement = (
               <th
-                className={`grid-cells2${sufixCells}`}
-                style={gridCells2Style}
+                className="empty"
+                style={seperatorStyle}
               >
-                <span
-                  className={`wrapclass${sufixWrap}`}
-                  style={wrapStyle}
-                >
-                  {entry}
-                </span>
+                *
               </th>
-            </Fragment>
-          );
-        })}
-      </Fragment>
-    );
+            );
+            let sufixWrap = '';
+            if ((entry.length > 11 && vLetterSizeHeader === 0) || (entry.length > 12 && vLetterSizeHeader === -2)) {
+              sufixWrap = '70';
+            } else {
+              sufixWrap = 'Empty';
+            }
+            const gridCells2Style = {
+              ...baseCSS,
+              fontSize: `${14 + vLetterSizeHeader} px`,
+              height: '70px',
+              verticalAlign: 'middle'
+            };
+            const wrapStyle = {
+              fontFamily: vFontFamily
+            };
+            return (
+              <Fragment key={entryIndex}>
+                {hasSeperator && seperatorElement}
+                <th
+                  className={`grid-cells2${sufixCells}`}
+                  style={gridCells2Style}
+                >
+                  <span
+                    className={`wrapclass${sufixWrap}`}
+                    style={wrapStyle}
+                  >
+                    {entry}
+                  </span>
+                </th>
+              </Fragment>
+            );
+          })}
+        </Fragment>
+      );
+    }
   }
 
   renderSecondDimensionSubTitles () {
