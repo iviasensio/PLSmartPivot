@@ -1,6 +1,5 @@
 import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
-import { renderToStaticMarkup } from 'react-dom/server';
 import ExportButton from './export-button.jsx';
 
 /* TODO: the different render methods are very similar, split it into a few components
@@ -15,9 +14,9 @@ class HeaderWrapper extends PureComponent {
     } = this.props;
 
     const baseCSS = {
+      backgroundColor: vHeaderColorSchema,
       color: vHeaderColorText,
       fontFamily: vFontFamily,
-      backgroundColor: vHeaderColorSchema,
       textAlign: vHeaderAlignText
     };
     return baseCSS;
@@ -39,22 +38,24 @@ class HeaderWrapper extends PureComponent {
       ExtraLabelsArray
     } = this.props;
 
+    const baseCSS = this.getBaseCSS();
+
     if (vNumDims === 2) {
       if (measure_count > 1) {
         const thStyle = {
-          ...this.getBaseCSS(),
+          ...baseCSS,
           cursor: 'default',
-          fontSize: (16 + vLetterSizeHeader) + 'px',
+          fontSize: `${16 + vLetterSizeHeader} px`,
           height: '80px',
-          width: '230px',
-          verticalAlign: 'middle'
+          verticalAlign: 'middle',
+          width: '230px'
         };
         return (
           <Fragment key="second-dimension-titles">
             <th
               className="fdim-cells"
-              rowSpan="2"
               padding-left="20px"
+              rowSpan="2"
               style={thStyle}
             >
               <ExportButton excelExport={vExportToExcel} />
@@ -64,80 +65,30 @@ class HeaderWrapper extends PureComponent {
               const emptyStyle = {
                 color: 'white',
                 fontFamily: vFontFamily,
-                fontSize: (13 + vLetterSizeHeader) + 'px'
+                fontSize: `${13 + vLetterSizeHeader} px`
               };
               const style = {
-                ...this.getBaseCSS(),
-                fontSize: (14 + vLetterSizeHeader) + 'px',
+                ...baseCSS,
+                fontSize: `${14 + vLetterSizeHeader} px`,
                 height: '45px',
                 verticalAlign: 'middle'
               };
               return (
                 <Fragment key={index}>
                   {vSeparatorCols && index > 0 && (
-                    <th className="empty" style={emptyStyle}>
+                    <th
+                      className="empty"
+                      style={emptyStyle}
+                    >
                       *
                     </th>
                   )}
-                  <th className={'grid-cells2' + sufixCells} colSpan={measure_count} style={style}>
+                  <th
+                    className={`grid-cells2${sufixCells}`}
+                    colSpan={measure_count}
+                    style={style}
+                  >
                     {header}
-                  </th>
-                </Fragment>
-              );
-            })}
-          </Fragment>
-        );
-      } else {
-        const fDimCellsStyle = {
-          ...this.getBaseCSS(),
-          cursor: 'default',
-          fontSize: (16 + vLetterSizeHeader) + 'px',
-          height: '70px',
-          width: '230px',
-          verticalAlign: 'middle'
-        };
-
-        return (
-          <Fragment>
-            <th className="fdim-cells" style={fDimCellsStyle}>
-              <ExportButton excelExport={vExportToExcel} />
-              {LabelsArray[0] + ExtraLabelsArray[0]}
-            </th>
-            {SecondHeader.map((entry, entryIndex) => {
-              // TODO: seperator element is reused a bunch, only difference being font-size
-              const hasSeperator = vSeparatorCols && nSecond > 0;
-              const seperatorStyle = {
-                color: 'white',
-                fontFamily: vFontFamily,
-                fontSize: (12 + vLetterSize) + 'px'
-              };
-              const seperatorElement = (
-                <th className="empty" style={seperatorStyle}>
-                  *
-                </th>
-              );
-              let sufixWrap = '';
-              if ((entry.length > 11 && vLetterSizeHeader === 0) || (entry.length > 12 && vLetterSizeHeader === -2)) {
-                sufixWrap = '70';
-              } else {
-                sufixWrap = 'Empty';
-              }
-              const gridCells2Style = {
-                ...this.getBaseCSS(),
-                fontSize: (14 + vLetterSizeHeader) + 'px',
-                height: '70px',
-                verticalAlign: 'middle'
-              };
-              const wrapStyle = {
-                fontFamily: vFontFamily
-              };
-              return (
-                <Fragment key={entryIndex}>
-                  {hasSeperator && seperatorElement}
-                  <th className={'grid-cells2' + sufixCells} style={gridCells2Style}>
-                    <span className={'wrapclass' + sufixWrap} style={wrapStyle}>
-                      {entry}
-                    </span>
                   </th>
                 </Fragment>
               );
@@ -146,6 +97,74 @@ class HeaderWrapper extends PureComponent {
         );
       }
     }
+    const fDimCellsStyle = {
+      ...baseCSS,
+      cursor: 'default',
+      fontSize: `${16 + vLetterSizeHeader} px`,
+      height: '70px',
+      verticalAlign: 'middle',
+      width: '230px'
+    };
+
+    return (
+      <Fragment>
+        <th
+          className="fdim-cells"
+          style={fDimCellsStyle}
+        >
+          <ExportButton excelExport={vExportToExcel} />
+          {LabelsArray[0] + ExtraLabelsArray[0]}
+        </th>
+        {SecondHeader.map((entry, entryIndex) => {
+          // TODO: seperator element is reused a bunch, only difference being font-size
+          const hasSeperator = vSeparatorCols && nSecond > 0;
+          const seperatorStyle = {
+            color: 'white',
+            fontFamily: vFontFamily,
+            fontSize: `${12 + vLetterSize} px`
+          };
+          const seperatorElement = (
+            <th
+              className="empty"
+              style={seperatorStyle}
+            >
+              *
+            </th>
+          );
+          let sufixWrap = '';
+          if ((entry.length > 11 && vLetterSizeHeader === 0) || (entry.length > 12 && vLetterSizeHeader === -2)) {
+            sufixWrap = '70';
+          } else {
+            sufixWrap = 'Empty';
+          }
+          const gridCells2Style = {
+            ...baseCSS,
+            fontSize: `${14 + vLetterSizeHeader} px`,
+            height: '70px',
+            verticalAlign: 'middle'
+          };
+          const wrapStyle = {
+            fontFamily: vFontFamily
+          };
+          return (
+            <Fragment key={entryIndex}>
+              {hasSeperator && seperatorElement}
+              <th
+                className={`grid-cells2${sufixCells}`}
+                style={gridCells2Style}
+              >
+                <span
+                  className={`wrapclass${sufixWrap}`}
+                  style={wrapStyle}
+                >
+                  {entry}
+                </span>
+              </th>
+            </Fragment>
+          );
+        })}
+      </Fragment>
+    );
   }
 
   renderSecondDimensionSubTitles () {
@@ -161,25 +180,30 @@ class HeaderWrapper extends PureComponent {
       ExtraLabelsArray
     } = this.props;
 
+    const baseCSS = this.getBaseCSS();
+
     return SecondHeader.map((header, index) => {
       const emptyStyle = {
         color: 'white',
         fontFamily: vFontFamily,
-        fontSize: (12 + vLetterSize) + 'px'
+        fontSize: `${12 + vLetterSizeHeader} px`
       };
       return (
         <Fragment key={index}>
           {vSeparatorCols && index > 0 && (
-            <th className="empty" style={emptyStyle}>
+            <th
+              className="empty"
+              style={emptyStyle}
+            >
               *
             </th>
           )}
           {MeasuresFormat.map((measureFormat, measureFormatIndex) => {
             if (measureFormat.substring(measureFormat.length - 1) === '%') {
               const cells2SmallStyle = {
-                ...this.getBaseCSS(),
+                ...baseCSS,
                 cursor: 'default',
-                fontSize: (13 + vLetterSizeHeader) + 'px',
+                fontSize: `${13 + vLetterSizeHeader} px`,
                 height: '25px',
                 verticalAlign: 'middle'
               };
@@ -193,9 +217,9 @@ class HeaderWrapper extends PureComponent {
               );
             }
             const cells2Style = {
-              ...this.getBaseCSS(),
+              ...baseCSS,
               cursor: 'default',
-              fontSize: (14 + vLetterSizeHeader) + 'px',
+              fontSize: `${14 + vLetterSizeHeader} px`,
               height: '25px',
               verticalAlign: 'middle'
             };
@@ -223,6 +247,8 @@ class HeaderWrapper extends PureComponent {
       measureInfos
     } = this.props;
 
+    const baseCSS = this.getBaseCSS();
+
     if (dim_count === 1) {
       return measureInfos.map((measureInfo, measureInfoIndex) => {
         let sufixWrap = '';
@@ -233,9 +259,9 @@ class HeaderWrapper extends PureComponent {
           sufixWrap = 'Empty';
         }
         const thStyle = {
-          ...this.getBaseCSS(),
+          ...baseCSS,
           cursor: 'default',
-          fontSize: (15 + vLetterSizeHeader) + 'px',
+          fontSize: `${15 + vLetterSizeHeader} px`,
           height: '70px',
           verticalAlign: 'middle'
         };
@@ -247,9 +273,8 @@ class HeaderWrapper extends PureComponent {
           </th>
         );
       });
-    } else {
-      return null;
     }
+    return null;
   }
 
   renderDimensionInfos () {
@@ -258,21 +283,24 @@ class HeaderWrapper extends PureComponent {
       vLetterSizeHeader,
       vExportToExcel
     } = this.props;
+
+    const baseCSS = this.getBaseCSS();
+
     return dimensionInfos.map((dimensionInfo, dimensionInfoIndex) => {
       // TODO: move static properties to css file
       const style = {
-        ...this.getBaseCSS(),
+        ...baseCSS,
         cursor: 'default',
-        fontSize: (17 + vLetterSizeHeader) + 'px',
+        fontSize: `${17 + vLetterSizeHeader} px`,
         height: '70px',
-        width: '230px',
-        verticalAlign: 'middle'
+        verticalAlign: 'middle',
+        width: '230px'
       };
 
       return (
         <th
-          key={dimensionInfoIndex}
           className="fdim-cells"
+          key={dimensionInfoIndex}
           style={style}
         >
           <ExportButton excelExport={vExportToExcel} />
