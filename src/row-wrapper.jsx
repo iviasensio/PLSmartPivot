@@ -101,7 +101,7 @@ export async function prepareProps ({ state }) {
   }
 
   function ReadCustomSchema () {
-    var Url = '/Extensions/PLSmartPivot/' + props.vCustomFile;
+    var Url = '/Extensions/qlik-smart-pivot/' + props.vCustomFile;
     return $.get(Url).then(function (response) {
       var allTextLines = response.split(/\r\n|\n/);
       var headers = allTextLines[0].split(';');

@@ -8,7 +8,7 @@ class ExportButton extends React.PureComponent {
     return excelExport === true && (
       <input
         className="icon-xls"
-        src="/Extensions/PLSmartPivot/Excel.png"
+        src="/Extensions/qlik-smart-pivot/Excel.png"
         type="image"
       />
     );
