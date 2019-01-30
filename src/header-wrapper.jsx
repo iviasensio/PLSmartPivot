@@ -96,13 +96,14 @@ class HeaderWrapper extends PureComponent {
           width: '230px',
           verticalAlign: 'middle'
         };
+
         return (
           <Fragment>
             <th className="fdim-cells" style={fDimCellsStyle}>
               <ExportButton excelExport={vExportToExcel} />
               {LabelsArray[0] + ExtraLabelsArray[0]}
             </th>
-            {nSecond.map((entry, entryIndex) => {
+            {SecondHeader.map((entry, entryIndex) => {
               // TODO: seperator element is reused a bunch, only difference being font-size
               const hasSeperator = vSeparatorCols && nSecond > 0;
               const seperatorStyle = {
