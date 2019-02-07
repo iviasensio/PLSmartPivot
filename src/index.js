@@ -1,7 +1,10 @@
-import '@babel/polyfill';
 import paint from './paint.jsx';
 import definition from './definition';
 import './main.less';
+
+if (!window._babelPolyfill) { // eslint-disable-line no-underscore-dangle
+  require('@babel/polyfill'); // eslint-disable-line global-require
+}
 
 export default {
   controller: [
