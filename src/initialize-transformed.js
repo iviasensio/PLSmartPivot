@@ -3,7 +3,6 @@ import { distinctArray } from './utilities';
 
 // TODO: rename colors
 function initializeColors ({ layout }) {
-  console.log(layout);
   return {
     vColLibBlue: layout.collibblue,
     vColLibBlueP: layout.collibbluep,
@@ -142,7 +141,6 @@ function generateDataSet (component, dimensionsInformation, measurementsInformat
       });
 
     if (hasSecondDimension) {
-      // console.log(row[0]);
       const currentDim1Entry = row[0].qText;
       const isSameDimension1AsPrevious = currentDim1Entry === previousDim1Entry;
       if (isSameDimension1AsPrevious) {
