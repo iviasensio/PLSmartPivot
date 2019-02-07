@@ -19,7 +19,7 @@ const HeadersTable = ({ data, general, styling }) => {
     measurements
   } = data.headers;
 
-  const hasSecondDimension = Boolean(dimension2);
+  const hasSecondDimension = dimension2.length > 0;
 
   return (
     <div className="header-wrapper">
@@ -33,14 +33,16 @@ const HeadersTable = ({ data, general, styling }) => {
               styling={styling}
               title={dimension1[0].name}
             />
-            {!hasSecondDimension && injectSeparators(measurements, styling.useSeparatorColumns)
-              .map(measurementEntry => (
-                <MeasurementColumnHeader
-                  key={`${measurementEntry.displayValue}-${measurementEntry.name}`}
-                  measurement={measurementEntry}
-                />
-              ))
-            }
+            {!hasSecondDimension && measurements.map(measurementEntry => (
+              <MeasurementColumnHeader
+                baseCSS={baseCSS}
+                general={general}
+                hasSecondDimension={hasSecondDimension}
+                key={`${measurementEntry.displayValue}-${measurementEntry.name}`}
+                measurement={measurementEntry}
+                styling={styling}
+              />
+            ))}
             {hasSecondDimension && injectSeparators(dimension2, styling.useSeparatorColumns).map(entry => {
               if (entry.isSeparator) {
                 const separatorStyle = {

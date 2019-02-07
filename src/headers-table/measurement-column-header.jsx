@@ -45,7 +45,7 @@ const MeasurementColumnHeader = ({ baseCSS, general, hasSecondDimension, measure
       style={style}
     >
       <span
-        className={`wrapclass ${suffixWrap}`}
+        className={`wrapclass${suffixWrap}`}
         style={{ fontFamily: styling.headerOptions.fontFamily }}
       >
         {title}
