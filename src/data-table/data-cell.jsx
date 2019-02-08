@@ -5,7 +5,7 @@ import { addSeparators } from '../utilities';
 
 function formatMeasurementValue (measurement, styling) {
   // TODO: measurement.name is a horrible propertyname, it's actually the column header
-  const isColumnPercentageBased = measurement.name.substring(0, 1) === '%';
+  const isColumnPercentageBased = measurement.parents.measurement.header.substring(0, 1) === '%';
   let formattedMeasurementValue = '';
   if (isColumnPercentageBased) {
     if (isNaN(measurement.value)) {
@@ -62,50 +62,74 @@ function getSemaphoreColors (measurement, semaphoreColors) {
   return semaphoreColors.statusColors.normal;
 }
 
-const DataCell = ({ data, general, measurement, styleBuilder, styling }) => {
-  const isColumnPercentageBased = measurement.name.substring(0, 1) === '%';
-  let formattedMeasurementValue = formatMeasurementValue(measurement, styling);
-  if (styleBuilder.hasComments()) {
-    formattedMeasurementValue = '.';
+class DataCell extends React.PureComponent {
+  constructor (props) {
+    super(props);
+
+    this.handleSelect = this.handleSelect.bind(this);
   }
 
-  let cellStyle = {
-    fontFamily: styling.options.fontFamily,
-    ...styleBuilder.getStyle(),
-    paddingRight: '4px',
-    textAlign: 'right'
+  handleSelect () {
+    const { data: { meta: { dimensionCount } }, general: { allowFilteringByClick }, measurement, qlik } = this.props;
+    const hasSecondDimension = dimensionCount > 1;
+    if (!allowFilteringByClick) {
+      return;
+    }
 
-  };
-  const { semaphoreColors } = styling;
-  const isValidSemaphoreValue = !styleBuilder.hasComments() && !isNaN(measurement.value);
-  const shouldHaveSemaphoreColors = semaphoreColors.fieldsToApplyTo.applyToAll || semaphoreColors.fieldsToApplyTo.specificFields.indexOf(measurement.name) !== -1;
-  if (isValidSemaphoreValue && shouldHaveSemaphoreColors) {
-    const { backgroundColor, color } = getSemaphoreColors(measurement, semaphoreColors);
-    cellStyle = {
-      backgroundColor,
-      color,
+    qlik.backendApi.selectValues(0, [measurement.parents.dimension1.elementNumber], true);
+
+    if (hasSecondDimension) {
+      qlik.backendApi.selectValues(1, [measurement.parents.dimension2.elementNumber], true);
+    }
+  }
+
+  render () {
+    const { data, general, measurement, styleBuilder, styling } = this.props;
+    const isColumnPercentageBased = measurement.name.substring(0, 1) === '%';
+    let formattedMeasurementValue = formatMeasurementValue(measurement, styling);
+    if (styleBuilder.hasComments()) {
+      formattedMeasurementValue = '.';
+    }
+
+    let cellStyle = {
       fontFamily: styling.options.fontFamily,
-      fontSize: styleBuilder.getStyle().fontSize,
-      paddingLeft: '4px',
+      ...styleBuilder.getStyle(),
+      paddingRight: '4px',
       textAlign: 'right'
+
     };
-  }
+    const { semaphoreColors } = styling;
+    const isValidSemaphoreValue = !styleBuilder.hasComments() && !isNaN(measurement.value);
+    const shouldHaveSemaphoreColors = semaphoreColors.fieldsToApplyTo.applyToAll || semaphoreColors.fieldsToApplyTo.specificFields.indexOf(measurement.parents.dimension1.header) !== -1;
+    if (isValidSemaphoreValue && shouldHaveSemaphoreColors) {
+      const { backgroundColor, color } = getSemaphoreColors(measurement, semaphoreColors);
+      cellStyle = {
+        backgroundColor,
+        color,
+        fontFamily: styling.options.fontFamily,
+        fontSize: styleBuilder.getStyle().fontSize,
+        paddingLeft: '4px',
+        textAlign: 'right'
+      };
+    }
 
-  let cellClass = 'grid-cells';
-  const shouldUseSmallCells = isColumnPercentageBased && data.headers.measurements.length > 1;
-  if (shouldUseSmallCells) {
-    cellClass = 'grid-cells-small';
-  }
+    let cellClass = 'grid-cells';
+    const shouldUseSmallCells = isColumnPercentageBased && data.headers.measurements.length > 1;
+    if (shouldUseSmallCells) {
+      cellClass = 'grid-cells-small';
+    }
 
-  return (
-    <td
-      className={`${cellClass}${general.cellSuffix}`}
-      style={cellStyle}
-    >
-      {formattedMeasurementValue}
-    </td>
-  );
-};
+    return (
+      <td
+        className={`${cellClass}${general.cellSuffix}`}
+        onClick={this.handleSelect}
+        style={cellStyle}
+      >
+        {formattedMeasurementValue}
+      </td>
+    );
+  }
+}
 
 DataCell.propTypes = {
   data: PropTypes.shape({
@@ -120,6 +144,11 @@ DataCell.propTypes = {
     format: PropTypes.string,
     name: PropTypes.string,
     value: PropTypes.any
+  }).isRequired,
+  qlik: PropTypes.shape({
+    backendApi: PropTypes.shape({
+      selectValues: PropTypes.func.isRequired
+    }).isRequired
   }).isRequired,
   styleBuilder: PropTypes.shape({
     hasComments: PropTypes.func.isRequired
