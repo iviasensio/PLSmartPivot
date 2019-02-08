@@ -2,6 +2,12 @@
   @TableBorder: 1px solid #d3d3d3;
   @KpiTableWidth: 230px;
 
+  *,
+  *:before,
+  *:after {
+	  box-sizing: border-box;
+  }
+
   ._cell(@Width: 50px) {
   	min-width: @Width!important;
   	max-width: @Width!important;
