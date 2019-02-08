@@ -92,7 +92,8 @@ const DataCell = ({ data, general, measurement, styleBuilder, styling }) => {
   }
 
   let cellClass = 'grid-cells';
-  const shouldUseSmallCells = isColumnPercentageBased && data.headers.measurements.length > 1;
+  const hasTwoDimensions = data.headers.dimension2 && data.headers.dimension2.length > 0;
+  const shouldUseSmallCells = isColumnPercentageBased && data.headers.measurements.length > 1 && hasTwoDimensions;
   if (shouldUseSmallCells) {
     cellClass = 'grid-cells-small';
   }
