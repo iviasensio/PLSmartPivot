@@ -251,7 +251,7 @@ async function initializeTransformed ({ $element, layout, component }) {
       },
       options: {
         backgroundColor: colors[`vColLib${layout.ColorSchema}`],
-        backgroundColorOdd: colors[`vColLib${layout.ColorSchemaP}`],
+        backgroundColorOdd: colors[`vColLib${layout.ColorSchema}P`],
         color: layout.BodyTextColorSchema,
         fontFamily: layout.FontFamily,
         fontSizeAdjustment: getFontSizeAdjustment(layout.lettersize)
