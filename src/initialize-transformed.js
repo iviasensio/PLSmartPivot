@@ -259,6 +259,7 @@ async function initializeTransformed ({ $element, layout, component }) {
       semaphoreColors: {
         fieldsToApplyTo: {
           applyToAll: layout.allsemaphores,
+          applyToMetric: layout.allmetrics,
           specificFields: [
             layout.conceptsemaphore1,
             layout.conceptsemaphore2,

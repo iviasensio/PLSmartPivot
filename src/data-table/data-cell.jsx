@@ -76,9 +76,9 @@ const DataCell = ({ data, general, measurement, styleBuilder, styling }) => {
     textAlign: 'right'
 
   };
-  const { semaphoreColors } = styling;
+  const { semaphoreColors, semaphoreColors: { fieldsToApplyTo } } = styling;
   const isValidSemaphoreValue = !styleBuilder.hasComments() && !isNaN(measurement.value);
-  const shouldHaveSemaphoreColors = semaphoreColors.fieldsToApplyTo.applyToAll || semaphoreColors.fieldsToApplyTo.specificFields.indexOf(measurement.name) !== -1;
+  const shouldHaveSemaphoreColors = fieldsToApplyTo.applyToMetric && (fieldsToApplyTo.applyToAll || fieldsToApplyTo.specificFields.indexOf(measurement.name) !== -1);
   if (isValidSemaphoreValue && shouldHaveSemaphoreColors) {
     const { backgroundColor, color } = getSemaphoreColors(measurement, semaphoreColors);
     cellStyle = {
