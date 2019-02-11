@@ -1,16 +1,11 @@
-function StyleBuilder (state) {
+function StyleBuilder (styling) {
   const {
-    CustomArray,
-    CustomArrayBasic,
-    vNumCustomHeaders,
-    vColorSchema,
-    vColorText,
-    vColorSchemaP,
-    vLetterSize,
-    colors
-  } = state;
+    colors,
+    customCSV,
+    options
+  } = styling;
   let style = {
-    fontSize: `${14 + vLetterSize}px`
+    fontSize: `${14 + options.fontSizeAdjustment}px`
   };
   let hasComments = false;
   let commentColor;
@@ -18,9 +13,9 @@ function StyleBuilder (state) {
 
   function applyStandardAttributes (rowNumber) {
     const isEven = rowNumber % 2 === 0;
-    style.backgroundColor = isEven ? vColorSchema : vColorSchemaP;
-    style.color = vColorText;
-    style.fontSize = `${14 + vLetterSize}px`;
+    style.backgroundColor = isEven ? options.backgroundColor : options.backgroundColorOdd;
+    style.color = options.color;
+    style.fontSize = `${13 + options.fontSizeAdjustment}px`;
   }
 
   function applyColor (color) {
@@ -28,6 +23,7 @@ function StyleBuilder (state) {
     commentColor = color;
   }
 
+  /* eslint-disable sort-keys*/
   const properties = {
     '<comment>': () => { hasComments = true; },
     // text
@@ -46,17 +42,18 @@ function StyleBuilder (state) {
     // font color TODO: this is a color just like the others, but it applies to text instead.. any way to make it less weird?
     '<white>': () => { style.color = 'white'; },
     // font size
-    '<large>': () => { style.fontSize = `${15 + vLetterSize}px`; },
-    '<medium>': () => { style.fontSize = `${14 + vLetterSize}px`; },
-    '<small>': () => { style.fontSize = `${13 + vLetterSize}px`; },
+    '<large>': () => { style.fontSize = `${15 + options.fontSizeAdjustment}px`; },
+    '<medium>': () => { style.fontSize = `${14 + options.fontSizeAdjustment}px`; },
+    '<small>': () => { style.fontSize = `${13 + options.fontSizeAdjustment}px`; },
     // text alignment
     '<center>': () => { style.textAlign = 'center'; }
   };
+  /* eslint-enable sort-keys */
 
   // TODO: need to improve this, it has way too many false positives
   function isCSSColor (property) {
-    const isHexColor = property.substring(0, 1) == '#';
-    const isRGBColor = property.substring(0, 3).toUpperCase() == 'RGB';
+    const isHexColor = property.substring(0, 1) === '#';
+    const isRGBColor = property.substring(0, 3).toUpperCase() === 'RGB';
 
     return isHexColor || isRGBColor;
   }
@@ -84,27 +81,27 @@ function StyleBuilder (state) {
   }
 
   function parseCustomFileStyle (columnText) {
-    hasCustomFileStyle = true;
-    for (let csvAttribute = 1; csvAttribute < vNumCustomHeaders; csvAttribute += 1) {
+    for (let csvAttribute = 1; csvAttribute < customCSV.count; csvAttribute += 1) {
       let customAttribute = '';
-      if (CustomArrayBasic.indexOf(columnText) < 0) {
+      if (customCSV.basic.indexOf(columnText) < 0) {
         customAttribute = 'none';
       } else {
-        customAttribute = CustomArray[CustomArrayBasic.indexOf(columnText)][csvAttribute];
+        hasCustomFileStyle = true;
+        customAttribute = customCSV.full[customCSV.basic.indexOf(columnText)][csvAttribute];
       }
       applyProperty(customAttribute);
     }
   }
 
   return {
+    applyCustomStyle,
+    applyProperty,
+    applyStandardAttributes,
     getCommentColor: () => commentColor,
     getStyle: () => style,
+    hasComments: () => hasComments,
     hasCustomFileStyle: () => hasCustomFileStyle,
     hasFontSize: () => Boolean(style.fontSize),
-    hasComments: () => hasComments,
-    applyStandardAttributes,
-    applyProperty,
-    applyCustomStyle,
     parseCustomFileStyle
   };
 }

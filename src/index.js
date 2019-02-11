@@ -1,4 +1,4 @@
-import paint from './paint';
+import paint from './paint.jsx';
 import definition from './definition';
 import './main.less';
 
