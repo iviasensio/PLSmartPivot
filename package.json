@@ -12,7 +12,8 @@
     "eslint:fix": "eslint --fix src",
     "test": "karma start karma.conf.js",
     "test-once": "karma start karma.conf.js --single-run",
-    "watch": "gulp watch"
+    "watch": "gulp watch",
+    "stylelint": "stylelint src/main.less"
   },
   "devDependencies": {
     "@babel/core": "7.1.2",

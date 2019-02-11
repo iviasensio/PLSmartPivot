@@ -21,7 +21,7 @@ const config = {
       commonjs: 'jquery',
       commonjs2: 'jquery',
       root: '_'
-    },
+    }
   },
   // TODO: breaks core-js for some reason
   // resolve: {
@@ -54,7 +54,11 @@ const config = {
       },
       {
         test: /.less$/,
-        use: ['style-loader', 'css-loader', 'less-loader']
+        use: [
+          'style-loader',
+          'css-loader',
+          'less-loader'
+        ]
       }
     ]
   },
@@ -68,9 +72,11 @@ const config = {
       'resources/Accounts.csv',
       'resources/Accounts2.csv',
       'resources/QlikLook.csv',
-      'resources/Excel.png',
+      'resources/Excel.png'
     ], {}),
-    new StyleLintPlugin()
+    new StyleLintPlugin({
+      files: '**/*.less'
+    })
   ]
 };
 
