@@ -15,6 +15,7 @@ module.exports = {
   },
   globals: {
     angular: false,
+    beforeEach: false,
     define: false,
     describe: false,
     document: false,

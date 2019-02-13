@@ -1,9 +1,9 @@
 import $ from 'jquery';
 import initializeStore from './store';
 import React from 'react';
+// import ReactDOM from 'react-dom';
 import ReactDOM from 'react-dom';
-import HeadersTable from './headers-table/index.jsx';
-import DataTable from './data-table/index.jsx';
+import Root from './root.jsx';
 
 export default async function paint ($element, layout, component) {
   const state = await initializeStore({
@@ -13,37 +13,10 @@ export default async function paint ($element, layout, component) {
   });
 
   const jsx = (
-    <React.Fragment>
-      <div className="kpi-table">
-        <HeadersTable
-          data={state.data}
-          general={state.general}
-          qlik={component}
-          styling={state.styling}
-        />
-        <DataTable
-          data={state.data}
-          general={state.general}
-          qlik={component}
-          renderData={false}
-          styling={state.styling}
-        />
-      </div>
-      <div className="data-table">
-        <HeadersTable
-          data={state.data}
-          general={state.general}
-          qlik={component}
-          styling={state.styling}
-        />
-        <DataTable
-          data={state.data}
-          general={state.general}
-          qlik={component}
-          styling={state.styling}
-        />
-      </div>
-    </React.Fragment>
+    <Root
+      qlik={component}
+      state={state}
+    />
   );
 
   ReactDOM.render(jsx, $element[0]);
