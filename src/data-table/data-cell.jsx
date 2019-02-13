@@ -94,7 +94,7 @@ class DataCell extends React.PureComponent {
     let cellStyle = {
       fontFamily: styling.options.fontFamily,
       ...styleBuilder.getStyle(),
-      paddingRight: '4px',
+      paddingLeft: '4px',
       textAlign: 'right'
 
     };
