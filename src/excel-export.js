@@ -1,11 +1,11 @@
-import $ from 'jquery';
+import $ from 'jquery'; // eslint-disable-line id-length
 
 const isIE = /* @cc_on!@*/false || Boolean(document.documentMode);
 const isChrome = Boolean(window.chrome) && Boolean(window.chrome.webstore);
 const isSafari = Object.prototype.toString.call(window.HTMLElement).indexOf('Constructor') > 0;
 const isFirefox = typeof InstallTrigger !== 'undefined';
 
-export function enableExcelExport (layout, f) {
+export function enableExcelExport (layout, htmlMarkupString) {
   let myTitle = '';
   let mySubTitle = '';
   let myFootNote = '';
@@ -43,18 +43,18 @@ export function enableExcelExport (layout, f) {
       $.preventDefault();
     }
     if (isIE) {
-      let a = '<html><head><meta charset="UTF-8"></head>';
-      a += myTitle + mySubTitle + myFootNote;
-      a += f;
-      a = a.split('>.<').join('><');
-      a += '</html>';
+      let htmlMarkup = '<html><head><meta charset="UTF-8"></head>';
+      htmlMarkup += myTitle + mySubTitle + myFootNote;
+      htmlMarkup += htmlMarkupString;
+      htmlMarkup = htmlMarkup.split('>.<').join('><');
+      htmlMarkup += '</html>';
 
-      const w = window.open();
-      w.document.open();
-      w.document.write(a);
-      w.document.close();
-      w.document.execCommand('SaveAs', true, 'Analysis.xls' || 'c:\TMP');
-      w.close();
+      const newWindow = window.open();
+      newWindow.document.open();
+      newWindow.document.write(htmlMarkup);
+      newWindow.document.close();
+      newWindow.document.execCommand('SaveAs', true, 'Analysis.xls' || 'c:\TMP');
+      newWindow.close();
     }
 
     if (isFirefox) {
