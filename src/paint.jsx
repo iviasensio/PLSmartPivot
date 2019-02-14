@@ -1,5 +1,4 @@
 import $ from 'jquery';
-import { enableExcelExport } from './excel-export';
 import initializeStore from './store';
 import React from 'react';
 // import ReactDOM from 'react-dom';
@@ -181,8 +180,6 @@ export default async function paint ($element, layout, component) {
       component.backendApi.selectValues(0, [SelectRow], true);
       $(this).toggleClass('selected');
     });
-
-    enableExcelExport(layout, html);
 
     // freeze first column
     $('.qv-object-content-container').on('scroll', (t) => {

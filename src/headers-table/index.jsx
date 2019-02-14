@@ -29,6 +29,7 @@ const HeadersTable = ({ data, general, styling }) => {
             <ExportColumnHeader
               allowExcelExport={general.allowExcelExport}
               baseCSS={baseCSS}
+              general={general}
               hasSecondDimension={hasSecondDimension}
               styling={styling}
               title={dimension1[0].name}
