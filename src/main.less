@@ -2,6 +2,36 @@
   @TableBorder: 1px solid #d3d3d3;
   @KpiTableWidth: 230px;
 
+  .edit-mode{
+    pointer-events: none;
+  }
+  .tooltip-wrapper{
+    position: fixed;
+    padding: 5px;
+    padding-top: 10px;
+  	background-color: #404040;
+  	z-index: 10;
+  	pointer-events: none;
+  	border-radius: 5px;
+    height: 30px;
+    width: auto;
+    opacity: .9;
+    >p{
+      color: #fff;
+    }
+  }
+
+  .tooltip-wrapper::after {
+  	content: "";
+  	position: absolute;
+  	bottom: -10px;
+  	left: 50%;
+  	border-width: 10px 10px 0;
+  	border-style: solid;
+  	border-color: #404040 transparent;
+  	margin-left: -10px;
+  	pointer-events: none;
+  }
   ._cell(@Width: 50px) {
   	min-width: @Width!important;
   	max-width: @Width!important;
