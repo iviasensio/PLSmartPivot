@@ -11,10 +11,10 @@ export default async function paint ($element, layout, component) {
     component,
     layout
   });
-
+  const editmodeClass = component.inAnalysisState() ? '' : 'edit-mode';
   const jsx = (
     <React.Fragment>
-      <div className="kpi-table">
+      <div className={`kpi-table ${editmodeClass}`}>
         <HeadersTable
           data={state.data}
           general={state.general}
@@ -29,7 +29,7 @@ export default async function paint ($element, layout, component) {
           styling={state.styling}
         />
       </div>
-      <div className="data-table">
+      <div className={`data-table ${editmodeClass}`}>
         <HeadersTable
           data={state.data}
           general={state.general}
