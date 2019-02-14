@@ -1,8 +1,20 @@
+function removeAllTooltips (node) {
+  const tooltips = node.querySelectorAll('.tooltip');
+  [].forEach.call(tooltips, tooltip => {
+    if (tooltip.parentNode) {
+      tooltip.parentNode.removeChild(tooltip);
+    }
+  });
+}
+
 function buildTableHTML (title, subtitle, footnote) {
   const titleHTML = `<p style="font-size:15pt"><b>${title}</b></p>`;
   const subtitleHTML = `<p style="font-size:11pt">${subtitle}</p>`;
   const footnoteHTML = `<p style="font-size:11pt"><i>Note:</i>${footnote}</p>`;
   const dataTableClone = document.querySelector('.data-table').cloneNode(true);
+
+  removeAllTooltips(dataTableClone);
+
   const tableHTML = `
     <html
       xmlns:o="urn:schemas-microsoft-com:office:office"
@@ -68,7 +80,6 @@ function generateDataURI (html) {
 }
 
 export function exportXLS (title, subtitle, footnote) {
-  // close all tooltips (awaiting tooltips rewrite, should add a close all action for it)
   // original was removing icon when starting export, disable and some spinner instead, shouldn't take enough time to warrant either..?
   const table = buildTableHTML(title, subtitle, footnote);
   downloadXLS(table);
