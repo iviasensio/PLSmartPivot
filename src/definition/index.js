@@ -3,8 +3,6 @@ import header from './header';
 import formatted from './formatted';
 import conceptSemaphores from './concept-semaphores';
 import metricSemaphores from './metric-semaphores';
-import colorLibrary from './color-library';
-import pijamaColorLibrary from './pijama-color-library';
 
 const definition = {
   component: 'accordion',
@@ -22,13 +20,11 @@ const definition = {
     },
     settings: {
       items: {
-        ColorLibrary: colorLibrary,
         ConceptSemaphores: conceptSemaphores,
         Formatted: formatted,
         Header: header,
         MetricSemaphores: metricSemaphores,
-        Pagination: pagination,
-        PijamaColorLibrary: pijamaColorLibrary
+        Pagination: pagination
       },
       uses: 'settings'
     },

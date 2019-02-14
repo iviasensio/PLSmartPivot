@@ -273,9 +273,9 @@ async function initializeTransformed ({ $element, layout, component }) {
       hasCustomFileStyle: layout.customfilebool,
       headerOptions: {
         alignment: getAlignment(layout.HeaderAlign),
-        colorSchema: colors[`vColLib${layout.HeaderColorSchema}`],
+        colorSchema: layout.HeaderColorSchema.color,
         fontSizeAdjustment: getFontSizeAdjustment(layout.lettersizeheader),
-        textColor: layout.HeaderTextColorSchema
+        textColor: layout.HeaderTextColorSchema.color
       },
       options: {
         backgroundColor: colors[`vColLib${layout.ColorSchema}`],
