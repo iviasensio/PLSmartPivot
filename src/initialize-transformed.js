@@ -91,24 +91,41 @@ function generateMeasurements (information) {
 function generateDimensionEntry (information, data) {
   return {
     displayValue: data.qText,
+    elementNumber: data.qElemNumber,
     name: information.qFallbackTitle,
     value: data.qNum
   };
 }
 
-function generateMatrixCell (information, data) {
-  return {
-    displayValue: data.qText,
-    elementNumber: data.qElemNumber,
-    format: information.format,
-    magnitude: information.magnitudeLabelSuffix.substring(
-      information.magnitudeLabelSuffix.length - 2,
-      information.magnitudeLabelSuffix.length - 1
+function generateMatrixCell ({ cell, dimension1Information, dimension2Information, measurementInformation }) {
+  const matrixCell = {
+    displayValue: cell.qText,
+    format: measurementInformation.format,
+    magnitude: measurementInformation.magnitudeLabelSuffix.substring(
+      measurementInformation.magnitudeLabelSuffix.length - 2,
+      measurementInformation.magnitudeLabelSuffix.length - 1
     ),
-    magnitudeLabelSuffix: information.magnitudeLabelSuffix,
-    name: information.name,
-    value: data.qNum
+    magnitudeLabelSuffix: measurementInformation.magnitudeLabelSuffix,
+    name: measurementInformation.name,
+    parents: {
+      dimension1: {
+        elementNumber: dimension1Information.qElemNumber,
+        header: dimension1Information.qText
+      },
+      measurement: {
+        header: measurementInformation.name
+      }
+    },
+    value: cell.qNum
   };
+
+  if (dimension2Information) {
+    matrixCell.parents.dimension2 = {
+      elementNumber: dimension2Information.qElemNumber
+    };
+  }
+
+  return matrixCell;
 }
 
 let lastRow = 0;
@@ -135,7 +152,14 @@ function generateDataSet (component, dimensionsInformation, measurementsInformat
       .slice(firstDataCell, row.length)
       .map((cell, cellIndex) => {
         const measurementInformation = measurements[cellIndex];
-        const generatedCell = generateMatrixCell(measurementInformation, cell);
+        const dimension1Information = row[0]; // eslint-disable-line prefer-destructuring
+        const dimension2Information = hasSecondDimension ? row[1] : null;
+        const generatedCell = generateMatrixCell({
+          cell,
+          dimension1Information,
+          dimension2Information,
+          measurementInformation
+        });
 
         return generatedCell;
       });
@@ -228,6 +252,7 @@ async function initializeTransformed ({ $element, layout, component }) {
     },
     general: {
       allowExcelExport: layout.allowexportxls,
+      allowFilteringByClick: layout.filteroncellclick,
       cellSuffix: getCellSuffix(layout.columnwidthslider), // TOOD: move to matrix cells or is it headers.measurements?
       errorMessage: layout.errormessage,
       footnote: layout.footnote,
