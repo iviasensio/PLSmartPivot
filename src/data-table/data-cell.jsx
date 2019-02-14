@@ -113,9 +113,11 @@ class DataCell extends React.Component {
       general,
       measurement,
       styleBuilder,
-      styling
+      styling,
+      qlik
     } = this.props;
 
+    const inEditState = qlik.inEditState();
     const isColumnPercentageBased = measurement.name.substring(0, 1) === '%';
     let formattedMeasurementValue = formatMeasurementValue(measurement, styling);
     if (styleBuilder.hasComments()) {
@@ -164,7 +166,7 @@ class DataCell extends React.Component {
         style={cellStyle}
       >
         {formattedMeasurementValue}
-        {bool
+        {bool && !inEditState
           ?
           <Tooltip
             data={formattedMeasurementValue}
