@@ -129,7 +129,8 @@ module.exports = {
     "react/jsx-no-literals": ["off"],
     "react/jsx-max-depth": ["off"], // rule throws exception in single-dimension-measure
     "react/jsx-filename-extension": ["warn"],
-    "react/prefer-stateless-function": ["warn"]
+    "react/prefer-stateless-function": ["warn"],
+    "react/no-set-state": ["warn"]
   },
   extends: [
     "eslint:all",
