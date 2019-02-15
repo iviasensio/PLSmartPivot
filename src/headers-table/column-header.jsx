@@ -1,11 +1,26 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Tooltip from '../tooltip/index.jsx';
 
-class ColumnHeader extends React.PureComponent {
+class ColumnHeader extends React.Component {
   constructor (props) {
     super(props);
-
+    this.state = {
+      showTooltip: false,
+      mouseXPosition: 0,
+      mouseYPosition: 0
+    };
+    this.handleEnter = this.handleEnter.bind(this);
+    this.handleLeave = this.handleLeave.bind(this);
     this.handleSelect = this.handleSelect.bind(this);
+  }
+
+  shouldComponentUpdate (nextProps, nextState) {
+    const { showTooltip } = this.state;
+    if (showTooltip === nextState.showTooltip) {
+      return false;
+    }
+    return true;
   }
 
   handleSelect () {
@@ -13,8 +28,22 @@ class ColumnHeader extends React.PureComponent {
     qlik.backendApi.selectValues(1, [entry.elementNumber], true);
   }
 
+  handleEnter (event) {
+    console.log(event.clientX);
+    this.setState({ showTooltip: true,
+      mouseXPosition: event.clientX,
+      mouseYPosition: event.clientY });
+  }
+
+  handleLeave () {
+    this.setState({ showTooltip: false });
+  }
+
   render () {
-    const { baseCSS, cellSuffix, colSpan, entry, styling } = this.props;
+    const { baseCSS, cellSuffix, colSpan, entry, styling, qlik } = this.props;
+    const { showTooltip, mouseXPosition, mouseYPosition } = this.state;
+    const inEditState = qlik.inEditState();
+
     const style = {
       ...baseCSS,
       fontSize: `${14 + styling.headerOptions.fontSizeAdjustment} px`,
@@ -27,9 +56,18 @@ class ColumnHeader extends React.PureComponent {
         className={`grid-cells2${cellSuffix}`}
         colSpan={colSpan}
         onClick={this.handleSelect}
+        onMouseOut={this.handleLeave}
+        onMouseOver={this.handleEnter}
         style={style}
       >
         {entry.displayValue}
+        {showTooltip && !inEditState
+          ?
+          <Tooltip
+            data={entry.displayValue}
+            xPosition={mouseXPosition}
+            yPosition={mouseYPosition}
+          /> : null}
       </th>
     );
   }
