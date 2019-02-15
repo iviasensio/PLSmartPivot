@@ -2,23 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Tooltip from '../tooltip/index.jsx';
 
-class ColumnHeader extends React.Component {
+class ColumnHeader extends React.PureComponent {
   constructor (props) {
     super(props);
-    this.state = {
-      showTooltip: false
-    };
-    this.handleEnter = this.handleEnter.bind(this);
-    this.handleLeave = this.handleLeave.bind(this);
     this.handleSelect = this.handleSelect.bind(this);
-  }
-
-  shouldComponentUpdate (nextProps, nextState) {
-    const { showTooltip } = this.state;
-    if (showTooltip === nextState.showTooltip) {
-      return false;
-    }
-    return true;
   }
 
   handleSelect () {
@@ -26,17 +13,8 @@ class ColumnHeader extends React.Component {
     qlik.backendApi.selectValues(1, [entry.elementNumber], true);
   }
 
-  handleEnter () {
-    this.setState({ showTooltip: true });
-  }
-
-  handleLeave () {
-    this.setState({ showTooltip: false });
-  }
-
   render () {
     const { baseCSS, cellSuffix, colSpan, entry, styling, qlik } = this.props;
-    const { showTooltip } = this.state;
     const inEditState = qlik.inEditState();
 
     const style = {
@@ -51,16 +29,14 @@ class ColumnHeader extends React.Component {
         className={`grid-cells2${cellSuffix}`}
         colSpan={colSpan}
         onClick={this.handleSelect}
-        onMouseOut={this.handleLeave}
-        onMouseOver={this.handleEnter}
         style={style}
       >
-        {entry.displayValue}
-        {showTooltip && !inEditState
-          ?
-          <Tooltip>
-            {entry.displayValue}
-          </Tooltip> : null}
+        <Tooltip
+          isTooltipActive={!inEditState}
+          tooltipText={entry.displayValue}
+        >
+          {entry.displayValue}
+        </Tooltip>
       </th>
     );
   }
