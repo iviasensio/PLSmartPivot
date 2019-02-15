@@ -29,7 +29,6 @@ class ColumnHeader extends React.Component {
   }
 
   handleEnter (event) {
-    console.log(event.clientX);
     this.setState({ showTooltip: true,
       mouseXPosition: event.clientX,
       mouseYPosition: event.clientY });
