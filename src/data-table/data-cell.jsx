@@ -65,9 +65,7 @@ class DataCell extends React.Component {
   constructor (props) {
     super(props);
     this.state = {
-      showTooltip: false,
-      mouseXPosition: 0,
-      mouseYPosition: 0
+      showTooltip: false
     };
     this.handleEnter = this.handleEnter.bind(this);
     this.handleLeave = this.handleLeave.bind(this);
@@ -96,10 +94,8 @@ class DataCell extends React.Component {
     }
   }
 
-  handleEnter (event) {
-    this.setState({ showTooltip: true,
-      mouseXPosition: event.clientX,
-      mouseYPosition: event.clientY });
+  handleEnter () {
+    this.setState({ showTooltip: true });
   }
 
   handleLeave () {
@@ -107,7 +103,7 @@ class DataCell extends React.Component {
   }
 
   render () {
-    const { showTooltip, mouseXPosition, mouseYPosition } = this.state;
+    const { showTooltip } = this.state;
     const {
       data,
       general,
@@ -168,11 +164,9 @@ class DataCell extends React.Component {
         {formattedMeasurementValue}
         {showTooltip && !inEditState && formattedMeasurementValue !== '.'
           ?
-          <Tooltip
-            data={formattedMeasurementValue}
-            xPosition={mouseXPosition}
-            yPosition={mouseYPosition}
-          /> : null}
+          <Tooltip>
+            {formattedMeasurementValue}
+          </Tooltip> : null}
       </td>
     );
   }

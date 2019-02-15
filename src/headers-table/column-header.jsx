@@ -6,9 +6,7 @@ class ColumnHeader extends React.Component {
   constructor (props) {
     super(props);
     this.state = {
-      showTooltip: false,
-      mouseXPosition: 0,
-      mouseYPosition: 0
+      showTooltip: false
     };
     this.handleEnter = this.handleEnter.bind(this);
     this.handleLeave = this.handleLeave.bind(this);
@@ -28,10 +26,8 @@ class ColumnHeader extends React.Component {
     qlik.backendApi.selectValues(1, [entry.elementNumber], true);
   }
 
-  handleEnter (event) {
-    this.setState({ showTooltip: true,
-      mouseXPosition: event.clientX,
-      mouseYPosition: event.clientY });
+  handleEnter () {
+    this.setState({ showTooltip: true });
   }
 
   handleLeave () {
@@ -40,7 +36,7 @@ class ColumnHeader extends React.Component {
 
   render () {
     const { baseCSS, cellSuffix, colSpan, entry, styling, qlik } = this.props;
-    const { showTooltip, mouseXPosition, mouseYPosition } = this.state;
+    const { showTooltip } = this.state;
     const inEditState = qlik.inEditState();
 
     const style = {
@@ -62,11 +58,9 @@ class ColumnHeader extends React.Component {
         {entry.displayValue}
         {showTooltip && !inEditState
           ?
-          <Tooltip
-            data={entry.displayValue}
-            xPosition={mouseXPosition}
-            yPosition={mouseYPosition}
-          /> : null}
+          <Tooltip>
+            {entry.displayValue}
+          </Tooltip> : null}
       </th>
     );
   }
