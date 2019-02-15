@@ -60,29 +60,6 @@ export default async function paint ($element, layout, component) {
     $(`[tid="${layout.qInfo.qId}"] .kpi-table`).css('left', `${Math.round(t.target.scrollLeft)}px`);
   });
 
-  // TODO: fixing tooltips has a seperate issue, make sure to remove this as part of that issue
-  // $(`[tid="${layout.qInfo.qId}"] .header-wrapper th`).hover(function () {
-  //   $(`[tid="${layout.qInfo.qId}"] .tooltip`).delay(500)
-  //     .show(0);
-  //   $(`[tid="${layout.qInfo.qId}"] .header-wrapper th`).children(`[tid="${layout.qInfo.qId}"] .tooltip`)
-  //     .remove();
-
-  //   const element = $(this);
-  //   const offset = element.offset();
-  //   const toolTip = $('<div class="tooltip"></div>');
-
-  //   toolTip.css({
-  //     left: offset.left,
-  //     top: offset.top
-  //   });
-
-  //   toolTip.text(element.text());
-  //   $(`[tid="${layout.qInfo.qId}"] .header-wrapper th`).append(toolTip);
-  // }, () => {
-  //   $(`[tid="${layout.qInfo.qId}"] .tooltip`).delay(0)
-  //     .hide(0);
-  // });
-
   // TODO: excel export is broken in most browsers, fixing it has an issue of it's own (leaving it disabled for now)
   // import { enableExcelExport } from './excel-export';
   // enableExcelExport(layout, html);
