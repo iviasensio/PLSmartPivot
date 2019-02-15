@@ -61,23 +61,10 @@ function getSemaphoreColors (measurement, semaphoreColors) {
   }
   return semaphoreColors.statusColors.normal;
 }
-class DataCell extends React.Component {
+class DataCell extends React.PureComponent {
   constructor (props) {
     super(props);
-    this.state = {
-      showTooltip: false
-    };
-    this.handleEnter = this.handleEnter.bind(this);
-    this.handleLeave = this.handleLeave.bind(this);
     this.handleSelect = this.handleSelect.bind(this);
-  }
-
-  shouldComponentUpdate (nextProps, nextState) {
-    const { showTooltip } = this.state;
-    if (showTooltip === nextState.showTooltip) {
-      return false;
-    }
-    return true;
   }
 
   handleSelect () {
@@ -94,16 +81,7 @@ class DataCell extends React.Component {
     }
   }
 
-  handleEnter () {
-    this.setState({ showTooltip: true });
-  }
-
-  handleLeave () {
-    this.setState({ showTooltip: false });
-  }
-
   render () {
-    const { showTooltip } = this.state;
     const {
       data,
       general,
@@ -157,16 +135,14 @@ class DataCell extends React.Component {
       <td
         className={`${cellClass}${general.cellSuffix}`}
         onClick={this.handleSelect}
-        onMouseOut={this.handleLeave}
-        onMouseOver={this.handleEnter}
         style={cellStyle}
       >
-        {formattedMeasurementValue}
-        {showTooltip && !inEditState && formattedMeasurementValue !== '.'
-          ?
-          <Tooltip>
-            {formattedMeasurementValue}
-          </Tooltip> : null}
+        <Tooltip
+          isTooltipActive={!inEditState}
+          tooltipText={formattedMeasurementValue}
+        >
+          {formattedMeasurementValue}
+        </Tooltip>
       </td>
     );
   }
