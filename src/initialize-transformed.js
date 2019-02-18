@@ -279,7 +279,8 @@ async function initializeTransformed ({ $element, layout, component }) {
         backgroundColorOdd: colors[`vColLib${layout.ColorSchemaP}`],
         color: layout.BodyTextColorSchema,
         fontFamily: layout.FontFamily,
-        fontSizeAdjustment: getFontSizeAdjustment(layout.lettersize)
+        fontSizeAdjustment: getFontSizeAdjustment(layout.lettersize),
+        textAlignment: layout.cellTextAlignment
       },
       semaphoreColors: {
         fieldsToApplyTo: {

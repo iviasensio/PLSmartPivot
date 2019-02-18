@@ -90,12 +90,22 @@ class DataCell extends React.PureComponent {
     if (styleBuilder.hasComments()) {
       formattedMeasurementValue = '.';
     }
+    let textAlignment = 'Right';
+    const textAlignmentProp = styling.options.textAlignment;
+
+    if (textAlignmentProp === 1) {
+      textAlignment = 'Left';
+    } else if (textAlignmentProp === 2) {
+      textAlignment = 'Center';
+    } else {
+      textAlignment = 'Right';
+    }
 
     let cellStyle = {
       fontFamily: styling.options.fontFamily,
       ...styleBuilder.getStyle(),
       paddingLeft: '4px',
-      textAlign: 'right'
+      textAlign: textAlignment
 
     };
     const { semaphoreColors } = styling;
@@ -109,7 +119,7 @@ class DataCell extends React.PureComponent {
         fontFamily: styling.options.fontFamily,
         fontSize: styleBuilder.getStyle().fontSize,
         paddingLeft: '4px',
-        textAlign: 'right'
+        textAlign: textAlignment
       };
     }
 
