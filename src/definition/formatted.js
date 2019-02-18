@@ -140,6 +140,10 @@ const formatted = {
       label: 'FontFamily',
       options: [
         {
+          value: 'QlikView Sans',
+          label: 'QlikView Sans'
+        },
+        {
           value: 'Arial',
           label: 'Arial'
         },
@@ -164,7 +168,7 @@ const formatted = {
           label: 'Verdana'
         }
       ],
-      defaultValue: 'Calibri'
+      defaultValue: 'QlikView Sans'
     },
     DataFontSize: {
       ref: 'lettersize',
