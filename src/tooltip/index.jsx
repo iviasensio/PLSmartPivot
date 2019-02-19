@@ -7,6 +7,7 @@ class Tooltip extends React.Component {
       showTooltip: false
     };
     this.handleRenderTooltip = this.handleRenderTooltip.bind(this);
+    this.handleCalculateTooltipPosition = this.handleCalculateTooltipPosition.bind(this);
   }
 
   shouldComponentUpdate (nextProps, nextState) {
@@ -22,12 +23,23 @@ class Tooltip extends React.Component {
     this.setState({ showTooltip: !showTooltip });
   }
 
+  handleCalculateTooltipPosition (event) {
+    const tooltipClassName = 'tooltip-wrapper';
+    let tooltip = document.getElementsByClassName(tooltipClassName);
+    const xPositionOffset = 25;
+    const yPositionOffset = 65;
+
+    tooltip[0].style.left = event.clientX - xPositionOffset + 'px';
+    tooltip[0].style.top = event.clientY - yPositionOffset + 'px';
+  }
+
   render () {
     const { children, tooltipText, isTooltipActive } = this.props;
     const { showTooltip } = this.state;
 
     return (
       <div
+        onMouseMove={this.handleCalculateTooltipPosition}
         onMouseOut={this.handleRenderTooltip}
         onMouseOver={this.handleRenderTooltip}
       >
