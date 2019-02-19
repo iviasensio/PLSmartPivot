@@ -92,13 +92,8 @@ class DataCell extends React.PureComponent {
     }
     let textAlignment = 'Right';
     const textAlignmentProp = styling.options.textAlignment;
-
-    if (textAlignmentProp === 1) {
-      textAlignment = 'Left';
-    } else if (textAlignmentProp === 2) {
-      textAlignment = 'Center';
-    } else {
-      textAlignment = 'Right';
+    if (textAlignmentProp) {
+      textAlignment = textAlignmentProp;
     }
 
     let cellStyle = {
