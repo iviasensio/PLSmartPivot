@@ -116,7 +116,7 @@ module.exports = {
     "max-params": ["warn"],
     "brace-style": ["warn", "1tbs", { "allowSingleLine": true }],
     "prefer-const": ["warn"],
-
+    "class-methods-use-this":["warn"],
     // plugin:react
     "react/jsx-indent": ["warn", 2],
     "react/jsx-indent-props": ["warn", 2],
