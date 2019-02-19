@@ -4,26 +4,26 @@ import { distinctArray } from './utilities';
 // TODO: rename colors
 function initializeColors ({ layout }) {
   return {
-    vColLibBlue: layout.collibblue,
-    vColLibBlueP: layout.collibbluep,
+    vColLibBlue: layout.collibblue || '#b7dbff',
+    vColLibBlueP: layout.collibbluep || '4477aa',
     vColLibClean: layout.collibclean,
     vColLibCleanP: layout.collibcleanp,
     vColLibCustom: layout.collibcustom,
     vColLibCustomP: layout.collibcustomp,
-    vColLibDark: layout.collibdark,
-    vColLibDarkP: layout.collibdarkp,
-    vColLibGreen: layout.collibgreen,
-    vColLibGreenP: layout.collibgreenp,
-    vColLibNight: layout.collibnight,
-    vColLibNightP: layout.collibnightp,
-    vColLibOrange: layout.colliborange,
-    vColLibOrangeP: layout.colliborangep,
-    vColLibRed: layout.collibred,
-    vColLibRedP: layout.collibredp,
+    vColLibDark: layout.collibdark || '#C4C4C4',
+    vColLibDarkP: layout.collibdarkp || '#A0A0A0',
+    vColLibGreen: layout.collibgreen || '#689A68',
+    vColLibGreenP: layout.collibgreenp || '#406740',
+    vColLibNight: layout.collibnight || '#191970',
+    vColLibNightP: layout.collibnightp || '#151567',
+    vColLibOrange: layout.colliborange || '#ffa500',
+    vColLibOrangeP: layout.colliborangep || '#ff8c00',
+    vColLibRed: layout.collibred || '#ff0000',
+    vColLibRedP: layout.collibredp || '#8b0000',
     vColLibSoft: layout.collibsoft,
     vColLibSoftP: layout.collibsoftp,
-    vColLibViolete: layout.collibviolete,
-    vColLibVioleteP: layout.collibvioletep
+    vColLibViolete: layout.collibviolete || '#CCC0FF',
+    vColLibVioleteP: layout.collibvioletep || '#AEA0EC'
   };
 }
 
