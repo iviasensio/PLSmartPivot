@@ -7,17 +7,21 @@
   }
   .tooltip-wrapper{
     min-width: 25px;
-    position: fixed;
+    position: absolute;
     padding: 5px;
     padding-top: 15px;
   	background-color: #404040;
-  	z-index: 10;
+  	z-index: 100;
   	pointer-events: none;
   	border-radius: 5px;
     height: 30px;
     width: auto;
     opacity: .9;
     text-align: center;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    transform: translate(0,-70%);
     >p{
       color: #fff;
     }
@@ -163,7 +167,10 @@
 		background-color: #808080 !important;
 		color: #ffffff;
 	}
-
+  .grid-cells{
+    position: relative;
+    overflow: visible;
+  }
 	.grid-cells-header {
 		padding: 0px;
 	}

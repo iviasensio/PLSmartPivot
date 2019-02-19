@@ -4,9 +4,7 @@ class Tooltip extends React.Component {
   constructor (props) {
     super(props);
     this.state = {
-      showTooltip: false,
-      xPosition: 0,
-      yPosition: 0
+      showTooltip: false
     };
     this.handleRenderTooltip = this.handleRenderTooltip.bind(this);
   }
@@ -19,21 +17,15 @@ class Tooltip extends React.Component {
     return true;
   }
 
-  handleRenderTooltip (event) {
+  handleRenderTooltip () {
     const { showTooltip } = this.state;
-    const xPosition = event.clientX;
-    const yPosition = event.clientY;
-    this.setState({ showTooltip: !showTooltip,
-      xPosition,
-      yPosition });
+    this.setState({ showTooltip: !showTooltip });
   }
 
   render () {
     const { children, tooltipText, isTooltipActive } = this.props;
-    const { showTooltip, xPosition, yPosition } = this.state;
+    const { showTooltip } = this.state;
 
-    const xPositionOffset = 20;
-    const yPositionOffset = 75;
     return (
       <div
         onMouseOut={this.handleRenderTooltip}
@@ -45,8 +37,6 @@ class Tooltip extends React.Component {
           ? (
             <div
               className="tooltip-wrapper"
-              style={{ 'left': `${xPosition - xPositionOffset}px`,
-                'top': `${yPosition - yPositionOffset}px` }}
             >
               <p>
                 {tooltipText}
