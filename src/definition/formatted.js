@@ -185,7 +185,7 @@ const formatted = {
           label: 'Medium'
         }
       ],
-      defaultValue: 2
+      defaultValue: 1
     },
     ColumnWidthSlider: {
       type: 'number',
