@@ -25,6 +25,11 @@ export default {
       qMeasures: []
     }
   },
+  support: {
+    export: true,
+    exportData: true,
+    snapshot: true
+  },
   paint ($element, layout) {
     try {
       paint($element, layout, this);
