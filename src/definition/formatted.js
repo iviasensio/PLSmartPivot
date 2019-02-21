@@ -189,19 +189,19 @@ const formatted = {
       component: 'buttongroup',
       options: [
         {
-          value: 'Left',
+          value: 'left',
           label: 'Left'
         },
         {
-          value: 'Center',
+          value: 'center',
           label: 'Center'
         },
         {
-          value: 'Right',
+          value: 'right',
           label: 'Right'
         }
       ],
-      defaultValue: 'Right'
+      defaultValue: 'right'
     },
     ColumnWidthSlider: {
       type: 'number',
