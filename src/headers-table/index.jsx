@@ -5,84 +5,52 @@ import ColumnHeader from './column-header.jsx';
 import MeasurementColumnHeader from './measurement-column-header.jsx';
 import { injectSeparators } from '../utilities';
 
-const HeadersTable = ({ data, general, qlik, styling }) => {
-  const baseCSS = {
-    backgroundColor: styling.headerOptions.colorSchema,
-    color: styling.headerOptions.textColor,
-    fontFamily: styling.options.fontFamily,
-    textAlign: styling.headerOptions.alignment
-  };
+class HeadersTable extends React.Component {
+  render () {
+    const { data, general, qlik, styling } = this.props;
+    const baseCSS = {
+      backgroundColor: styling.headerOptions.colorSchema,
+      color: styling.headerOptions.textColor,
+      fontFamily: styling.options.fontFamily,
+      textAlign: styling.headerOptions.alignment
+    };
 
-  const {
-    dimension1,
-    dimension2,
-    measurements
-  } = data.headers;
+    const {
+      dimension1,
+      dimension2,
+      measurements
+    } = data.headers;
 
-  const hasSecondDimension = dimension2.length > 0;
+    const hasSecondDimension = dimension2.length > 0;
 
-  return (
-    <div className="header-wrapper">
-      <table className="header">
-        <tbody>
-          <tr>
-            <ExportColumnHeader
-              allowExcelExport={general.allowExcelExport}
-              baseCSS={baseCSS}
-              general={general}
-              hasSecondDimension={hasSecondDimension}
-              styling={styling}
-              title={dimension1[0].name}
-            />
-            {!hasSecondDimension && measurements.map(measurementEntry => (
-              <MeasurementColumnHeader
+    return (
+      <div className="header-wrapper">
+        <table className="header">
+          <tbody>
+            <tr>
+              <ExportColumnHeader
+                allowExcelExport={general.allowExcelExport}
                 baseCSS={baseCSS}
-                general={general}
                 hasSecondDimension={hasSecondDimension}
-                key={`${measurementEntry.displayValue}-${measurementEntry.name}`}
-                measurement={measurementEntry}
                 styling={styling}
+                title={dimension1[0].name}
               />
-            ))}
-            {hasSecondDimension && injectSeparators(dimension2, styling.useSeparatorColumns).map((entry, index) => {
-              if (entry.isSeparator) {
-                const separatorStyle = {
-                  color: 'white',
-                  fontFamily: styling.options.fontFamily,
-                  fontSize: `${13 + styling.headerOptions.fontSizeAdjustment}px`
-                };
-
-                return (
-                  <th
-                    className="empty"
-                    key={index}
-                    style={separatorStyle}
-                  >
-                    *
-                  </th>
-                );
-              }
-              return (
-                <ColumnHeader
+              {!hasSecondDimension && measurements.map(measurementEntry => (
+                <MeasurementColumnHeader
                   baseCSS={baseCSS}
-                  cellSuffix={general.cellSuffix}
-                  colSpan={measurements.length}
-                  entry={entry}
-                  key={entry.displayValue}
-                  qlik={qlik}
+                  general={general}
+                  hasSecondDimension={hasSecondDimension}
+                  key={`${measurementEntry.displayValue}-${measurementEntry.name}`}
+                  measurement={measurementEntry}
                   styling={styling}
                 />
-              );
-            })}
-          </tr>
-          {hasSecondDimension && (
-            <tr>
-              {injectSeparators(dimension2, styling.useSeparatorColumns).map((dimensionEntry, index) => {
-                if (dimensionEntry.isSeparator) {
+              ))}
+              {hasSecondDimension && injectSeparators(dimension2, styling.useSeparatorColumns).map((entry, index) => {
+                if (entry.isSeparator) {
                   const separatorStyle = {
                     color: 'white',
                     fontFamily: styling.options.fontFamily,
-                    fontSize: `${12 + styling.headerOptions.fontSizeAdjustment}px`
+                    fontSize: `${13 + styling.headerOptions.fontSizeAdjustment}px`
                   };
 
                   return (
@@ -95,25 +63,62 @@ const HeadersTable = ({ data, general, qlik, styling }) => {
                     </th>
                   );
                 }
-                return measurements.map(measurementEntry => (
-                  <MeasurementColumnHeader
+                return (
+                  <ColumnHeader
                     baseCSS={baseCSS}
-                    dimensionEntry={dimensionEntry}
-                    general={general}
-                    hasSecondDimension={hasSecondDimension}
-                    key={`${measurementEntry.displayValue}-${measurementEntry.name}-${dimensionEntry.name}`}
-                    measurement={measurementEntry}
+                    cellSuffix={general.cellSuffix}
+                    colSpan={measurements.length}
+                    entry={entry}
+                    key={entry.displayValue}
+                    qlik={qlik}
                     styling={styling}
                   />
-                ));
+                );
               })}
             </tr>
-          )}
-        </tbody>
-      </table>
-    </div>
-  );
-};
+            {hasSecondDimension && (
+              <tr>
+                {injectSeparators(dimension2, styling.useSeparatorColumns).map((dimensionEntry, index) => {
+                  if (dimensionEntry.isSeparator) {
+                    const separatorStyle = {
+                      color: 'white',
+                      fontFamily: styling.options.fontFamily,
+                      fontSize: `${12 + styling.headerOptions.fontSizeAdjustment}px`
+                    };
+
+                    return (
+                      <th
+                        className="empty"
+                        key={index}
+                        style={separatorStyle}
+                      >
+                        *
+                      </th>
+                    );
+                  }
+                  return measurements.map(measurementEntry => (
+                    <MeasurementColumnHeader
+                      baseCSS={baseCSS}
+                      dimensionEntry={dimensionEntry}
+                      general={general}
+                      hasSecondDimension={hasSecondDimension}
+                      key={`${measurementEntry.displayValue}-${measurementEntry.name}-${dimensionEntry.name}`}
+                      measurement={measurementEntry}
+                      styling={styling}
+                    />
+                  ));
+                })}
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </div>
+    );
+  }
+}
+
+// const HeadersTable = ({ data, general, qlik, styling }) => {
+// };
 
 HeadersTable.propTypes = {
   data: PropTypes.shape({

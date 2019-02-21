@@ -4,6 +4,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import HeadersTable from './headers-table/index.jsx';
 import DataTable from './data-table/index.jsx';
+import { LinkedScrollWrapper, LinkedScrollSection } from './linked-scroll';
 
 export default async function paint ($element, layout, component) {
   const state = await initializeStore({
@@ -13,7 +14,7 @@ export default async function paint ($element, layout, component) {
   });
 
   const jsx = (
-    <React.Fragment>
+    <LinkedScrollWrapper>
       <div className="kpi-table">
         <HeadersTable
           data={state.data}
@@ -21,43 +22,41 @@ export default async function paint ($element, layout, component) {
           qlik={component}
           styling={state.styling}
         />
-        <DataTable
-          data={state.data}
-          general={state.general}
-          qlik={component}
-          renderData={false}
-          styling={state.styling}
-        />
+        <LinkedScrollSection linkVertical>
+          <DataTable
+            data={state.data}
+            general={state.general}
+            qlik={component}
+            renderData={false}
+            styling={state.styling}
+          />
+        </LinkedScrollSection>
       </div>
       <div className="data-table">
-        <HeadersTable
-          data={state.data}
-          general={state.general}
-          qlik={component}
-          styling={state.styling}
-        />
-        <DataTable
-          data={state.data}
-          general={state.general}
-          qlik={component}
-          styling={state.styling}
-        />
+        <LinkedScrollSection linkHorizontal>
+          <HeadersTable
+            data={state.data}
+            general={state.general}
+            qlik={component}
+            styling={state.styling}
+          />
+        </LinkedScrollSection>
+        <LinkedScrollSection
+          linkHorizontal
+          linkVertical
+        >
+          <DataTable
+            data={state.data}
+            general={state.general}
+            qlik={component}
+            styling={state.styling}
+          />
+        </LinkedScrollSection>
       </div>
-    </React.Fragment>
+    </LinkedScrollWrapper>
   );
 
   ReactDOM.render(jsx, $element[0]);
-
-  // TODO: skipped the following as they weren't blockers for letting react handle rendering,
-  // they are however the only reason we still depend on jQuery and should be removed as part of unnecessary dependencies issue
-  $(`[tid="${layout.qInfo.qId}"] .data-table .row-wrapper`).on('scroll', function () {
-    $(`[tid="${layout.qInfo.qId}"] .kpi-table .row-wrapper`).scrollTop($(this).scrollTop());
-  });
-
-  // freeze first column
-  $(`[tid="${layout.qInfo.qId}"] .qv-object-content-container`).on('scroll', (t) => {
-    $(`[tid="${layout.qInfo.qId}"] .kpi-table`).css('left', `${Math.round(t.target.scrollLeft)}px`);
-  });
 
   // TODO: fixing tooltips has a seperate issue, make sure to remove this as part of that issue
   $(`[tid="${layout.qInfo.qId}"] .header-wrapper th`).hover(function () {
