@@ -39,8 +39,8 @@ function getAlignment (option) {
 
 function getFontSizeAdjustment (option) {
   const fontSizeAdjustmentOptions = {
-    1: -2,
-    2: 0,
+    1: -1,
+    2: 1,
     3: 2
   };
 
