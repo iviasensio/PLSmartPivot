@@ -255,7 +255,10 @@ async function initializeTransformed ({ $element, layout, component }) {
       allowFilteringByClick: layout.filteroncellclick,
       cellSuffix: getCellSuffix(layout.columnwidthslider), // TOOD: move to matrix cells or is it headers.measurements?
       errorMessage: layout.errormessage,
-      maxLoops
+      footnote: layout.footnote,
+      maxLoops,
+      subtitle: layout.subtitle,
+      title: layout.title
     },
     selection: {
       dimensionSelectionCounts: dimensionsInformation.map(dimensionInfo => dimensionInfo.qStateCounts.qSelected)
