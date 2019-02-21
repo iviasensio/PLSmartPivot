@@ -10,6 +10,11 @@ describe('<HeadersTable />', () => {
   const defaultProps = {
     data,
     general,
+    qlik: {
+      backendApi: {
+        selectValues: () => {}
+      }
+    },
     styling
   };
 

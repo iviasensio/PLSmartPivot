@@ -17,10 +17,6 @@ module.exports = (config) => {
     },
     files: [
       {
-        pattern: 'src/*.spec.js',
-        watched: true
-      },
-      {
         pattern: 'src/**/*.spec.js',
         watched: true
       }
@@ -28,10 +24,6 @@ module.exports = (config) => {
     frameworks: ['jasmine'],
     preprocessors: {
       'src/**/*.spec.{js, jsx}': [
-        'webpack',
-        'sourcemap'
-      ],
-      'src/*.spec.{js, jsx}': [
         'webpack',
         'sourcemap'
       ]
@@ -68,10 +60,6 @@ module.exports = (config) => {
         alias: {
           'test-utilities': path.resolve('test/test-utilities')
         },
-        // extensions: [
-        //   'js',
-        //   'jsx'
-        // ],
         modules: ['node_modules']
       }
     }

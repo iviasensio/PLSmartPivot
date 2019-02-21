@@ -6,7 +6,14 @@ import sampleState from 'test-utilities/capex-sample-state';
 
 describe('<Root />', () => {
   const state = sampleState;
-  const defaultProps = { state };
+  const defaultProps = {
+    qlik: {
+      backendApi: {
+        selectValues: () => {}
+      }
+    },
+    state
+  };
 
   function setup (otherProps = {}) {
     const props = merge(defaultProps, otherProps);
