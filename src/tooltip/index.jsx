@@ -1,5 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
+const handleCalculateTooltipPosition = (event) => {
+  const tooltipClassName = 'tooltip-wrapper';
+  const tooltip = document.getElementsByClassName(tooltipClassName);
+
+  tooltip[0].style.left = event.clientX + 'px';
+  tooltip[0].style.top = event.clientY + 'px';
+};
 class Tooltip extends React.Component {
   constructor (props) {
     super(props);
@@ -7,7 +15,6 @@ class Tooltip extends React.Component {
       showTooltip: false
     };
     this.handleRenderTooltip = this.handleRenderTooltip.bind(this);
-    this.handleCalculateTooltipPosition = this.handleCalculateTooltipPosition.bind(this);
   }
 
   shouldComponentUpdate (nextProps, nextState) {
@@ -23,29 +30,20 @@ class Tooltip extends React.Component {
     this.setState({ showTooltip: !showTooltip });
   }
 
-  handleCalculateTooltipPosition (event) {
-    const tooltipClassName = 'tooltip-wrapper';
-    let tooltip = document.getElementsByClassName(tooltipClassName);
-    const xPositionOffset = 25;
-    const yPositionOffset = 65;
-
-    tooltip[0].style.left = event.clientX - xPositionOffset + 'px';
-    tooltip[0].style.top = event.clientY - yPositionOffset + 'px';
-  }
 
   render () {
-    const { children, tooltipText, isTooltipActive } = this.props;
+    const { children, tooltipText } = this.props;
     const { showTooltip } = this.state;
 
     return (
       <div
-        onMouseMove={this.handleCalculateTooltipPosition}
+        onMouseMove={handleCalculateTooltipPosition}
         onMouseOut={this.handleRenderTooltip}
         onMouseOver={this.handleRenderTooltip}
       >
         {children}
 
-        {showTooltip && isTooltipActive
+        {showTooltip
           ? (
             <div
               className="tooltip-wrapper"
@@ -62,7 +60,6 @@ class Tooltip extends React.Component {
 
 Tooltip.propTypes = {
   children: PropTypes.string.isRequired,
-  isTooltipActive: PropTypes.bool.isRequired,
   tooltipText: PropTypes.string.isRequired
 };
 export default Tooltip;
