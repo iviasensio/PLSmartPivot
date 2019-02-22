@@ -1,204 +1,259 @@
+/* eslint-disable */
 .qv-object-qlik-smart-pivot {
   @TableBorder: 1px solid #d3d3d3;
   @KpiTableWidth: 230px;
-  .edit-mode{
+
+  .edit-mode {
     pointer-events: none;
   }
+
   ._cell(@Width: 50px) {
-  	min-width: @Width!important;
-  	max-width: @Width!important;
-  	cursor: pointer;
-  	line-height: 1em!important;
+    min-width: @Width !important;
+    max-width: @Width !important;
+    cursor: pointer;
+    line-height: 1em !important;
   }
 
-	div.qv-object-content-container {
-		z-index: 110;
-	}
+  div.qv-object-content-container {
+    z-index: 110;
+  }
 
-	.icon-xls {
-		text-align: left;
-	}
+  .icon-xls {
+    text-align: left;
+  }
 
-	button {
-		width: 100%;
-	}
+  button {
+    width: 100%;
+  }
 
-	table {
-		border-collapse: collapse;
-		border-spacing: 0;
-		width: auto;
-		border-left: @TableBorder;
-		border-right: @TableBorder;
-		border-top: @TableBorder;
-	}
+  table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    width: auto;
+    border-left: @TableBorder;
+    border-right: @TableBorder;
+    border-top: @TableBorder;
+  }
 
-	td, th {
-		border: 1px solid #ffffff;
-		padding: 5px;
-		border-collapse: collapse;
-		white-space: nowrap;
-		overflow: hidden;
-		text-overflow: ellipsis;
-		vertical-align: middle;
-		cursor: default;
-	}
+  td,
+  th {
+    border: 1px solid #fff;
+    padding: 5px;
+    border-collapse: collapse;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    vertical-align: middle;
+    cursor: default;
+  }
 
-	.empty {
-		width: 3%;
-		background: #ffffff;
-		min-width: 4px !important;
-		max-width: 4px !important;
-	}
+  .empty {
+    width: 3%;
+    background: #fff;
+    min-width: 4px !important;
+    max-width: 4px !important;
+  }
 
-	th.main-kpi {
-		text-align: center;
-		vertical-align: middle;
-		border-bottom: @TableBorder;
-	}
+  th.main-kpi {
+    text-align: center;
+    vertical-align: middle;
+    border-bottom: @TableBorder;
+  }
 
-	.numeric {
-		text-align: right;
-	}
-	/*This is for wrap text in headers*/
-	.wrapclass25 {
-		width: 100%;
-		height: 25px;
-		white-space: pre-line;
-		overflow: hidden;
-		display: block;
-	}
+  .numeric {
+    text-align: right;
+  }
 
-	.wrapclass45 {
-		width: 100%;
-		height: 45px;
-		white-space: pre-line;
-		overflow: hidden;
-		display: block;
-	}
+  /* This is for wrap text in headers */
+  .wrapclass25 {
+    width: 100%;
+    height: 25px;
+    white-space: pre-line;
+    overflow: hidden;
+    display: block;
+  }
 
-	.wrapclass70 {
-		width: 100%;
-		height: 70px;
-		white-space: pre-line;
-		overflow: hidden;
-		display: inline-block;
-		vertical-align: middle;
-		line-height: 20px;
-	}
+  .wrapclass45 {
+    width: 100%;
+    height: 45px;
+    white-space: pre-line;
+    overflow: hidden;
+    display: block;
+  }
 
-	.wrapclassEmpty {
-		width: 100%;
-	}
-	/*******************/
-	/* Medium column size*/
-	/*******************/
-	.grid-cells { ._cell(70px); }
-	.grid-cells2 { ._cell(70px); }
-	.grid-cells-small { ._cell(52px); }
-	.grid-cells2-small { ._cell(52px); }
-	/*******************/
-	/* Small column size*/
-	/*******************/
-	.grid-cells-s { ._cell(67px); }
-	.grid-cells2-s { ._cell(67px); }
-	.grid-cells-small-s { ._cell(52px); }
-	.grid-cells2-small-s { ._cell(52px); }
-	/*******************/
-	/* large column size*/
-	/*******************/
-	.grid-cells-l { ._cell(82px); }
-	.grid-cells2-l { ._cell(82px); }
-	.grid-cells-small-l { ._cell(66px); }
-	.grid-cells2-small-l { ._cell(66px); }
+  .wrapclass70 {
+    width: 100%;
+    height: 70px;
+    white-space: pre-line;
+    overflow: hidden;
+    display: inline-block;
+    vertical-align: middle;
+    line-height: 20px;
+  }
 
-	/*END OF GRID CELLS*/
-	/*First Column*/
-	.fdim-cells {
-		min-width: 230px !Important;
-		max-width: 230px !Important;
-		cursor: pointer;
-		background-color: white;
-	}
+  .wrapclassEmpty {
+    width: 100%;
+  }
 
-	.fdim-cells:hover {
-		/*cursor: default;*/
-		background-color: #808080 !important;
-		color: #ffffff;
-	}
+  /* ***************** */
 
-	tbody tr:hover {
-		cursor: default;
-		background-color: #808080 !important;
-		color: #ffffff;
-	}
+  /* Medium column size */
 
-	.grid-cells-header {
-		padding: 0px;
-	}
+  /* ***************** */
 
-	.grid-cells-title {
-		min-width: 522px;
-	}
+  .grid-cells {
+    ._cell(70px);
+  }
 
-	.grid-cells:before {
-		content: "\00a0";
-	}
+  .grid-cells2 {
+    ._cell(70px);
+  }
+
+  .grid-cells-small {
+    ._cell(52px);
+  }
+
+  .grid-cells2-small {
+    ._cell(52px);
+  }
+
+  /* ***************** */
+
+  /* Small column size */
+
+  /* ***************** */
+  .grid-cells-s {
+    ._cell(67px);
+  }
+
+  .grid-cells2-s {
+    ._cell(67px);
+  }
+
+  .grid-cells-small-s {
+    ._cell(52px);
+  }
+
+  .grid-cells2-small-s {
+    ._cell(52px);
+  }
+
+  /* ***************** */
+
+  /* large column size */
+
+  /* ***************** */
+
+  .grid-cells-l {
+    ._cell(82px);
+  }
+
+  .grid-cells2-l {
+    ._cell(82px);
+  }
+
+  .grid-cells-small-l {
+    ._cell(66px);
+  }
+
+  .grid-cells2-small-l {
+    ._cell(66px);
+  }
+
+  /* END OF GRID CELLS */
+
+  /* First Column */
+  .fdim-cells {
+    min-width: 230px !Important;
+    max-width: 230px !Important;
+    cursor: pointer;
+    background-color: #fff;
+  }
+
+  .fdim-cells:hover {
+    background-color: #808080 !important;
+    color: #fff;
+  }
+
+  tbody tr:hover {
+    cursor: default;
+    background-color: #808080 !important;
+    color: #fff;
+  }
+
+  .grid-cells-header {
+    padding: 0;
+  }
+
+  .grid-cells-title {
+    min-width: 522px;
+  }
+
+  .grid-cells::before {
+    content: "\00a0";
+  }
 
   .grid {
-  	height: 50px;
-  	width: 350px;
+    height: 50px;
+    width: 350px;
   }
 
-  /*popups for headers*/
+  /* popups for headers */
+  .header-wrapper {
+    position: absolute;
+    top: 0;
+    z-index: 1;
+  }
+
   .tooltip {
-  	position: fixed !important;
-  	color: RGB(70,70,70);
-  	background-color: RGB(245,239,207);
-  	text-align: center;
-  	border: groove;
+    position: fixed !important;
+    color: rgb(70, 70, 70);
+    background-color: rgb(245, 239, 207);
+    text-align: center;
+    border: groove;
   }
 
-  /*end popups*/
   .row-wrapper {
-  	height: calc(~"100% - 97px");
-  	padding: 0;
-  	margin-top: 0;
+    height: calc(~"100% - 97px");
+    padding: 0;
+    margin-top: 0;
   }
 
-  .kpi-table .fdim-cells, .data-table td {
-  	line-height: 1em!important;
+  .kpi-table .fdim-cells,
+  .data-table td {
+    line-height: 1em !important;
   }
 
   .data-table .fdim-cells {
-  	display: none;
+    display: none;
   }
 
   .kpi-table {
-  	width: @KpiTableWidth !important;
-  	overflow: hidden !important;
+    width: @KpiTableWidth !important;
+    overflow: hidden !important;
     height: 100%;
-  	margin: 0;
-  	padding: 0;
-  	position: absolute;
-  	top: 0;
-  	left: 0;
-  	border-right: 1px solid white;
-  	box-shadow: 4px 2px 8px #e1e1e1;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-right: 1px solid #fff;
+    box-shadow: 4px 2px 8px #e1e1e1;
 
     .row-wrapper {
-    	height: calc(~"100% - 97px");
+      height: calc(~"100% - 97px");
       overflow: scroll;
       position: absolute;
-    	padding: 0;
-    	margin-top: 0;
+      padding: 0;
+      margin-top: 0;
     }
   }
 
   .data-table {
-  	height: 100%;
+    height: 100%;
     width: calc(100% - 243px);
-  	position: absolute;
-  	margin-left: @KpiTableWidth + 13px;
+    position: absolute;
+    margin-left: @KpiTableWidth + 13px;
 
     .header-wrapper {
       overflow: scroll;
@@ -206,11 +261,11 @@
     }
 
     .row-wrapper {
-    	height: calc(~"100% - 97px");
+      height: calc(~"100% - 97px");
       width: 100%;
       overflow: scroll;
-    	padding: 0;
-    	margin-top: 0;
+      padding: 0;
+      margin-top: 0;
     }
   }
 
@@ -219,11 +274,11 @@
   .kpi-table .row-wrapper,
   .data-table .header-wrapper,
   .data-table .row-wrapper {
-    -ms-overflow-style: none;  // IE 10+
-    -moz-overflow: -moz-scrollbars-none;  // Firefox
+    -ms-overflow-style: none; // IE 10+
+    -moz-overflow: -moz-scrollbars-none; // Firefox
 
     &::-webkit-scrollbar {
-      display: none;  // Safari and Chrome
+      display: none; // Safari and Chrome
     }
   }
 }

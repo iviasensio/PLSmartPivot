@@ -75,7 +75,9 @@ const config = {
       'resources/Accounts2.csv',
       'resources/QlikLook.csv'
     ], {}),
-    new StyleLintPlugin()
+    new StyleLintPlugin({
+      files: '**/*.less'
+    })
   ]
 };
 
