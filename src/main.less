@@ -204,25 +204,12 @@
     width: 350px;
   }
 
-  /* popups for headers */
-  .header-wrapper {
-    position: absolute;
-    top: 0;
-    z-index: 1;
-  }
-
   .tooltip {
     position: fixed !important;
     color: rgb(70, 70, 70);
     background-color: rgb(245, 239, 207);
     text-align: center;
     border: groove;
-  }
-
-  .row-wrapper {
-    height: calc(~"100% - 97px");
-    padding: 0;
-    margin-top: 0;
   }
 
   .kpi-table .fdim-cells,
@@ -280,6 +267,8 @@
   .kpi-table .row-wrapper,
   .data-table .header-wrapper,
   .data-table .row-wrapper {
+    /* stylelint-disable-next-line property-no-unknown */
+    scrollbar-width: none;
     -ms-overflow-style: none; // IE 10+
     -moz-overflow: -moz-scrollbars-none; // Firefox
 
