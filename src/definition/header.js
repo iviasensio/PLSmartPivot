@@ -27,7 +27,7 @@ const header = {
       ref: 'HeaderColorSchema',
       type: 'string',
       component: 'dropdown',
-      label: 'BackGround Header Color',
+      label: 'Background Header Color',
       options: [
         {
           value: 'Clean',

@@ -5,7 +5,7 @@ import ColumnHeader from './column-header.jsx';
 import MeasurementColumnHeader from './measurement-column-header.jsx';
 import { injectSeparators } from '../utilities';
 
-const HeadersTable = ({ data, general, styling }) => {
+const HeadersTable = ({ data, general, qlik, styling }) => {
   const baseCSS = {
     backgroundColor: styling.headerOptions.colorSchema,
     color: styling.headerOptions.textColor,
@@ -29,6 +29,7 @@ const HeadersTable = ({ data, general, styling }) => {
             <ExportColumnHeader
               allowExcelExport={general.allowExcelExport}
               baseCSS={baseCSS}
+              general={general}
               hasSecondDimension={hasSecondDimension}
               styling={styling}
               title={dimension1[0].name}
@@ -43,7 +44,7 @@ const HeadersTable = ({ data, general, styling }) => {
                 styling={styling}
               />
             ))}
-            {hasSecondDimension && injectSeparators(dimension2, styling.useSeparatorColumns).map(entry => {
+            {hasSecondDimension && injectSeparators(dimension2, styling.useSeparatorColumns).map((entry, index) => {
               if (entry.isSeparator) {
                 const separatorStyle = {
                   color: 'white',
@@ -54,6 +55,7 @@ const HeadersTable = ({ data, general, styling }) => {
                 return (
                   <th
                     className="empty"
+                    key={index}
                     style={separatorStyle}
                   >
                     *
@@ -65,16 +67,17 @@ const HeadersTable = ({ data, general, styling }) => {
                   baseCSS={baseCSS}
                   cellSuffix={general.cellSuffix}
                   colSpan={measurements.length}
+                  entry={entry}
                   key={entry.displayValue}
+                  qlik={qlik}
                   styling={styling}
-                  title={entry.displayValue}
                 />
               );
             })}
           </tr>
           {hasSecondDimension && (
             <tr>
-              {injectSeparators(dimension2, styling.useSeparatorColumns).map(dimensionEntry => {
+              {injectSeparators(dimension2, styling.useSeparatorColumns).map((dimensionEntry, index) => {
                 if (dimensionEntry.isSeparator) {
                   const separatorStyle = {
                     color: 'white',
@@ -85,6 +88,7 @@ const HeadersTable = ({ data, general, styling }) => {
                   return (
                     <th
                       className="empty"
+                      key={index}
                       style={separatorStyle}
                     >
                       *
@@ -120,6 +124,11 @@ HeadersTable.propTypes = {
     })
   }).isRequired,
   general: PropTypes.shape({}).isRequired,
+  qlik: PropTypes.shape({
+    backendApi: PropTypes.shape({
+      selectValues: PropTypes.func.isRequired
+    }).isRequired
+  }).isRequired,
   styling: PropTypes.shape({
     headerOptions: PropTypes.shape({}),
     options: PropTypes.shape({})

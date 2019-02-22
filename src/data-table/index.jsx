@@ -2,10 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import StyleBuilder from '../style-builder';
 import DataCell from './data-cell.jsx';
-import HeaderPadding from './header-padding.jsx';
+import RowHeader from './row-header.jsx';
 import { injectSeparators } from '../utilities';
 
-const DataTable = ({ data, general, styling }) => {
+const DataTable = ({ data, general, qlik, renderData, styling }) => {
   const {
     headers: {
       dimension1,
@@ -17,77 +17,83 @@ const DataTable = ({ data, general, styling }) => {
   return (
     <div className="row-wrapper">
       <table>
-        {dimension1.map((dimensionEntry, dimensionIndex) => {
-          const rowHeaderText = dimensionEntry.displayValue || '';
-          if (rowHeaderText === '-') {
-            return null;
-          }
-          const styleBuilder = new StyleBuilder(styling);
-          if (styling.hasCustomFileStyle) {
-            styleBuilder.parseCustomFileStyle(rowHeaderText);
-          } else {
-            styleBuilder.applyStandardAttributes(dimensionIndex);
-            styleBuilder.applyCustomStyle({
-              fontSize: `${14 + styling.options.fontSizeAdjustment}px`
-            });
-          }
-          const rowStyle = {
-            fontFamily: styling.options.fontFamily,
-            width: '230px',
-            ...styleBuilder.getStyle()
-          };
+        <tbody>
+          {dimension1.map((dimensionEntry, dimensionIndex) => {
+            const rowHeaderText = dimensionEntry.displayValue || '';
+            if (rowHeaderText === '-') {
+              return null;
+            }
+            const styleBuilder = new StyleBuilder(styling);
+            if (styling.hasCustomFileStyle) {
+              styleBuilder.parseCustomFileStyle(rowHeaderText);
+            } else {
+              styleBuilder.applyStandardAttributes(dimensionIndex);
+              styleBuilder.applyCustomStyle({
+                fontSize: `${14 + styling.options.fontSizeAdjustment}px`
+              });
+            }
+            const rowStyle = {
+              fontFamily: styling.options.fontFamily,
+              width: '230px',
+              ...styleBuilder.getStyle()
+            };
 
-          return (
-            <tr key={dimensionEntry.displayValue}>
-              <td
-                className="fdim-cells"
-                style={rowStyle}
-              >
-                <HeaderPadding
+            return (
+              <tr key={dimensionEntry.displayValue}>
+                <RowHeader
+                  entry={dimensionEntry}
+                  qlik={qlik}
+                  rowStyle={rowStyle}
                   styleBuilder={styleBuilder}
                   styling={styling}
                 />
-                {dimensionEntry.displayValue}
-              </td>
-              {injectSeparators(
-                matrix[dimensionIndex],
-                styling.useSeparatorColumns,
-                { atEvery: measurements.length }
-              ).map(measurementData => {
-                if (measurementData.isSeparator) {
-                  const separatorStyle = {
-                    color: 'white',
-                    fontFamily: styling.options.fontFamily,
-                    fontSize: `${12 + styling.options.fontSizeAdjustment}px`
-                  };
+                {renderData && injectSeparators(
+                  matrix[dimensionIndex],
+                  styling.useSeparatorColumns,
+                  { atEvery: measurements.length }
+                ).map((measurementData, index) => {
+                  if (measurementData.isSeparator) {
+                    const separatorStyle = {
+                      color: 'white',
+                      fontFamily: styling.options.fontFamily,
+                      fontSize: `${12 + styling.options.fontSizeAdjustment}px`
+                    };
 
+                    return (
+                      <td
+                        className="empty"
+                        key={`${dimensionEntry.displayValue}-${index}-separator`}
+                        style={separatorStyle}
+                      >
+                        *
+                      </td>
+                    );
+                  }
+                  const { dimension1: dimension1Info, dimension2, measurement } = measurementData.parents;
+                  const id = `${dimension1Info.elementNumber}-${dimension2 && dimension2.elementNumber}-${measurement.header}`;
                   return (
-                    <td
-                      className="empty"
-                      key={`${dimensionEntry.displayValue}-${measurementData.name}-separator`}
-                      style={separatorStyle}
-                    >
-                      *
-                    </td>
+                    <DataCell
+                      data={data}
+                      general={general}
+                      key={`${dimensionEntry.displayValue}-${id}`}
+                      measurement={measurementData}
+                      qlik={qlik}
+                      styleBuilder={styleBuilder}
+                      styling={styling}
+                    />
                   );
-                }
-                return (
-                  <DataCell
-                    data={data}
-                    general={general}
-                    key={`${dimensionEntry.displayValue}-${measurementData.name}`}
-                    measurement={measurementData}
-                    styleBuilder={styleBuilder}
-                    styling={styling}
-                  />
-                );
-              })}
-            </tr>
-          );
-        })}
+                })}
+              </tr>
+            );
+          })}
+        </tbody>
       </table>
     </div>
   );
+};
+
+DataTable.defaultProps = {
+  renderData: true
 };
 
 DataTable.propTypes = {
@@ -98,6 +104,8 @@ DataTable.propTypes = {
     matrix: PropTypes.arrayOf(PropTypes.array.isRequired).isRequired
   }).isRequired,
   general: PropTypes.shape({}).isRequired,
+  qlik: PropTypes.shape({}).isRequired,
+  renderData: PropTypes.bool,
   styling: PropTypes.shape({
     hasCustomFileStyle: PropTypes.bool.isRequired
   }).isRequired
