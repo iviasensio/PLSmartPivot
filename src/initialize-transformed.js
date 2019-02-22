@@ -1,32 +1,6 @@
 import jQuery from 'jquery';
 import { distinctArray } from './utilities';
 
-// TODO: rename colors
-function initializeColors ({ layout }) {
-  return {
-    vColLibBlue: layout.collibblue || '#b7dbff',
-    vColLibBlueP: layout.collibbluep || '4477aa',
-    vColLibClean: layout.collibclean,
-    vColLibCleanP: layout.collibcleanp,
-    vColLibCustom: layout.collibcustom,
-    vColLibCustomP: layout.collibcustomp,
-    vColLibDark: layout.collibdark || '#C4C4C4',
-    vColLibDarkP: layout.collibdarkp || '#A0A0A0',
-    vColLibGreen: layout.collibgreen || '#689A68',
-    vColLibGreenP: layout.collibgreenp || '#406740',
-    vColLibNight: layout.collibnight || '#191970',
-    vColLibNightP: layout.collibnightp || '#151567',
-    vColLibOrange: layout.colliborange || '#ffa500',
-    vColLibOrangeP: layout.colliborangep || '#ff8c00',
-    vColLibRed: layout.collibred || '#ff0000',
-    vColLibRedP: layout.collibredp || '#8b0000',
-    vColLibSoft: layout.collibsoft,
-    vColLibSoftP: layout.collibsoftp,
-    vColLibViolete: layout.collibviolete || '#CCC0FF',
-    vColLibVioleteP: layout.collibvioletep || '#AEA0EC'
-  };
-}
-
 function getAlignment (option) {
   const alignmentOptions = {
     1: 'left',
@@ -194,7 +168,6 @@ function generateDataSet (component, dimensionsInformation, measurementsInformat
 }
 
 async function initializeTransformed ({ $element, layout, component }) {
-  const colors = initializeColors({ layout });
   const dimensionsInformation = component.backendApi.getDimensionInfos();
   const measurementsInformation = component.backendApi.getMeasureInfos();
   const dimensionCount = layout.qHyperCube.qDimensionInfo.length;
@@ -264,7 +237,6 @@ async function initializeTransformed ({ $element, layout, component }) {
       dimensionSelectionCounts: dimensionsInformation.map(dimensionInfo => dimensionInfo.qStateCounts.qSelected)
     },
     styling: {
-      colors,
       customCSV: {
         basic: customSchemaBasic,
         count: customHeadersCount,
@@ -278,8 +250,8 @@ async function initializeTransformed ({ $element, layout, component }) {
         textColor: layout.HeaderTextColorSchema.color
       },
       options: {
-        backgroundColor: colors[`vColLib${layout.ColorSchema}`],
-        backgroundColorOdd: colors[`vColLib${layout.ColorSchemaP}`],
+        backgroundColor: layout.rowEvenBGColor,
+        backgroundColorOdd: layout.rowOddBGColor,
         color: layout.BodyTextColorSchema,
         fontFamily: layout.FontFamily,
         fontSizeAdjustment: getFontSizeAdjustment(layout.lettersize),

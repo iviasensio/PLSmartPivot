@@ -10,29 +10,29 @@ Manufacturing overhead;;#b7dbff;<italic>;;<center>;;<comment>
 Indirect labor;;;;;;;
 Depreciation, manufacturing equip;;;;;;;
 Other mfr overhead;;;;;;;
-Net mfr overhead;<bold>;<violete>;;;;;
-Net costs of goods sold;<bold>;<violete>;;;;;
-Gross profit;<bold>;<dark>;;;<center>;<large>;
+Net mfr overhead;<bold>;#CCC0FF;;;;;
+Net costs of goods sold;<bold>;#CCC0FF;;;;;
+Gross profit;<bold>;#C4C4C4;;;<center>;<large>;
 Operating expenses;<bold>;;<italic>;;;;
 Selling expenses;;;;;;;
 Sales salaries;;;;;;;
 Warranty expenses;;;;;;;
 Depreciation, store equipment;;;;;;;
 Other selling expenses3;;;;;;;
-Total selling expenses;<bold>;<violete>;;;;;
+Total selling expenses;<bold>;#CCC0FF;;;;;
 General & administrative expenses;;#b7dbff;<italic>;;<center>;;<comment>
 Administration salaries;;;;;;;
 Rent expenses;;;;;;;
 Depreciation, computers;;;;;;;
 Other general & admin expenses;;;;;;;
 total general & admin expenses;<bold>;<soft>;;;;;
-total operating expenses;<bold>;<violete>;;;;;
-Operating income before taxes;<bold>;<dark>;;<white>;;<large>;
+total operating expenses;<bold>;#CCC0FF;;;;;
+Operating income before taxes;<bold>;#C4C4C4;;<white>;;<large>;
 Financial revenue & expenses;;#b7dbff;<italic>;;<center>;;<comment>
 Revenue from investments;;;;;;;
 Less interest expenses;;;;;;;
 Net financial gain (expense);;;;;;;
-Income before tax & extraordinary items;<bold>;<dark>;;<white>;;<large>;
+Income before tax & extraordinary items;<bold>;#C4C4C4;;<white>;;<large>;
 Less income tax on operations;;;;;;;
 Income before extraordinary items;;;;;;;
 Extraordinary items;;#b7dbff;<italic>;;<center>;;<comment>
@@ -41,4 +41,4 @@ Less initial cost;;;;;;;
 Net gain on sale of land;<bold>;<soft>;;;;;
 Less income tax on gain;;;;;;;
 Extraordinary items after tax;<bold>;<soft>;;;;;
-Net Income (Profit);<bold>;<dark>;;<white>;<center>;<large>;
+Net Income (Profit);<bold>;#C4C4C4;;<white>;<center>;<large>;

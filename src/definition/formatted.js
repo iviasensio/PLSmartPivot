@@ -29,57 +29,27 @@ const formatted = {
         return data.customfilebool;
       }
     },
-    colors: {
-      ref: 'ColorSchema',
-      type: 'string',
-      component: 'dropdown',
-      label: 'BackGround Style',
-      options: [
-        {
-          value: 'Clean',
-          label: 'Clean'
-        },
-        {
-          value: 'Soft',
-          label: 'Soft'
-        },
-        {
-          value: 'Dark',
-          label: 'Dark'
-        },
-        {
-          value: 'Night',
-          label: 'Night'
-        },
-        {
-          value: 'Blue',
-          label: 'Blue'
-        },
-        {
-          value: 'Orange',
-          label: 'Orange'
-        },
-        {
-          value: 'Red',
-          label: 'Red'
-        },
-        {
-          value: 'Green',
-          label: 'Green'
-        },
-        {
-          value: 'Violete',
-          label: 'Violete'
-        },
-        {
-          value: 'Custom',
-          label: 'Custom'
-        }
-      ],
-      defaultValue: 'Clean',
-      show (data) {
-        return !data.customfilebool;
-      }
+    rowEvenBGColor: {
+      component: 'color-picker',
+      defaultValue: {
+        color: '#fff',
+        index: 6
+      },
+      dualOutput: true,
+      label: 'Even row background color',
+      ref: 'rowEvenBGColor',
+      type: 'object'
+    },
+    rowOddBGColor: {
+      component: 'color-picker',
+      defaultValue: {
+        color: '#fff',
+        index: 6
+      },
+      dualOutput: true,
+      label: 'Odd row background color',
+      ref: 'rowOddBGColor',
+      type: 'object'
     },
     BodyTextColor: {
       ref: 'BodyTextColorSchema',
