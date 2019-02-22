@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import StyleBuilder from '../style-builder';
 import DataCell from './data-cell.jsx';
-import HeaderPadding from './header-padding.jsx';
 import RowHeader from './row-header.jsx';
 import { injectSeparators } from '../utilities';
 
