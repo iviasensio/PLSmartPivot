@@ -6,23 +6,16 @@ console.log('Webpack mode:', settings.mode); // eslint-disable-line no-console
 
 const config = {
   devtool: 'source-map',
-  entry: [
-    './src/index.js'
-  ],
-  mode: settings.mode,
-  output: {
-    path: settings.buildDestination,
-    filename: settings.name + '.js',
-    libraryTarget: 'amd'
-  },
+  entry: ['./src/index.js'],
   externals: {
     jquery: {
       amd: 'jquery',
       commonjs: 'jquery',
       commonjs2: 'jquery',
       root: '_'
-    },
+    }
   },
+  mode: settings.mode,
   // TODO: breaks core-js for some reason
   // resolve: {
   //   extensions: ['js', 'jsx']
@@ -31,20 +24,23 @@ const config = {
     rules: [
       {
         enforce: 'pre',
-        test: /\.(js|jsx)$/,
         exclude: /(node_modules|Library)/,
         loader: 'eslint-loader',
         options: {
           failOnError: true
-        }
+        },
+        test: /\.(js|jsx)$/
       },
       {
-        test: /\.(js|jsx)$/,
         exclude: /node_modules/,
+        test: /\.(js|jsx)$/,
         use: {
           loader: 'babel-loader',
           options: {
-            plugins: ['@babel/plugin-transform-async-to-generator'],
+            plugins: [
+              '@babel/plugin-transform-async-to-generator',
+              '@babel/plugin-proposal-class-properties'
+            ],
             presets: [
               '@babel/preset-env',
               '@babel/preset-react'
@@ -54,21 +50,30 @@ const config = {
       },
       {
         test: /.less$/,
-        use: ['style-loader', 'css-loader', 'less-loader']
+        use: [
+          'style-loader',
+          'css-loader',
+          'less-loader'
+        ]
       }
     ]
   },
+  output: {
+    filename: `${settings.name}.js`,
+    libraryTarget: 'amd',
+    path: settings.buildDestination
+  },
   plugins: [
     new CopyWebpackPlugin([
-      'assets/' + settings.name + '.qext',
-      'assets/' + settings.name + '.png',
+      `assets/${settings.name}.qext`,
+      `assets/${settings.name}.png`,
       'assets/wbfolder.wbl',
+      'resources/Excel.png',
 
       // TODO: remove entries below this line
       'resources/Accounts.csv',
       'resources/Accounts2.csv',
-      'resources/QlikLook.csv',
-      'resources/Excel.png',
+      'resources/QlikLook.csv'
     ], {}),
     new StyleLintPlugin()
   ]
