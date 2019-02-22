@@ -25,7 +25,7 @@ const metricSemaphores = {
       type: 'string',
       defaultValue: '0',
       show (data) {
-        return data.allmetrics == false;
+        return !data.allmetrics;
       }
     },
     MetricStatus1: {

@@ -12,8 +12,6 @@
   }
 
 	div.qv-object-content-container {
-		overflow-x: scroll;
-		overflow-y: hidden;
 		z-index: 110;
 	}
 
@@ -151,12 +149,6 @@
   	width: 350px;
   }
 
-  .header-wrapper {
-  	position: absolute;
-  	top: 0;
-  	z-index: 1;
-  }
-
   /*popups for headers*/
   .tooltip {
   	position: fixed !important;
@@ -168,11 +160,7 @@
 
   /*end popups*/
   .row-wrapper {
-  	position: absolute;
-  	top: 97px;
   	height: calc(~"100% - 97px");
-  	overflow-x: hidden;
-  	overflow-y: scroll;
   	padding: 0;
   	margin-top: 0;
   }
@@ -188,30 +176,54 @@
   .kpi-table {
   	width: @KpiTableWidth !important;
   	overflow: hidden !important;
-  	display: table;
-  	height: 100%;
+    height: 100%;
   	margin: 0;
   	padding: 0;
-  	z-index: 100;
   	position: absolute;
   	top: 0;
   	left: 0;
   	border-right: 1px solid white;
   	box-shadow: 4px 2px 8px #e1e1e1;
-  }
 
-  .kpi-table .row-wrapper {
-  	overflow: hidden;
+    .row-wrapper {
+    	height: calc(~"100% - 97px");
+      overflow: scroll;
+      position: absolute;
+    	padding: 0;
+    	margin-top: 0;
+    }
   }
 
   .data-table {
-  	width: 272px !important;
-  	float: left;
-  	display: table;
   	height: 100%;
-  	z-index: 90;
+    width: calc(100% - 243px);
   	position: absolute;
   	margin-left: @KpiTableWidth + 13px;
-  	-ms-overflow-style: none;
+
+    .header-wrapper {
+      overflow: scroll;
+      width: 100%;
+    }
+
+    .row-wrapper {
+    	height: calc(~"100% - 97px");
+      width: 100%;
+      overflow: scroll;
+    	padding: 0;
+    	margin-top: 0;
+    }
+  }
+
+  // hide scrollbars
+  .kpi-table .header-wrapper,
+  .kpi-table .row-wrapper,
+  .data-table .header-wrapper,
+  .data-table .row-wrapper {
+    -ms-overflow-style: none;  // IE 10+
+    -moz-overflow: -moz-scrollbars-none;  // Firefox
+
+    &::-webkit-scrollbar {
+      display: none;  // Safari and Chrome
+    }
   }
 }

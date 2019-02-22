@@ -2,9 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import HeadersTable from './headers-table/index.jsx';
 import DataTable from './data-table/index.jsx';
+import { LinkedScrollWrapper, LinkedScrollSection } from './linked-scroll';
 
 const Root = ({ state, qlik, editmodeClass }) => (
-  <React.Fragment>
+  <LinkedScrollWrapper>
     <div className={`kpi-table ${editmodeClass}`}>
       <HeadersTable
         data={state.data}
@@ -12,29 +13,38 @@ const Root = ({ state, qlik, editmodeClass }) => (
         qlik={qlik}
         styling={state.styling}
       />
-      <DataTable
-        data={state.data}
-        general={state.general}
-        qlik={qlik}
-        renderData={false}
-        styling={state.styling}
-      />
+      <LinkedScrollSection linkVertical>
+        <DataTable
+          data={state.data}
+          general={state.general}
+          qlik={qlik}
+          renderData={false}
+          styling={state.styling}
+        />
+      </LinkedScrollSection>
     </div>
     <div className={`data-table ${editmodeClass}`}>
-      <HeadersTable
-        data={state.data}
-        general={state.general}
-        qlik={qlik}
-        styling={state.styling}
-      />
-      <DataTable
-        data={state.data}
-        general={state.general}
-        qlik={qlik}
-        styling={state.styling}
-      />
+      <LinkedScrollSection linkHorizontal>
+        <HeadersTable
+          data={state.data}
+          general={state.general}
+          qlik={qlik}
+          styling={state.styling}
+        />
+      </LinkedScrollSection>
+      <LinkedScrollSection
+        linkHorizontal
+        linkVertical
+      >
+        <DataTable
+          data={state.data}
+          general={state.general}
+          qlik={qlik}
+          styling={state.styling}
+        />
+      </LinkedScrollSection>
     </div>
-  </React.Fragment>
+  </LinkedScrollWrapper>
 );
 
 Root.propTypes = {
