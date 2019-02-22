@@ -10,11 +10,12 @@ export default async function paint ($element, layout, component) {
     component,
     layout
   });
-
+  const editmodeClass = component.inAnalysisState() ? '' : 'edit-mode';
   const jsx = (
     <Root
       qlik={component}
       state={state}
+      editmodeClass={editmodeClass}
     />
   );
 
