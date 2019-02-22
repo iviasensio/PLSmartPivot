@@ -39,8 +39,8 @@ function getAlignment (option) {
 
 function getFontSizeAdjustment (option) {
   const fontSizeAdjustmentOptions = {
-    1: -2,
-    2: 0,
+    1: -1,
+    2: 1,
     3: 2
   };
 
@@ -255,7 +255,10 @@ async function initializeTransformed ({ $element, layout, component }) {
       allowFilteringByClick: layout.filteroncellclick,
       cellSuffix: getCellSuffix(layout.columnwidthslider), // TOOD: move to matrix cells or is it headers.measurements?
       errorMessage: layout.errormessage,
-      maxLoops
+      footnote: layout.footnote,
+      maxLoops,
+      subtitle: layout.subtitle,
+      title: layout.title
     },
     selection: {
       dimensionSelectionCounts: dimensionsInformation.map(dimensionInfo => dimensionInfo.qStateCounts.qSelected)
@@ -279,7 +282,8 @@ async function initializeTransformed ({ $element, layout, component }) {
         backgroundColorOdd: colors[`vColLib${layout.ColorSchemaP}`],
         color: layout.BodyTextColorSchema,
         fontFamily: layout.FontFamily,
-        fontSizeAdjustment: getFontSizeAdjustment(layout.lettersize)
+        fontSizeAdjustment: getFontSizeAdjustment(layout.lettersize),
+        textAlignment: layout.cellTextAlignment
       },
       semaphoreColors: {
         fieldsToApplyTo: {

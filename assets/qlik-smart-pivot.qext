@@ -1,6 +1,6 @@
 {
-	"name": "Smart pivot",
-	"description": "Formatted table for P&L reports.",
+	"name": "P&L pivot",
+	"description": "Profit & Loss reporting with color and font customizations.",
 	"type": "visualization",
 	"version": "X.Y.Z",
 	"icon": "table",

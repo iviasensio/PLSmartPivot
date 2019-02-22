@@ -48,7 +48,6 @@ export default async function paint ($element, layout, component) {
 
   ReactDOM.render(jsx, $element[0]);
 
-
   // TODO: skipped the following as they weren't blockers for letting react handle rendering,
   // they are however the only reason we still depend on jQuery and should be removed as part of unnecessary dependencies issue
   $(`[tid="${layout.qInfo.qId}"] .data-table .row-wrapper`).on('scroll', function () {

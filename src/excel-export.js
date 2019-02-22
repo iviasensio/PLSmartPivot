@@ -1,73 +1,86 @@
-import $ from 'jquery';
-
-const isIE = /* @cc_on!@*/false || Boolean(document.documentMode);
-const isChrome = Boolean(window.chrome) && Boolean(window.chrome.webstore);
-const isSafari = Object.prototype.toString.call(window.HTMLElement).indexOf('Constructor') > 0;
-const isFirefox = typeof InstallTrigger !== 'undefined';
-
-export function enableExcelExport (layout, f) {
-  let myTitle = '';
-  let mySubTitle = '';
-  let myFootNote = '';
-  if (layout.title.length > 0) {
-    myTitle += '<p style="font-size:15pt"><b>';
-    myTitle += layout.title;
-    myTitle += '</b></p>';
-  }
-  if (layout.subtitle.length > 0) {
-    mySubTitle += '<p style="font-size:11pt">';
-    mySubTitle += layout.subtitle;
-    mySubTitle += '</p>';
-  }
-  if (layout.footnote.length > 0) {
-    myFootNote += '<p style="font-size:11pt"><i>Note:</i>';
-    myFootNote += layout.footnote;
-    myFootNote += '</p>';
-  }
-
-  $('.icon-xls').on('click', () => {
-    $('.header-wrapper th').children('.tooltip')
-      .remove(); // remove some popup effects when exporting
-    $('.header-wrapper th').children('.icon-xls')
-      .remove(); // remove the xls icon when exporting
-    if (isChrome || isSafari) {
-      const $clonedDiv = $('.data-table').clone(true); // .kpi-table a secas exporta la 1ªcol
-      let vEncodeHead = '<html><head><meta charset="UTF-8"></head>';
-      vEncodeHead += myTitle + mySubTitle + myFootNote;
-      const vEncode = encodeURIComponent($clonedDiv.html());
-      let vDecode = `${vEncodeHead + vEncode}</html>`;
-
-      $clonedDiv.find('tr.header');
-      vDecode = vDecode.split('%3E.%3C').join('%3E%3C');
-      window.open(`data:application/vnd.ms-excel,${vDecode}`);
-      $.preventDefault();
-    }
-    if (isIE) {
-      let a = '<html><head><meta charset="UTF-8"></head>';
-      a += myTitle + mySubTitle + myFootNote;
-      a += f;
-      a = a.split('>.<').join('><');
-      a += '</html>';
-
-      const w = window.open();
-      w.document.open();
-      w.document.write(a);
-      w.document.close();
-      w.document.execCommand('SaveAs', true, 'Analysis.xls' || 'c:\TMP');
-      w.close();
-    }
-
-    if (isFirefox) {
-      const $clonedDiv = $('.data-table').clone(true);// .kpi-table a secas exporta la 1ªcol
-      let vEncodeHead = '<html><head><meta charset="UTF-8"></head>';
-      vEncodeHead += myTitle + mySubTitle + myFootNote;
-      const vEncode = encodeURIComponent($clonedDiv.html());
-      let vDecode = `${vEncodeHead + vEncode}</html>`;
-
-      $clonedDiv.find('tr.header');
-      vDecode = vDecode.split('>.<').join('><');
-      window.open(`data:application/vnd.ms-excel,${vDecode}`);
-      $.preventDefault();
+function removeAllTooltips (node) {
+  const tooltips = node.querySelectorAll('.tooltip');
+  [].forEach.call(tooltips, tooltip => {
+    if (tooltip.parentNode) {
+      tooltip.parentNode.removeChild(tooltip);
     }
   });
+}
+
+function buildTableHTML (title, subtitle, footnote) {
+  const titleHTML = `<p style="font-size:15pt"><b>${title}</b></p>`;
+  const subtitleHTML = `<p style="font-size:11pt">${subtitle}</p>`;
+  const footnoteHTML = `<p style="font-size:11pt"><i>Note:</i>${footnote}</p>`;
+  const dataTableClone = document.querySelector('.data-table').cloneNode(true);
+
+  removeAllTooltips(dataTableClone);
+
+  const tableHTML = `
+    <html
+      xmlns:o="urn:schemas-microsoft-com:office:office"
+      xmlns:x="urn:schemas-microsoft-com:office:excel"
+      xmlns="http://www.w3.org/TR/REC-html40"
+    >
+      <head>
+        <meta charset="UTF-8">
+        <!--[if gte mso 9]>
+          <xml>
+            <x:ExcelWorkbook>
+              <x:ExcelWorksheets>
+                <x:ExcelWorksheet>
+                  <x:Name>${title || 'Analyze'}</x:Name>
+                  <x:WorksheetOptions>
+                    <x:DisplayGridlines/>
+                  </x:WorksheetOptions>
+                </x:ExcelWorksheet>
+              </x:ExcelWorksheets>
+            </x:ExcelWorkbook>
+          </xml>
+        <![endif]-->
+      </head>
+      <body>
+        ${titleHTML.length > 0 ? titleHTML : ''}
+        ${subtitleHTML.length > 0 ? subtitleHTML : ''}
+        ${footnoteHTML.length > 0 ? footnoteHTML : ''}
+        ${dataTableClone.outerHTML}
+      </body>
+    </html>
+    `.split('>.<')
+    .join('><')
+    .split('>*<')
+    .join('><');
+
+  return tableHTML;
+}
+
+function downloadXLS (html) {
+  const filename = 'analysis.xls';
+  // IE/Edge
+  if (window.navigator.msSaveOrOpenBlob) {
+    const blobObject = new Blob([html]);
+    return window.navigator.msSaveOrOpenBlob(blobObject, filename);
+  }
+
+  const dataURI = generateDataURI(html);
+  const link = window.document.createElement('a');
+  link.href = dataURI;
+  link.download = filename;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+
+  return true;
+}
+
+function generateDataURI (html) {
+  const dataType = 'data:application/vnd.ms-excel;base64,';
+  const data = window.btoa(unescape(encodeURIComponent(html)));
+
+  return `${dataType}${data}`;
+}
+
+export function exportXLS (title, subtitle, footnote) {
+  // original was removing icon when starting export, disable and some spinner instead, shouldn't take enough time to warrant either..?
+  const table = buildTableHTML(title, subtitle, footnote);
+  downloadXLS(table);
 }
