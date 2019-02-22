@@ -45,7 +45,9 @@ module.exports = (config) => {
             exclude: [/node_modules/],
             loader: 'babel-loader',
             options: {
-              plugins: ['@babel/plugin-transform-async-to-generator'],
+              plugins: [
+                '@babel/plugin-transform-async-to-generator',
+                '@babel/plugin-proposal-class-properties'],
               presets: ['@babel/preset-react']
             },
             test: /\.(js|jsx)$/
