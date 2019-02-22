@@ -96,18 +96,25 @@ class DataCell extends React.PureComponent {
       textAlignment = textAlignmentProp;
     }
 
+    let cellStyle = {
+      fontFamily: styling.options.fontFamily,
+      ...styleBuilder.getStyle(),
+      paddingLeft: '5px',
+      textAlign: textAlignment
+
+    };
+
     const { semaphoreColors, semaphoreColors: { fieldsToApplyTo } } = styling;
     const isValidSemaphoreValue = !styleBuilder.hasComments() && !isNaN(measurement.value);
     const shouldHaveSemaphoreColors = (fieldsToApplyTo.applyToMetric || fieldsToApplyTo.specificFields.indexOf(measurement.parents.dimension1.header) !== -1);
-    let cellStyle;
     if (isValidSemaphoreValue && shouldHaveSemaphoreColors) {
       const { backgroundColor, color } = getSemaphoreColors(measurement, semaphoreColors);
       cellStyle = {
+        ...styleBuilder.getStyle(),
         backgroundColor,
         color,
         fontFamily: styling.options.fontFamily,
-        ...styleBuilder.getStyle(),
-        paddingLeft: '4px',
+        paddingLeft: '5px',
         textAlign: textAlignment
       };
     }
