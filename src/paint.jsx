@@ -1,7 +1,6 @@
 import $ from 'jquery';
 import initializeStore from './store';
 import React from 'react';
-// import ReactDOM from 'react-dom';
 import ReactDOM from 'react-dom';
 import Root from './root.jsx';
 
