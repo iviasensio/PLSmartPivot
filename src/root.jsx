@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import HeadersTable from './headers-table/index.jsx';
 import DataTable from './data-table/index.jsx';
 
-const Root = ({ state, qlik }) => (
+const Root = ({ state, qlik, editmodeClass }) => (
   <React.Fragment>
-    <div className="kpi-table">
+    <div className={`kpi-table ${editmodeClass}`}>
       <HeadersTable
         data={state.data}
         general={state.general}
@@ -20,7 +20,7 @@ const Root = ({ state, qlik }) => (
         styling={state.styling}
       />
     </div>
-    <div className="data-table">
+    <div className={`data-table ${editmodeClass}`}>
       <HeadersTable
         data={state.data}
         general={state.general}
@@ -43,7 +43,8 @@ Root.propTypes = {
     data: PropTypes.object.isRequired,
     general: PropTypes.object.isRequired,
     styling: PropTypes.object.isRequired
-  }).isRequired
+  }).isRequired,
+  editmodeClass: PropTypes.string.isRequired
 };
 
 export default Root;
