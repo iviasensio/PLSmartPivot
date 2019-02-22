@@ -98,7 +98,7 @@ class DataCell extends React.PureComponent {
 
     const { semaphoreColors, semaphoreColors: { fieldsToApplyTo } } = styling;
     const isValidSemaphoreValue = !styleBuilder.hasComments() && !isNaN(measurement.value);
-    const shouldHaveSemaphoreColors = fieldsToApplyTo.applyToMetric && (fieldsToApplyTo.applyToAll || fieldsToApplyTo.specificFields.indexOf(measurement.name) !== -1);
+    const shouldHaveSemaphoreColors = (fieldsToApplyTo.applyToMetric || fieldsToApplyTo.specificFields.indexOf(measurement.parents.dimension1.header) !== -1);
     let cellStyle;
     if (isValidSemaphoreValue && shouldHaveSemaphoreColors) {
       const { backgroundColor, color } = getSemaphoreColors(measurement, semaphoreColors);
