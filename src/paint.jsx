@@ -12,10 +12,10 @@ export default async function paint ($element, layout, component) {
     component,
     layout
   });
-
+  const editmodeClass = component.inAnalysisState() ? '' : 'edit-mode';
   const jsx = (
     <LinkedScrollWrapper>
-      <div className="kpi-table">
+      <div className={`kpi-table ${editmodeClass}`}>
         <HeadersTable
           data={state.data}
           general={state.general}
@@ -32,7 +32,7 @@ export default async function paint ($element, layout, component) {
           />
         </LinkedScrollSection>
       </div>
-      <div className="data-table">
+      <div className={`data-table ${editmodeClass}`}>
         <LinkedScrollSection linkHorizontal>
           <HeadersTable
             data={state.data}

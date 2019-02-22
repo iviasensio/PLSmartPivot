@@ -187,6 +187,26 @@ const formatted = {
       ],
       defaultValue: 1
     },
+    textAlignment: {
+      ref: 'cellTextAlignment',
+      label: 'Cell Text alignment',
+      component: 'buttongroup',
+      options: [
+        {
+          value: 'left',
+          label: 'Left'
+        },
+        {
+          value: 'center',
+          label: 'Center'
+        },
+        {
+          value: 'right',
+          label: 'Right'
+        }
+      ],
+      defaultValue: 'right'
+    },
     ColumnWidthSlider: {
       type: 'number',
       component: 'slider',
