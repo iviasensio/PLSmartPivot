@@ -9,15 +9,16 @@ import pijamaColorLibrary from './pijama-color-library';
 const definition = {
   component: 'accordion',
   items: {
-    dimensions: {
-      max: 2,
-      min: 1,
-      uses: 'dimensions'
-    },
-    measures: {
-      max: 9,
-      min: 1,
-      uses: 'measures'
+    data: {
+      items: {
+        dimensions: {
+          disabledRef: ''
+        },
+        measures: {
+          disabledRef: ''
+        }
+      },
+      uses: 'data'
     },
     settings: {
       items: {

@@ -11,10 +11,10 @@ export default async function paint ($element, layout, component) {
     component,
     layout
   });
-
+  const editmodeClass = component.inAnalysisState() ? '' : 'edit-mode';
   const jsx = (
     <React.Fragment>
-      <div className="kpi-table">
+      <div className={`kpi-table ${editmodeClass}`}>
         <HeadersTable
           data={state.data}
           general={state.general}
@@ -29,7 +29,7 @@ export default async function paint ($element, layout, component) {
           styling={state.styling}
         />
       </div>
-      <div className="data-table">
+      <div className={`data-table ${editmodeClass}`}>
         <HeadersTable
           data={state.data}
           general={state.general}
@@ -47,7 +47,6 @@ export default async function paint ($element, layout, component) {
   );
 
   ReactDOM.render(jsx, $element[0]);
-
 
   // TODO: skipped the following as they weren't blockers for letting react handle rendering,
   // they are however the only reason we still depend on jQuery and should be removed as part of unnecessary dependencies issue
@@ -82,8 +81,4 @@ export default async function paint ($element, layout, component) {
     $(`[tid="${layout.qInfo.qId}"] .tooltip`).delay(0)
       .hide(0);
   });
-
-  // TODO: excel export is broken in most browsers, fixing it has an issue of it's own (leaving it disabled for now)
-  // import { enableExcelExport } from './excel-export';
-  // enableExcelExport(layout, html);
 }

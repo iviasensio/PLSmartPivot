@@ -12,6 +12,18 @@ export default {
     '$timeout',
     function () { }
   ],
+  data: {
+    dimensions: {
+      max: 2,
+      min: 1,
+      uses: 'dimensions'
+    },
+    measures: {
+      max: 9,
+      min: 1,
+      uses: 'measures'
+    }
+  },
   definition,
   initialProperties: {
     qHyperCubeDef: {
@@ -24,6 +36,11 @@ export default {
       ],
       qMeasures: []
     }
+  },
+  support: {
+    export: true,
+    exportData: true,
+    snapshot: true
   },
   paint ($element, layout) {
     try {

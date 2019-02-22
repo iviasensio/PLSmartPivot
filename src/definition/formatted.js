@@ -140,6 +140,10 @@ const formatted = {
       label: 'FontFamily',
       options: [
         {
+          value: 'QlikView Sans',
+          label: 'QlikView Sans'
+        },
+        {
           value: 'Arial',
           label: 'Arial'
         },
@@ -164,7 +168,7 @@ const formatted = {
           label: 'Verdana'
         }
       ],
-      defaultValue: 'Calibri'
+      defaultValue: 'QlikView Sans'
     },
     DataFontSize: {
       ref: 'lettersize',
@@ -181,7 +185,27 @@ const formatted = {
           label: 'Medium'
         }
       ],
-      defaultValue: 2
+      defaultValue: 1
+    },
+    textAlignment: {
+      ref: 'cellTextAlignment',
+      label: 'Cell Text alignment',
+      component: 'buttongroup',
+      options: [
+        {
+          value: 'left',
+          label: 'Left'
+        },
+        {
+          value: 'center',
+          label: 'Center'
+        },
+        {
+          value: 'right',
+          label: 'Right'
+        }
+      ],
+      defaultValue: 'right'
     },
     ColumnWidthSlider: {
       type: 'number',
