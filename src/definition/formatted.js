@@ -78,7 +78,7 @@ const formatted = {
       ],
       defaultValue: 'Clean',
       show (data) {
-        return data.customfilebool == false;
+        return !data.customfilebool;
       }
     },
     BodyTextColor: {
@@ -130,7 +130,7 @@ const formatted = {
       ],
       defaultValue: 'Black',
       show (data) {
-        return data.customfilebool == false;
+        return !data.customfilebool;
       }
     },
     FontFamily: {
