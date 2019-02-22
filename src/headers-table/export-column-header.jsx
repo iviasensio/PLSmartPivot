@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ExportButton from '../export-button.jsx';
 
-const ExportColumnHeader = ({ baseCSS, title, allowExcelExport, hasSecondDimension, styling }) => {
+const ExportColumnHeader = ({ baseCSS, general, title, allowExcelExport, hasSecondDimension, styling }) => {
   const rowSpan = hasSecondDimension ? 2 : 1;
   const style = {
     ...baseCSS,
@@ -19,7 +19,10 @@ const ExportColumnHeader = ({ baseCSS, title, allowExcelExport, hasSecondDimensi
       rowSpan={rowSpan}
       style={style}
     >
-      <ExportButton excelExport={allowExcelExport} />
+      <ExportButton
+        excelExport={allowExcelExport}
+        general={general}
+      />
       {title}
     </th>
   );
@@ -28,6 +31,7 @@ const ExportColumnHeader = ({ baseCSS, title, allowExcelExport, hasSecondDimensi
 ExportColumnHeader.propTypes = {
   allowExcelExport: PropTypes.bool.isRequired,
   baseCSS: PropTypes.shape({}).isRequired,
+  general: PropTypes.shape({}).isRequired,
   hasSecondDimension: PropTypes.bool.isRequired,
   styling: PropTypes.shape({
     headerOptions: PropTypes.shape({
