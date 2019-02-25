@@ -104,27 +104,29 @@ class DataCell extends React.PureComponent {
     let cellStyle = {
       fontFamily: styling.options.fontFamily,
       ...styleBuilder.getStyle(),
-      paddingLeft: '4px',
+      paddingLeft: '5px',
       textAlign: textAlignment
 
     };
-    const { semaphoreColors } = styling;
+
+    const { semaphoreColors, semaphoreColors: { fieldsToApplyTo } } = styling;
     const isValidSemaphoreValue = !styleBuilder.hasComments() && !isNaN(measurement.value);
-    const shouldHaveSemaphoreColors = semaphoreColors.fieldsToApplyTo.applyToAll || semaphoreColors.fieldsToApplyTo.specificFields.indexOf(measurement.parents.dimension1.header) !== -1;
+    const shouldHaveSemaphoreColors = (fieldsToApplyTo.applyToMetric || fieldsToApplyTo.specificFields.indexOf(measurement.parents.dimension1.header) !== -1);
     if (isValidSemaphoreValue && shouldHaveSemaphoreColors) {
       const { backgroundColor, color } = getSemaphoreColors(measurement, semaphoreColors);
       cellStyle = {
+        ...styleBuilder.getStyle(),
         backgroundColor,
         color,
         fontFamily: styling.options.fontFamily,
-        fontSize: styleBuilder.getStyle().fontSize,
-        paddingLeft: '4px',
+        paddingLeft: '5px',
         textAlign: textAlignment
       };
     }
 
     let cellClass = 'grid-cells';
-    const shouldUseSmallCells = isColumnPercentageBased && data.headers.measurements.length > 1;
+    const hasTwoDimensions = data.headers.dimension2 && data.headers.dimension2.length > 0;
+    const shouldUseSmallCells = isColumnPercentageBased && data.headers.measurements.length > 1 && hasTwoDimensions;
     if (shouldUseSmallCells) {
       cellClass = 'grid-cells-small';
     }
@@ -144,7 +146,6 @@ class DataCell extends React.PureComponent {
     );
   }
 }
-
 DataCell.propTypes = {
   data: PropTypes.shape({
     headers: PropTypes.shape({

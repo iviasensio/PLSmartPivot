@@ -12,10 +12,12 @@
     "eslint:fix": "eslint --fix src",
     "test": "karma start karma.conf.js",
     "test-once": "karma start karma.conf.js --single-run",
-    "watch": "gulp watch"
+    "watch": "gulp watch",
+    "stylelint": "stylelint src/main.less"
   },
   "devDependencies": {
     "@babel/core": "7.1.2",
+    "@babel/plugin-proposal-class-properties": "7.3.3",
     "@babel/plugin-transform-async-to-generator": "7.1.0",
     "@babel/polyfill": "7.0.0",
     "@babel/preset-env": "7.1.0",
@@ -25,6 +27,8 @@
     "copy-webpack-plugin": "4.5.3",
     "css-loader": "1.0.0",
     "del": "2.0.2",
+    "enzyme": "3.8.0",
+    "enzyme-adapter-react-16": "1.9.1",
     "eslint": "5.7.0",
     "eslint-loader": "2.1.1",
     "eslint-plugin-react": "7.11.1",
@@ -32,6 +36,7 @@
     "gulp-json-editor": "2.4.3",
     "gulp-zip": "3.0.2",
     "jasmine-core": "3.2.1",
+    "jasmine-enzyme": "7.0.1",
     "karma": "3.0.0",
     "karma-chrome-launcher": "2.2.0",
     "karma-jasmine": "1.1.2",
@@ -39,6 +44,7 @@
     "karma-webpack": "3.0.5",
     "less": "3.8.1",
     "less-loader": "4.1.0",
+    "lodash.merge": "4.6.1",
     "style-loader": "0.23.1",
     "stylelint": "8.4.0",
     "stylelint-webpack-plugin": "0.10.5",

@@ -1,9 +1,8 @@
-import $ from 'jquery';
+import $ from 'jquery'; // eslint-disable-line id-length
 import initializeStore from './store';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import HeadersTable from './headers-table/index.jsx';
-import DataTable from './data-table/index.jsx';
+import Root from './root.jsx';
 
 export default async function paint ($element, layout, component) {
   const state = await initializeStore({
@@ -11,39 +10,13 @@ export default async function paint ($element, layout, component) {
     component,
     layout
   });
-
+  const editmodeClass = component.inAnalysisState() ? '' : 'edit-mode';
   const jsx = (
-    <React.Fragment>
-      <div className="kpi-table">
-        <HeadersTable
-          data={state.data}
-          general={state.general}
-          qlik={component}
-          styling={state.styling}
-        />
-        <DataTable
-          data={state.data}
-          general={state.general}
-          qlik={component}
-          renderData={false}
-          styling={state.styling}
-        />
-      </div>
-      <div className="data-table">
-        <HeadersTable
-          data={state.data}
-          general={state.general}
-          qlik={component}
-          styling={state.styling}
-        />
-        <DataTable
-          data={state.data}
-          general={state.general}
-          qlik={component}
-          styling={state.styling}
-        />
-      </div>
-    </React.Fragment>
+    <Root
+      qlik={component}
+      state={state}
+      editmodeClass={editmodeClass}
+    />
   );
 
   ReactDOM.render(jsx, $element[0]);
@@ -62,4 +35,5 @@ export default async function paint ($element, layout, component) {
   // TODO: excel export is broken in most browsers, fixing it has an issue of it's own (leaving it disabled for now)
   // import { enableExcelExport } from './excel-export';
   // enableExcelExport(layout, html);
+
 }

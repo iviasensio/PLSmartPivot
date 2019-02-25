@@ -9,17 +9,19 @@ export function distinctArray (array) {
     .map(entry => JSON.parse(entry));
 }
 
-export function addSeparators (nStr, thousandsSep, decimalSep, numDecimals) {
-  let x1;
-  nStr = nStr.toFixed(numDecimals);
-  const x = nStr.split('.');
-  x1 = x[0];
-  const x2 = x.length > 1 ? decimalSep + x[1] : '';
-  const rgx = /(\d+)(\d{3})/;
-  while (rgx.test(x1)) {
-    x1 = x1.replace(rgx, `$1${thousandsSep}$2`);
+export function addSeparators (number, thousandSeparator, decimalSeparator, numberOfDecimals) {
+  const numberString = number.toFixed(numberOfDecimals);
+  const numberStringParts = numberString.split('.');
+  let [
+    wholeNumber,
+    decimal
+  ] = numberStringParts;
+  decimal = numberStringParts.length > 1 ? decimalSeparator + decimal : '';
+  const regexCheckForThousand = /(\d+)(\d{3})/;
+  while (regexCheckForThousand.test(wholeNumber)) {
+    wholeNumber = wholeNumber.replace(regexCheckForThousand, `$1${thousandSeparator}$2`);
   }
-  return x1 + x2;
+  return wholeNumber + decimal;
 }
 
 export function Deferred () {

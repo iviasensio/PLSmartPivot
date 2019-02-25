@@ -279,7 +279,7 @@ async function initializeTransformed ({ $element, layout, component }) {
       },
       options: {
         backgroundColor: colors[`vColLib${layout.ColorSchema}`],
-        backgroundColorOdd: colors[`vColLib${layout.ColorSchemaP}`],
+        backgroundColorOdd: colors[`vColLib${layout.ColorSchema}P`],
         color: layout.BodyTextColorSchema,
         fontFamily: layout.FontFamily,
         fontSizeAdjustment: getFontSizeAdjustment(layout.lettersize),
@@ -288,6 +288,7 @@ async function initializeTransformed ({ $element, layout, component }) {
       semaphoreColors: {
         fieldsToApplyTo: {
           applyToAll: layout.allsemaphores,
+          applyToMetric: layout.allmetrics,
           specificFields: [
             layout.conceptsemaphore1,
             layout.conceptsemaphore2,
