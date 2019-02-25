@@ -13,7 +13,8 @@ describe('<HeadersTable />', () => {
     qlik: {
       backendApi: {
         selectValues: () => {}
-      }
+      },
+      inEditState: () => {}
     },
     styling
   };
