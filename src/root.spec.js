@@ -10,7 +10,8 @@ describe('<Root />', () => {
     qlik: {
       backendApi: {
         selectValues: () => {}
-      }
+      },
+      inEditState: () => {}
     },
     state
   };

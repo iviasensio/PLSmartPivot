@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { ApplyPreMask } from '../masking';
 import { addSeparators } from '../utilities';
-
+import Tooltip from '../tooltip/index.jsx';
 function formatMeasurementValue (measurement, styling) {
   // TODO: measurement.name is a horrible propertyname, it's actually the column header
   const isColumnPercentageBased = measurement.parents.measurement.header.substring(0, 1) === '%';
@@ -61,11 +61,9 @@ function getSemaphoreColors (measurement, semaphoreColors) {
   }
   return semaphoreColors.statusColors.normal;
 }
-
 class DataCell extends React.PureComponent {
   constructor (props) {
     super(props);
-
     this.handleSelect = this.handleSelect.bind(this);
   }
 
@@ -84,7 +82,14 @@ class DataCell extends React.PureComponent {
   }
 
   render () {
-    const { data, general, measurement, styleBuilder, styling } = this.props;
+    const {
+      data,
+      general,
+      measurement,
+      styleBuilder,
+      styling
+    } = this.props;
+
     const isColumnPercentageBased = measurement.name.substring(0, 1) === '%';
     let formattedMeasurementValue = formatMeasurementValue(measurement, styling);
     if (styleBuilder.hasComments()) {
@@ -99,27 +104,29 @@ class DataCell extends React.PureComponent {
     let cellStyle = {
       fontFamily: styling.options.fontFamily,
       ...styleBuilder.getStyle(),
-      paddingLeft: '4px',
+      paddingLeft: '5px',
       textAlign: textAlignment
 
     };
-    const { semaphoreColors } = styling;
+
+    const { semaphoreColors, semaphoreColors: { fieldsToApplyTo } } = styling;
     const isValidSemaphoreValue = !styleBuilder.hasComments() && !isNaN(measurement.value);
-    const shouldHaveSemaphoreColors = semaphoreColors.fieldsToApplyTo.applyToAll || semaphoreColors.fieldsToApplyTo.specificFields.indexOf(measurement.parents.dimension1.header) !== -1;
+    const shouldHaveSemaphoreColors = (fieldsToApplyTo.applyToMetric || fieldsToApplyTo.specificFields.indexOf(measurement.parents.dimension1.header) !== -1);
     if (isValidSemaphoreValue && shouldHaveSemaphoreColors) {
       const { backgroundColor, color } = getSemaphoreColors(measurement, semaphoreColors);
       cellStyle = {
+        ...styleBuilder.getStyle(),
         backgroundColor,
         color,
         fontFamily: styling.options.fontFamily,
-        fontSize: styleBuilder.getStyle().fontSize,
-        paddingLeft: '4px',
+        paddingLeft: '5px',
         textAlign: textAlignment
       };
     }
 
     let cellClass = 'grid-cells';
-    const shouldUseSmallCells = isColumnPercentageBased && data.headers.measurements.length > 1;
+    const hasTwoDimensions = data.headers.dimension2 && data.headers.dimension2.length > 0;
+    const shouldUseSmallCells = isColumnPercentageBased && data.headers.measurements.length > 1 && hasTwoDimensions;
     if (shouldUseSmallCells) {
       cellClass = 'grid-cells-small';
     }
@@ -130,12 +137,15 @@ class DataCell extends React.PureComponent {
         onClick={this.handleSelect}
         style={cellStyle}
       >
-        {formattedMeasurementValue}
+        <Tooltip
+          tooltipText={formattedMeasurementValue}
+        >
+          {formattedMeasurementValue}
+        </Tooltip>
       </td>
     );
   }
 }
-
 DataCell.propTypes = {
   data: PropTypes.shape({
     headers: PropTypes.shape({

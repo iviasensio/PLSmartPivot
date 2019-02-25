@@ -117,7 +117,7 @@ module.exports = {
     "max-params": ["warn"],
     "brace-style": ["warn", "1tbs", { "allowSingleLine": true }],
     "prefer-const": ["warn"],
-
+    "class-methods-use-this":["warn"],
     // plugin:react
     "react/jsx-indent": ["warn", 2],
     "react/jsx-indent-props": ["warn", 2],
@@ -130,7 +130,8 @@ module.exports = {
     "react/jsx-no-literals": ["off"],
     "react/jsx-max-depth": ["off"], // rule throws exception in single-dimension-measure
     "react/jsx-filename-extension": ["warn"],
-    "react/prefer-stateless-function": ["warn"]
+    "react/prefer-stateless-function": ["warn"],
+    "react/no-set-state": ["warn"]
   },
   extends: [
     "eslint:all",

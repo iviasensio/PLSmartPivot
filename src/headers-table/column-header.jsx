@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Tooltip from '../tooltip/index.jsx';
 
 class ColumnHeader extends React.PureComponent {
   constructor (props) {
     super(props);
-
     this.handleSelect = this.handleSelect.bind(this);
   }
 
@@ -14,7 +14,9 @@ class ColumnHeader extends React.PureComponent {
   }
 
   render () {
-    const { baseCSS, cellSuffix, colSpan, entry, styling } = this.props;
+    const { baseCSS, cellSuffix, colSpan, entry, styling, qlik } = this.props;
+    const inEditState = qlik.inEditState();
+
     const style = {
       ...baseCSS,
       fontSize: `${14 + styling.headerOptions.fontSizeAdjustment} px`,
@@ -29,7 +31,12 @@ class ColumnHeader extends React.PureComponent {
         onClick={this.handleSelect}
         style={style}
       >
-        {entry.displayValue}
+        <Tooltip
+          isTooltipActive={!inEditState}
+          tooltipText={entry.displayValue}
+        >
+          {entry.displayValue}
+        </Tooltip>
       </th>
     );
   }
