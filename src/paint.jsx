@@ -1,4 +1,3 @@
-import $ from 'jquery'; // eslint-disable-line id-length
 import initializeStore from './store';
 import React from 'react';
 import ReactDOM from 'react-dom';
