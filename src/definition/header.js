@@ -24,102 +24,26 @@ const header = {
       defaultValue: 2
     },
     headercolors: {
+      component: 'color-picker',
+      defaultValue: {
+        index: 6,
+        color: "#4477aa"
+      },
+      dualOutput: true,
+      label: 'BackGround Header Color',
       ref: 'HeaderColorSchema',
-      type: 'string',
-      component: 'dropdown',
-      label: 'Background Header Color',
-      options: [
-        {
-          value: 'Clean',
-          label: 'Clean'
-        },
-        {
-          value: 'Soft',
-          label: 'Soft'
-        },
-        {
-          value: 'Dark',
-          label: 'Dark'
-        },
-        {
-          value: 'Night',
-          label: 'Night'
-        },
-        {
-          value: 'Blue',
-          label: 'Blue'
-        },
-        {
-          value: 'Orange',
-          label: 'Orange'
-        },
-        {
-          value: 'Red',
-          label: 'Red'
-        },
-        {
-          value: 'Green',
-          label: 'Green'
-        },
-        {
-          value: 'Violete',
-          label: 'Violete'
-        },
-        {
-          value: 'Custom',
-          label: 'Custom'
-        }
-      ],
-      defaultValue: 'Night'
+      type: 'object'
     },
     HeaderTextColor: {
       ref: 'HeaderTextColorSchema',
-      type: 'string',
-      component: 'dropdown',
       label: 'Text Header Color',
-      options: [
-        {
-          value: 'Black',
-          label: 'Black'
-        },
-        {
-          value: 'DimGray',
-          label: 'DimGray'
-        },
-        {
-          value: 'ForestGreen',
-          label: 'ForestGreen'
-        },
-        {
-          value: 'Gainsboro',
-          label: 'Gainsboro'
-        },
-        {
-          value: 'Indigo',
-          label: 'Indigo'
-        },
-        {
-          value: 'Navy',
-          label: 'Navy'
-        },
-        {
-          value: 'Purple',
-          label: 'Purple'
-        },
-        {
-          value: 'WhiteSmoke',
-          label: 'WhiteSmoke'
-        },
-        {
-          value: 'White',
-          label: 'White'
-        },
-        {
-          value: 'YellowGreen',
-          label: 'YellowGreen'
-        }
-      ],
-      defaultValue: 'WhiteSmoke'
+      component: 'color-picker',
+      dualOutput: true,
+      defaultValue: {
+        index: 1,
+        color: "#ffffff"
+      },
+      type: 'object'
     },
     HeaderFontSize: {
       ref: 'lettersizeheader',

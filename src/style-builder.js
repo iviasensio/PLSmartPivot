@@ -1,6 +1,5 @@
 function StyleBuilder (styling) {
   const {
-    colors,
     customCSV,
     options
   } = styling;
@@ -30,16 +29,7 @@ function StyleBuilder (styling) {
     '<bold>': () => { style.fontWeight = 'bold'; },
     '<italic>': () => { style.fontStyle = 'italic'; },
     '<oblique>': () => { style.fontStyle = 'oblique'; },
-    // background and comment color
-    '<dark>': () => applyColor(colors.vColLibDark),
-    '<night>': () => applyColor(colors.vColLibNight),
-    '<soft>': () => applyColor(colors.vColLibSoft),
-    '<red>': () => applyColor(colors.vColLibRed),
-    '<orange>': () => applyColor(colors.vColLibOrange),
-    '<violete>': () => applyColor(colors.vColLibViolete),
-    '<blue>': () => applyColor(colors.vColLibBlue),
-    '<green>': () => applyColor(colors.vColLibGreen),
-    // font color TODO: this is a color just like the others, but it applies to text instead.. any way to make it less weird?
+    // font color
     '<white>': () => { style.color = 'white'; },
     // font size
     '<large>': () => { style.fontSize = `${15 + options.fontSizeAdjustment}px`; },

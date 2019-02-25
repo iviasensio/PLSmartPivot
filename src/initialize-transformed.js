@@ -1,32 +1,6 @@
 import jQuery from 'jquery';
 import { distinctArray } from './utilities';
 
-// TODO: rename colors
-function initializeColors ({ layout }) {
-  return {
-    vColLibBlue: layout.collibblue,
-    vColLibBlueP: layout.collibbluep,
-    vColLibClean: layout.collibclean,
-    vColLibCleanP: layout.collibcleanp,
-    vColLibCustom: layout.collibcustom,
-    vColLibCustomP: layout.collibcustomp,
-    vColLibDark: layout.collibdark,
-    vColLibDarkP: layout.collibdarkp,
-    vColLibGreen: layout.collibgreen,
-    vColLibGreenP: layout.collibgreenp,
-    vColLibNight: layout.collibnight,
-    vColLibNightP: layout.collibnightp,
-    vColLibOrange: layout.colliborange,
-    vColLibOrangeP: layout.colliborangep,
-    vColLibRed: layout.collibred,
-    vColLibRedP: layout.collibredp,
-    vColLibSoft: layout.collibsoft,
-    vColLibSoftP: layout.collibsoftp,
-    vColLibViolete: layout.collibviolete,
-    vColLibVioleteP: layout.collibvioletep
-  };
-}
-
 function getAlignment (option) {
   const alignmentOptions = {
     1: 'left',
@@ -194,7 +168,6 @@ function generateDataSet (component, dimensionsInformation, measurementsInformat
 }
 
 async function initializeTransformed ({ $element, layout, component }) {
-  const colors = initializeColors({ layout });
   const dimensionsInformation = component.backendApi.getDimensionInfos();
   const measurementsInformation = component.backendApi.getMeasureInfos();
   const dimensionCount = layout.qHyperCube.qDimensionInfo.length;
@@ -264,7 +237,6 @@ async function initializeTransformed ({ $element, layout, component }) {
       dimensionSelectionCounts: dimensionsInformation.map(dimensionInfo => dimensionInfo.qStateCounts.qSelected)
     },
     styling: {
-      colors,
       customCSV: {
         basic: customSchemaBasic,
         count: customHeadersCount,
@@ -273,13 +245,13 @@ async function initializeTransformed ({ $element, layout, component }) {
       hasCustomFileStyle: layout.customfilebool,
       headerOptions: {
         alignment: getAlignment(layout.HeaderAlign),
-        colorSchema: colors[`vColLib${layout.HeaderColorSchema}`],
+        colorSchema: layout.HeaderColorSchema.color,
         fontSizeAdjustment: getFontSizeAdjustment(layout.lettersizeheader),
-        textColor: layout.HeaderTextColorSchema
+        textColor: layout.HeaderTextColorSchema.color
       },
       options: {
-        backgroundColor: colors[`vColLib${layout.ColorSchema}`],
-        backgroundColorOdd: colors[`vColLib${layout.ColorSchema}P`],
+        backgroundColor: layout.rowEvenBGColor,
+        backgroundColorOdd: layout.rowOddBGColor,
         color: layout.BodyTextColorSchema,
         fontFamily: layout.FontFamily,
         fontSizeAdjustment: getFontSizeAdjustment(layout.lettersize),
