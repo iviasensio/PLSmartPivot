@@ -24,6 +24,38 @@
     z-index: 110;
   }
 
+  .tooltip-wrapper {
+    min-width: 25px;
+    position: fixed;
+    padding: 5px;
+    padding-top: 15px;
+    background-color: #404040;
+    z-index: 100;
+    pointer-events: none;
+    border-radius: 5px;
+    height: 30px;
+    width: auto;
+    opacity: 0.9;
+    text-align: center;
+    transform: translate(-50%, -110%);
+    
+    > p {
+      color: #fff;
+    }
+  }
+
+  .tooltip-wrapper::after {
+    content: "";
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    border-width: 10px 10px 0;
+    border-style: solid;
+    border-color: #404040 transparent;
+    margin-left: -10px;
+    pointer-events: none;
+  }
+
   .icon-xls {
     text-align: left;
   }
@@ -108,6 +140,7 @@
   /* ***************** */
 
   .grid-cells {
+    position: relative;
     ._cell(70px);
   }
 

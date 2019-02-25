@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { ApplyPreMask } from '../masking';
 import { addSeparators } from '../utilities';
-
+import Tooltip from '../tooltip/index.jsx';
 function formatMeasurementValue (measurement, styling) {
   // TODO: measurement.name is a horrible propertyname, it's actually the column header
   const isColumnPercentageBased = measurement.parents.measurement.header.substring(0, 1) === '%';
@@ -61,11 +61,9 @@ function getSemaphoreColors (measurement, semaphoreColors) {
   }
   return semaphoreColors.statusColors.normal;
 }
-
 class DataCell extends React.PureComponent {
   constructor (props) {
     super(props);
-
     this.handleSelect = this.handleSelect.bind(this);
   }
 
@@ -84,7 +82,14 @@ class DataCell extends React.PureComponent {
   }
 
   render () {
-    const { data, general, measurement, styleBuilder, styling } = this.props;
+    const {
+      data,
+      general,
+      measurement,
+      styleBuilder,
+      styling
+    } = this.props;
+
     const isColumnPercentageBased = measurement.name.substring(0, 1) === '%';
     let formattedMeasurementValue = formatMeasurementValue(measurement, styling);
     if (styleBuilder.hasComments()) {
@@ -132,7 +137,11 @@ class DataCell extends React.PureComponent {
         onClick={this.handleSelect}
         style={cellStyle}
       >
-        {formattedMeasurementValue}
+        <Tooltip
+          tooltipText={formattedMeasurementValue}
+        >
+          {formattedMeasurementValue}
+        </Tooltip>
       </td>
     );
   }
