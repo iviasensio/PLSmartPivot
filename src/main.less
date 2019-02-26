@@ -28,7 +28,7 @@
     min-width: 25px;
     position: fixed;
     padding: 5px;
-    padding-top: 15px;
+    padding-top: 8px;
     background-color: #404040;
     z-index: 100;
     pointer-events: none;
@@ -83,6 +83,12 @@
     text-overflow: ellipsis;
     vertical-align: middle;
     cursor: default;
+
+    > div {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
   }
 
   .empty {
@@ -269,6 +275,10 @@
       padding: 0;
       margin-top: 0;
     }
+  }
+
+  .row-wrapper .fdim-cells {
+    padding-left: 12px;
   }
 
   .data-table {
