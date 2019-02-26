@@ -36,7 +36,7 @@ const MeasurementColumnHeader = ({ baseCSS, general, hasSecondDimension, measure
     ...baseCSS,
     cursor: 'default',
     fontSize: `${15 + fontSizeAdjustment} px`,
-    height: '70px',
+    height: '80px',
     verticalAlign: 'middle'
   };
   return (

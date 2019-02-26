@@ -2,7 +2,7 @@
 Revenues;;rgb(183, 219, 255);<italic>;;<center>;;<comment>
 Gross sales revenues;;;;;;;
 Less return & allowances;;;;;;;
-Net sales revenues;<bold>;<soft>;;;;;
+Net sales revenues;<bold>;#efefef;;;;;
 Cost of goods sold;<bold>;;;;;;
 Direct materials;;;;;;;
 Direct labor;;;;;;;
@@ -25,7 +25,7 @@ Administration salaries;;;;;;;
 Rent expenses;;;;;;;
 Depreciation, computers;;;;;;;
 Other general & admin expenses;;;;;;;
-total general & admin expenses;<bold>;<soft>;;;;;
+total general & admin expenses;<bold>;#efefef;;;;;
 total operating expenses;<bold>;#CCC0FF;;;;;
 Operating income before taxes;<bold>;#C4C4C4;;<white>;;<large>;
 Financial revenue & expenses;;#b7dbff;<italic>;;<center>;;<comment>
@@ -38,7 +38,7 @@ Income before extraordinary items;;;;;;;
 Extraordinary items;;#b7dbff;<italic>;;<center>;;<comment>
 Sale of land;;;;;;;
 Less initial cost;;;;;;;
-Net gain on sale of land;<bold>;<soft>;;;;;
+Net gain on sale of land;<bold>;#efefef;;;;;
 Less income tax on gain;;;;;;;
-Extraordinary items after tax;<bold>;<soft>;;;;;
+Extraordinary items after tax;<bold>;#efefef;;;;;
 Net Income (Profit);<bold>;#C4C4C4;;<white>;<center>;<large>;

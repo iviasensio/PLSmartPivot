@@ -53,10 +53,10 @@ function formatMeasurementValue (measurement, styling) {
 }
 
 function getSemaphoreColors (measurement, semaphoreColors) {
-  if (measurement < semaphoreColors.status.critical) {
+  if (measurement.value < semaphoreColors.status.critical) {
     return semaphoreColors.statusColors.critical;
   }
-  if (measurement < semaphoreColors.status.medium) {
+  if (measurement.value < semaphoreColors.status.medium) {
     return semaphoreColors.statusColors.medium;
   }
   return semaphoreColors.statusColors.normal;
@@ -111,7 +111,9 @@ class DataCell extends React.PureComponent {
 
     const { semaphoreColors, semaphoreColors: { fieldsToApplyTo } } = styling;
     const isValidSemaphoreValue = !styleBuilder.hasComments() && !isNaN(measurement.value);
-    const shouldHaveSemaphoreColors = (fieldsToApplyTo.applyToMetric || fieldsToApplyTo.specificFields.indexOf(measurement.parents.dimension1.header) !== -1);
+    const dimension1Row = measurement.parents.dimension1.elementNumber;
+    const isSpecifiedMetricField = fieldsToApplyTo.metricsSpecificFields.indexOf(dimension1Row) !== -1;
+    const shouldHaveSemaphoreColors = (fieldsToApplyTo.applyToMetric || isSpecifiedMetricField);
     if (isValidSemaphoreValue && shouldHaveSemaphoreColors) {
       const { backgroundColor, color } = getSemaphoreColors(measurement, semaphoreColors);
       cellStyle = {
@@ -146,6 +148,7 @@ class DataCell extends React.PureComponent {
     );
   }
 }
+
 DataCell.propTypes = {
   data: PropTypes.shape({
     headers: PropTypes.shape({

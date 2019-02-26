@@ -10,7 +10,7 @@ Operating expenses;<bold>;;<italic>;;;;
 Total selling expenses;<bold>;RGB(225,226,226);;;;;
 General & administrative expenses;<bold>;;<italic>;;<center>;;<comment>
 Other general & admin expenses;<bold>;rgb(128, 191, 255);<white>;;<center>;<large>;
-total general & admin expenses;<bold>;<soft>;;;;;
+total general & admin expenses;<bold>;#efefef;;;;;
 total operating expenses;<bold>;rgb(128, 191, 255);<white>;;;;
 Operating income before taxes;<bold>;RGB(193,216,47);;;;<large>;
 Financial revenue & expenses;<bold>;;<italic>;;<center>;;<comment>

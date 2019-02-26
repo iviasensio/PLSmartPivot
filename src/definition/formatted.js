@@ -33,7 +33,7 @@ const formatted = {
       component: 'color-picker',
       defaultValue: {
         color: '#fff',
-        index: 6
+        index: 1
       },
       dualOutput: true,
       label: 'Even row background color',
@@ -43,8 +43,8 @@ const formatted = {
     rowOddBGColor: {
       component: 'color-picker',
       defaultValue: {
-        color: '#fff',
-        index: 6
+        color: '#b6d7ea',
+        index: 4
       },
       dualOutput: true,
       label: 'Odd row background color',
