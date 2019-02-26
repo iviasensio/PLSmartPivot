@@ -271,11 +271,12 @@ async function initializeTransformed ({ $element, layout, component }) {
             layout.conceptsemaphore7,
             layout.conceptsemaphore9,
             layout.conceptsemaphore10
-          ]
+          ],
+          metricsSpecificFields: layout.metricssemaphore.split(',').map(entry => Number(entry))
         },
         status: {
-          critical: layout.metricstatus1,
-          medium: layout.metricstatus2
+          critical: layout.metricsstatus1,
+          medium: layout.metricsstatus2
         },
         statusColors: {
           critical: {

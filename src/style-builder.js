@@ -11,9 +11,13 @@ function StyleBuilder (styling) {
   let hasCustomFileStyle = false;
 
   function applyStandardAttributes (rowNumber) {
-    const isEven = rowNumber % 2 === 0;
-    style.backgroundColor = isEven ? options.backgroundColor : options.backgroundColorOdd;
-    style.color = options.color;
+    const hasBackgroundColor = options.backgroundColor && options.backgroundColor.color;
+    const hasOddBackgroundColor = options.backgroundColorOdd && options.backgroundColorOdd.color;
+    if (hasBackgroundColor && hasOddBackgroundColor) {
+      const isEven = rowNumber % 2 === 0;
+      style.backgroundColor = isEven ? options.backgroundColor.color : options.backgroundColorOdd.color;
+      style.color = options.color;
+    }
     style.fontSize = `${13 + options.fontSizeAdjustment}px`;
   }
 
