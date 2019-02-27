@@ -25,7 +25,7 @@ export default {
       uses: 'dimensions'
     },
     measures: {
-      max: 9,
+      max: 8,
       min: 1,
       uses: 'measures'
     }

@@ -9,7 +9,6 @@ export default async function paint ($element, layout, component) {
     component,
     layout
   });
-  console.log(cubes);
   const state = await initializeStore({
     $element,
     component,

@@ -1,4 +1,3 @@
-// import jQuery from 'jquery';
 import { distinctArray } from './utilities';
 
 export const HEADER_FONT_SIZE = {
@@ -107,7 +106,7 @@ function generateMatrixCell ({ cell, dimension1Information, dimension2Informatio
   return matrixCell;
 }
 
-// let lastRow = 0;
+let lastRow = 0;
 function generateDataSet (component, dimensionsInformation, measurementsInformation, cubes) {
   const dimension1 = [];
   const dimension2 = [];
@@ -115,10 +114,10 @@ function generateDataSet (component, dimensionsInformation, measurementsInformat
   let matrix = [];
 
   let previousDim1Entry;
-  const hasSecondDimension = dimensionsInformation.length > 1;
-  // component.backendApi.eachDataRow((rowIndex, row) => {
+  const hasDesignDimension = cubes.design;
+  const hasSecondDimension = hasDesignDimension ? dimensionsInformation.length > 2 : dimensionsInformation.length > 1;
   cubes.data.forEach(row => {
-    // lastRow += 1;
+    lastRow += 1;
     const dimension1Entry = generateDimensionEntry(dimensionsInformation[0], row[0]);
     dimension1.push(dimension1Entry);
     let dimension2Entry;
@@ -173,11 +172,11 @@ function generateDataSet (component, dimensionsInformation, measurementsInformat
   };
 }
 
-function initializeTransformed ({ component, cubes, layout }) {
+function initializeTransformed ({ $element, component, cubes, layout }) {
   const dimensionsInformation = component.backendApi.getDimensionInfos();
   const measurementsInformation = component.backendApi.getMeasureInfos();
   const dimensionCount = layout.qHyperCube.qDimensionInfo.length;
-  // const rowCount = component.backendApi.getRowCount();
+  const rowCount = component.backendApi.getRowCount();
   const maxLoops = layout.maxloops;
   const {
     dimension1,
@@ -191,7 +190,6 @@ function initializeTransformed ({ component, cubes, layout }) {
   let customHeadersCount = 0;
 
   if (cubes.design) {
-    console.log(cubes.design);
     const allTextLines = cubes.design.map(entry => entry[0].qText);
     const headers = allTextLines[0].split(';');
     customHeadersCount = headers.length;
@@ -201,37 +199,12 @@ function initializeTransformed ({ component, cubes, layout }) {
 
       if (data.length === headers.length) {
         for (let headerIndex = 0; headerIndex < headers.length; headerIndex += 1) {
-          customSchemaBasic[lineNumber] = data[0];
+          [customSchemaBasic[lineNumber]] = data;
           customSchemaFull[lineNumber][headerIndex] = data[headerIndex];
         }
       }
     }
   }
-
-  // function readCustomSchema () {
-  //   const url = `/Extensions/qlik-smart-pivot/${layout.customfile}`;
-  //
-  //   return jQuery.get(url).then(response => {
-  //     const allTextLines = response.split(/\r\n|\n/);
-  //     const headers = allTextLines[0].split(';');
-  //     customHeadersCount = headers.length;
-  //     for (let lineNumber = 0; lineNumber < allTextLines.length; lineNumber += 1) {
-  //       customSchemaFull[lineNumber] = new Array(headers.length);
-  //       const data = allTextLines[lineNumber].split(';');
-  //
-  //       if (data.length === headers.length) {
-  //         for (let headerIndex = 0; headerIndex < headers.length; headerIndex += 1) {
-  //           customSchemaBasic[lineNumber] = data[0];
-  //           customSchemaFull[lineNumber][headerIndex] = data[headerIndex];
-  //         }
-  //       }
-  //     }
-  //   });
-  // }
-  //
-  // const hasCustomSchema = (layout.customfilebool && layout.customfile.length > 4);
-  // const schemaPromise = hasCustomSchema ? readCustomSchema() : Promise.resolve();
-  // await schemaPromise;
 
   // top level properties could be reducers and then components connect to grab what they want,
   // possibly with reselect for some presentational transforms (moving some of the presentational logic like formatting and such)
@@ -323,19 +296,19 @@ function initializeTransformed ({ component, cubes, layout }) {
     }
   };
 
-  // if (rowCount > lastRow && rowCount <= (maxLoops * 1000)) {
-  //   const requestPage = [
-  //     {
-  //       qHeight: Math.min(1000, rowCount - lastRow),
-  //       qLeft: 0,
-  //       qTop: matrix.length,
-  //       qWidth: 10 // should be # of columns
-  //     }
-  //   ];
-  //   component.backendApi.getData(requestPage).then(() => {
-  //     component.paint($element, layout);
-  //   });
-  // }
+  if (rowCount > lastRow && rowCount <= (maxLoops * 1000)) {
+    const requestPage = [
+      {
+        qHeight: Math.min(1000, rowCount - lastRow),
+        qLeft: 0,
+        qTop: matrix.length,
+        qWidth: 10 // should be # of columns
+      }
+    ];
+    component.backendApi.getData(requestPage).then(() => {
+      component.paint($element, layout);
+    });
+  }
 
   return transformedProperties;
 }

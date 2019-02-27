@@ -20,7 +20,7 @@ async function buildDataCube (dimensionsInformation, dimensionIndexes, app, meas
     qInitialDataFetch: [
       {
         qHeight: 1000,
-        qWidth: 9
+        qWidth: 10
       }
     ],
     qDimensions: [createDimension(dimension1)],
@@ -72,7 +72,10 @@ function getDimensionIndexes (dimensionsInformation, designDimensionIndex) {
   const hasDesign = designDimensionIndex !== -1;
   const nonDesignDimensionCount = hasDesign ? dimensionsInformation.length - 1 : dimensionsInformation.length;
   const dimension1 = designDimensionIndex === 0 ? 1 : 0;
-  const dimension2 = nonDesignDimensionCount === 2 && (hasDesign && designDimensionIndex < 2) ? 2 : 1;
+  let dimension2 = false;
+  if (nonDesignDimensionCount === 2) {
+    dimension2 = hasDesign && designDimensionIndex < 2 ? 2 : 1;
+  }
   const design = hasDesign && designDimensionIndex;
   const firstMeasurementIndex = dimensionsInformation.length;
   return {

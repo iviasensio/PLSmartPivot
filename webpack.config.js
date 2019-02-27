@@ -22,10 +22,6 @@ const config = {
     }
   },
   mode: settings.mode,
-  // TODO: breaks core-js for some reason
-  // resolve: {
-  //   extensions: ['js', 'jsx']
-  // },
   module: {
     rules: [
       {
