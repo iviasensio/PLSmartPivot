@@ -37,7 +37,8 @@ const tableFormat = {
       },
       label: 'Even row background color',
       ref: 'rowEvenBGColor',
-      type: 'object'
+      type: 'object',
+      dualOutput: true
     },
     rowOddBGColor: {
       component: 'color-picker',
@@ -47,7 +48,8 @@ const tableFormat = {
       },
       label: 'Odd row background color',
       ref: 'rowOddBGColor',
-      type: 'object'
+      type: 'object',
+      dualOutput: true
     },
     BodyTextColor: {
       ref: 'BodyTextColorSchema',
