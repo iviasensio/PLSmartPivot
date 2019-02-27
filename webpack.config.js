@@ -13,6 +13,12 @@ const config = {
       commonjs: 'jquery',
       commonjs2: 'jquery',
       root: '_'
+    },
+    qlik: {
+      amd: 'qlik',
+      commonjs: 'qlik',
+      commonjs2: 'qlik',
+      root: '_'
     }
   },
   mode: settings.mode,
