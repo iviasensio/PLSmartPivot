@@ -19,7 +19,7 @@ class ColumnHeader extends React.PureComponent {
 
     const style = {
       ...baseCSS,
-      fontSize: `${14 + styling.headerOptions.fontSizeAdjustment} px`,
+      fontSize: `${14 + styling.headerOptions.fontSizeAdjustment}px`,
       height: '45px',
       verticalAlign: 'middle'
     };
