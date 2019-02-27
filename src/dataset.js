@@ -51,13 +51,7 @@ async function buildDesignCube (dimensionsInformation, dimensionIndexes, app) {
         qWidth: 1
       }
     ],
-    qDimensions: [
-      {
-        qDef: {
-          qFieldDefs: dimensionInfo.qGroupFieldDefs
-        }
-      }
-    ]
+    qDimensions: [createDimension(dimensionInfo)]
   }, app);
 
   return cube.qHyperCube.qDataPages[0].qMatrix;
