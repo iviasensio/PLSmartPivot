@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import HeaderPadding from './header-padding.jsx';
+import Tooltip from '../tooltip/index.jsx';
 
 class RowHeader extends React.PureComponent {
   constructor (props) {
@@ -15,7 +16,9 @@ class RowHeader extends React.PureComponent {
   }
 
   render () {
-    const { entry, rowStyle, styleBuilder, styling } = this.props;
+    const { entry, rowStyle, styleBuilder, styling, qlik } = this.props;
+    const inEditState = qlik.inEditState();
+
     return (
       <td
         className="fdim-cells"
@@ -26,7 +29,12 @@ class RowHeader extends React.PureComponent {
           styleBuilder={styleBuilder}
           styling={styling}
         />
-        {entry.displayValue}
+        <Tooltip
+          isTooltipActive={!inEditState}
+          tooltipText={entry.displayValue}
+        >
+          {entry.displayValue}
+        </Tooltip>
       </td>
     );
   }
