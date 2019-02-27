@@ -1,4 +1,4 @@
-const formatted = {
+const tableFormat = {
   type: 'items',
   label: 'Table Format',
   items: {
@@ -35,7 +35,6 @@ const formatted = {
         color: '#fff',
         index: 1
       },
-      dualOutput: true,
       label: 'Even row background color',
       ref: 'rowEvenBGColor',
       type: 'object'
@@ -46,7 +45,6 @@ const formatted = {
         color: '#b6d7ea',
         index: 4
       },
-      dualOutput: true,
       label: 'Odd row background color',
       ref: 'rowOddBGColor',
       type: 'object'
@@ -230,4 +228,4 @@ const formatted = {
   }
 };
 
-export default formatted;
+export default tableFormat;

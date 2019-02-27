@@ -1,6 +1,6 @@
 import pagination from './pagination';
 import header from './header';
-import formatted from './formatted';
+import tableFormat from './table-format';
 import conceptSemaphores from './concept-semaphores';
 import metricSemaphores from './metric-semaphores';
 
@@ -21,7 +21,7 @@ const definition = {
     settings: {
       items: {
         ConceptSemaphores: conceptSemaphores,
-        Formatted: formatted,
+        Formatted: tableFormat,
         Header: header,
         MetricSemaphores: metricSemaphores,
         Pagination: pagination
