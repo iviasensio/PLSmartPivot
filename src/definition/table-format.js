@@ -29,7 +29,7 @@ const tableFormat = {
       ref: 'rowEvenBGColor',
       type: 'object',
       dualOutput: true,
-      show: data => hasDesignDimension(data)
+      show: data => !hasDesignDimension(data)
     },
     rowOddBGColor: {
       component: 'color-picker',
@@ -41,7 +41,7 @@ const tableFormat = {
       ref: 'rowOddBGColor',
       type: 'object',
       dualOutput: true,
-      show: data => hasDesignDimension(data)
+      show: data => !hasDesignDimension(data)
     },
     BodyTextColor: {
       ref: 'BodyTextColorSchema',
@@ -91,7 +91,7 @@ const tableFormat = {
         }
       ],
       defaultValue: 'Black',
-      show: data => hasDesignDimension(data)
+      show: data => !hasDesignDimension(data)
     },
     FontFamily: {
       ref: 'FontFamily',
