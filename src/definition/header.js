@@ -27,23 +27,23 @@ const header = {
       component: 'color-picker',
       defaultValue: {
         index: 6,
-        color: "#4477aa"
+        color: '#4477aa'
       },
-      dualOutput: true,
-      label: 'BackGround Header Color',
+      label: 'Background Header Color',
       ref: 'HeaderColorSchema',
-      type: 'object'
+      type: 'object',
+      dualOutput: true
     },
     HeaderTextColor: {
       ref: 'HeaderTextColorSchema',
       label: 'Text Header Color',
       component: 'color-picker',
-      dualOutput: true,
       defaultValue: {
         index: 1,
-        color: "#ffffff"
+        color: '#ffffff'
       },
-      type: 'object'
+      type: 'object',
+      dualOutput: true
     },
     HeaderFontSize: {
       ref: 'lettersizeheader',
@@ -60,7 +60,7 @@ const header = {
           label: 'Medium'
         }
       ],
-      defaultValue: 2
+      defaultValue: 1
     }
   }
 };
