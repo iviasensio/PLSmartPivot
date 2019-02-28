@@ -1,9 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { HEADER_FONT_SIZE } from '../initialize-transformed';
+import Tooltip from '../tooltip/index.jsx';
 
 const MeasurementColumnHeader = ({ baseCSS, general, hasSecondDimension, measurement, styling }) => {
   const title = `${measurement.name} ${measurement.magnitudeLabelSuffix}`;
   const { fontSizeAdjustment } = styling.headerOptions;
+  const isMediumFontSize = styling.headerOptions.fontSizeAdjustment === HEADER_FONT_SIZE.MEDIUM;
+
   if (hasSecondDimension) {
     const isPercentageFormat = measurement.format.substring(measurement.format.length - 1) === '%';
     let baseFontSize = 14;
@@ -16,7 +20,7 @@ const MeasurementColumnHeader = ({ baseCSS, general, hasSecondDimension, measure
       ...baseCSS,
       cursor: 'default',
       fontSize: `${baseFontSize + fontSizeAdjustment}px`,
-      height: '25px',
+      height: isMediumFontSize ? '50px' : '25px',
       verticalAlign: 'middle'
     };
     return (
@@ -25,18 +29,23 @@ const MeasurementColumnHeader = ({ baseCSS, general, hasSecondDimension, measure
         style={cellStyle}
       >
         <span className="wrapclass25">
-          {title}
+          <Tooltip
+            tooltipText={title}
+          >
+            {title}
+          </Tooltip>
         </span>
       </th>
     );
   }
+
   const isLong = (title.length > 11 && fontSizeAdjustment === 0) || (title.length > 12 && fontSizeAdjustment === -2);
   const suffixWrap = isLong ? '70' : 'empty';
   const style = {
     ...baseCSS,
     cursor: 'default',
-    fontSize: `${15 + fontSizeAdjustment} px`,
-    height: '80px',
+    fontSize: `${15 + fontSizeAdjustment}px`,
+    height: isMediumFontSize ? '100px' : '80px',
     verticalAlign: 'middle'
   };
   return (

@@ -1,6 +1,11 @@
 import jQuery from 'jquery';
 import { distinctArray } from './utilities';
 
+export const HEADER_FONT_SIZE = {
+  SMALL: -1,
+  MEDIUM: 1
+};
+
 function getAlignment (option) {
   const alignmentOptions = {
     1: 'left',
@@ -13,8 +18,8 @@ function getAlignment (option) {
 
 function getFontSizeAdjustment (option) {
   const fontSizeAdjustmentOptions = {
-    1: -1,
-    2: 1,
+    1: HEADER_FONT_SIZE.SMALL,
+    2: HEADER_FONT_SIZE.MEDIUM,
     3: 2
   };
 
