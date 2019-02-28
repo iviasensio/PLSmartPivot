@@ -126,7 +126,7 @@ const tableFormat = {
           label: 'Comic Sans MS'
         },
         {
-          value: 'MS Sans Serif, serif',
+          value: 'MS Sans Serif, -apple-system, sans-serif',
           label: 'MS Sans Serif'
         },
         {
