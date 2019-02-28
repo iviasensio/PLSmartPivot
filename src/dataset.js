@@ -6,44 +6,30 @@ function createCube (definition, app) {
   });
 }
 
-function createDimension (dimensionInformation) {
-  return {
-    qDef: {
-      qFieldDefs: dimensionInformation.qGroupFieldDefs
-    }
-  };
-}
-
-async function buildDataCube (dimensionsInformation, dimensionIndexes, app, measurementsInformation) {
-  const dimension1 = dimensionsInformation[dimensionIndexes.dimension1];
+async function buildDataCube (originCubeDefinition, dimensionIndexes, app) {
   const cubeDefinition = {
+    ...originCubeDefinition,
     qInitialDataFetch: [
       {
         qHeight: 1000,
         qWidth: 10
       }
     ],
-    qDimensions: [createDimension(dimension1)],
-    qMeasures: measurementsInformation.map(measurementInformation => ({
-      qDef: {
-        qDef: measurementInformation.qFallbackTitle
-      }
-    }))
+    qDimensions: [originCubeDefinition.qDimensions[dimensionIndexes.dimension1]],
+    qMeasures: originCubeDefinition.qMeasures
   };
   if (dimensionIndexes.dimension2) {
-    const dimension2 = dimensionsInformation[dimensionIndexes.dimension2];
-    cubeDefinition.qDimensions.push(createDimension(dimension2));
+    cubeDefinition.qDimensions.push(originCubeDefinition.qDimensions[dimensionIndexes.dimension2]);
   }
   const cube = await createCube(cubeDefinition, app);
 
   return cube.qHyperCube.qDataPages[0].qMatrix;
 }
 
-async function buildDesignCube (dimensionsInformation, dimensionIndexes, app) {
+async function buildDesignCube (originCubeDefinition, dimensionIndexes, app) {
   if (!dimensionIndexes.design) {
     return null;
   }
-  const dimensionInfo = dimensionsInformation[dimensionIndexes.design];
   const cube = await createCube({
     qInitialDataFetch: [
       {
@@ -51,7 +37,7 @@ async function buildDesignCube (dimensionsInformation, dimensionIndexes, app) {
         qWidth: 1
       }
     ],
-    qDimensions: [createDimension(dimensionInfo)]
+    qDimensions: [originCubeDefinition.qDimensions[dimensionIndexes.design]]
   }, app);
 
   return cube.qHyperCube.qDataPages[0].qMatrix;
@@ -81,13 +67,14 @@ function getDimensionIndexes (dimensionsInformation, designDimensionIndex) {
 }
 
 export async function initializeCubes ({ component, layout }) {
+  const properties = await component.backendApi.getProperties();
+  const originCubeDefinition = properties.qHyperCubeDef;
   const app = qlik.currApp(component);
   const designDimensionIndex = findDesignDimension(layout.qHyperCube.qDataPages[0].qMatrix);
   const dimensionsInformation = layout.qHyperCube.qDimensionInfo;
-  const measurementsInformation = layout.qHyperCube.qMeasureInfo;
   const dimensionIndexes = getDimensionIndexes(dimensionsInformation, designDimensionIndex);
-  const designCube = await buildDesignCube(dimensionsInformation, dimensionIndexes, app);
-  const dataCube = await buildDataCube(dimensionsInformation, dimensionIndexes, app, measurementsInformation);
+  const designCube = await buildDesignCube(originCubeDefinition, dimensionIndexes, app);
+  const dataCube = await buildDataCube(originCubeDefinition, dimensionIndexes, app);
 
   return {
     design: designCube,
