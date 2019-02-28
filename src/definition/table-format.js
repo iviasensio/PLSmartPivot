@@ -1,4 +1,4 @@
-const formatted = {
+const tableFormat = {
   type: 'items',
   label: 'Table Format',
   items: {
@@ -35,10 +35,10 @@ const formatted = {
         color: '#fff',
         index: 1
       },
-      dualOutput: true,
       label: 'Even row background color',
       ref: 'rowEvenBGColor',
-      type: 'object'
+      type: 'object',
+      dualOutput: true
     },
     rowOddBGColor: {
       component: 'color-picker',
@@ -46,10 +46,10 @@ const formatted = {
         color: '#b6d7ea',
         index: 4
       },
-      dualOutput: true,
       label: 'Odd row background color',
       ref: 'rowOddBGColor',
-      type: 'object'
+      type: 'object',
+      dualOutput: true
     },
     BodyTextColor: {
       ref: 'BodyTextColorSchema',
@@ -110,35 +110,35 @@ const formatted = {
       label: 'FontFamily',
       options: [
         {
-          value: 'QlikView Sans',
+          value: 'QlikView Sans, -apple-system, sans-serif',
           label: 'QlikView Sans'
         },
         {
-          value: 'Arial',
+          value: 'Arial, -apple-system, sans-serif',
           label: 'Arial'
         },
         {
-          value: 'Calibri',
+          value: 'Calibri, -apple-system, sans-serif',
           label: 'Calibri'
         },
         {
-          value: 'Comic Sans MS',
+          value: 'Comic Sans MS, -apple-system, sans-serif',
           label: 'Comic Sans MS'
         },
         {
-          value: 'MS Sans Serif',
+          value: 'MS Sans Serif, -apple-system, sans-serif',
           label: 'MS Sans Serif'
         },
         {
-          value: 'Tahoma',
+          value: 'Tahoma, -apple-system, sans-serif',
           label: 'Tahoma'
         },
         {
-          value: 'Verdana',
+          value: 'Verdana, -apple-system, sans-serif',
           label: 'Verdana'
         }
       ],
-      defaultValue: 'QlikView Sans'
+      defaultValue: 'QlikView Sans, -apple-system, sans-serif'
     },
     DataFontSize: {
       ref: 'lettersize',
@@ -230,4 +230,4 @@ const formatted = {
   }
 };
 
-export default formatted;
+export default tableFormat;
