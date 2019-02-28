@@ -2,11 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const handleCalculateTooltipPosition = (event) => {
-  const tooltipClassName = 'tooltip-wrapper';
-  const tooltip = document.getElementsByClassName(tooltipClassName);
-
-  tooltip[0].style.left = event.clientX + 'px';
-  tooltip[0].style.top = event.clientY + 'px';
+  const tooltip = document.querySelector('.tooltip-wrapper');
+  if (!tooltip) {
+    return;
+  }
+  tooltip.style.left = `${event.clientX}px`;
+  tooltip.style.top = `${event.clientY}px`;
 };
 class Tooltip extends React.Component {
   constructor (props) {
