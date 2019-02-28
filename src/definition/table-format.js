@@ -11,7 +11,8 @@ const tableFormat = {
       ref: 'indentbool',
       type: 'boolean',
       label: 'Indent',
-      defaultValue: true
+      defaultValue: false,
+      show: data => !hasDesignDimension(data)
     },
     SeparatorColumns: {
       ref: 'separatorcols',

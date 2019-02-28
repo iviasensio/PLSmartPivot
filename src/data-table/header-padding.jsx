@@ -4,7 +4,8 @@ import PropTypes from 'prop-types';
 const HeaderPadding = ({ styleBuilder, styling }) => {
   if (styling.usePadding && !styleBuilder.hasCustomFileStyle()) {
     const paddingStyle = {
-      fontFamily: styling.options.fontFamily
+      fontFamily: styling.options.fontFamily,
+      marginLeft: '15px'
     };
     return (
       <span style={paddingStyle} />
