@@ -39,6 +39,7 @@ const metricSemaphores = {
       label: 'Critic Color Fill',
       type: 'object',
       component: 'color-picker',
+      dualOutput: true,
       defaultValue: {
         index: 8,
         color: '#f93f17'
@@ -49,6 +50,7 @@ const metricSemaphores = {
       label: 'Critic Color Text',
       type: 'object',
       component: 'color-picker',
+      dualOutput: true,
       defaultValue: {
         index: 11,
         color: '#ffffff'
@@ -65,6 +67,7 @@ const metricSemaphores = {
       label: 'Medium Color Fill',
       type: 'object',
       component: 'color-picker',
+      dualOutput: true,
       defaultValue: {
         index: 9,
         color: '#ffcf02'
@@ -75,6 +78,7 @@ const metricSemaphores = {
       label: 'Medium Color Text',
       type: 'object',
       component: 'color-picker',
+      dualOutput: true,
       defaultValue: {
         index: 12,
         color: '#000000'
@@ -85,6 +89,7 @@ const metricSemaphores = {
       label: 'Success Color Fill',
       type: 'object',
       component: 'color-picker',
+      dualOutput: true,
       defaultValue: {
         index: 10,
         color: '#276e27'
@@ -95,6 +100,7 @@ const metricSemaphores = {
       label: 'Success Color Text',
       type: 'object',
       component: 'color-picker',
+      dualOutput: true,
       defaultValue: {
         index: 11,
         color: '#ffffff'
