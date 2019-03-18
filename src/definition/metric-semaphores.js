@@ -23,7 +23,7 @@ const metricSemaphores = {
       ref: 'metricssemaphore',
       translation: 'Metrics affected (1,2,4,...)',
       type: 'string',
-      defaultValue: '0',
+      defaultValue: '-',
       show (data) {
         return !data.allmetrics;
       }

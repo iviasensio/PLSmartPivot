@@ -10,27 +10,34 @@ export default {
   controller: [
     '$scope',
     '$timeout',
-    function () { }
+    function controller () {}
   ],
+  design: {
+    dimensions: {
+      max: 1,
+      min: 0
+    }
+  },
   data: {
     dimensions: {
-      max: 2,
+      max: 3,
       min: 1,
       uses: 'dimensions'
     },
     measures: {
-      max: 9,
+      max: 8,
       min: 1,
       uses: 'measures'
     }
   },
   definition,
   initialProperties: {
+    version: 1.0,
     qHyperCubeDef: {
       qDimensions: [],
       qInitialDataFetch: [
         {
-          qHeight: 1000,
+          qHeight: 1,
           qWidth: 10
         }
       ],

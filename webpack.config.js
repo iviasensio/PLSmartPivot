@@ -13,13 +13,15 @@ const config = {
       commonjs: 'jquery',
       commonjs2: 'jquery',
       root: '_'
+    },
+    qlik: {
+      amd: 'qlik',
+      commonjs: 'qlik',
+      commonjs2: 'qlik',
+      root: '_'
     }
   },
   mode: settings.mode,
-  // TODO: breaks core-js for some reason
-  // resolve: {
-  //   extensions: ['js', 'jsx']
-  // },
   module: {
     rules: [
       {
@@ -68,12 +70,7 @@ const config = {
       `assets/${settings.name}.qext`,
       `assets/${settings.name}.png`,
       'assets/wbfolder.wbl',
-      'resources/Excel.png',
-
-      // TODO: remove entries below this line
-      'resources/Accounts.csv',
-      'resources/Accounts2.csv',
-      'resources/QlikLook.csv'
+      'resources/Excel.png'
     ], {}),
     new StyleLintPlugin({
       files: '**/*.less'

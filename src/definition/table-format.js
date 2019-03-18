@@ -1,3 +1,8 @@
+// fixes case for when there are 3 dimensions, missies the case with 1 design dimension and 1 data dimension
+function hasDesignDimension (data) {
+  return data.qHyperCubeDef.qDimensions.length > 2;
+}
+
 const tableFormat = {
   type: 'items',
   label: 'Table Format',
@@ -6,28 +11,14 @@ const tableFormat = {
       ref: 'indentbool',
       type: 'boolean',
       label: 'Indent',
-      defaultValue: true
+      defaultValue: false,
+      show: data => !hasDesignDimension(data)
     },
     SeparatorColumns: {
       ref: 'separatorcols',
       type: 'boolean',
       label: 'Separator Columns',
       defaultValue: false
-    },
-    CustomFileBool: {
-      ref: 'customfilebool',
-      type: 'boolean',
-      label: 'Include External File',
-      defaultValue: false
-    },
-    CustomFile: {
-      ref: 'customfile',
-      label: 'Name of CSV file (; separated)',
-      type: 'string',
-      defaultValue: '',
-      show (data) {
-        return data.customfilebool;
-      }
     },
     rowEvenBGColor: {
       component: 'color-picker',
@@ -38,7 +29,8 @@ const tableFormat = {
       label: 'Even row background color',
       ref: 'rowEvenBGColor',
       type: 'object',
-      dualOutput: true
+      dualOutput: true,
+      show: data => !hasDesignDimension(data)
     },
     rowOddBGColor: {
       component: 'color-picker',
@@ -49,7 +41,8 @@ const tableFormat = {
       label: 'Odd row background color',
       ref: 'rowOddBGColor',
       type: 'object',
-      dualOutput: true
+      dualOutput: true,
+      show: data => !hasDesignDimension(data)
     },
     BodyTextColor: {
       ref: 'BodyTextColorSchema',
@@ -99,9 +92,7 @@ const tableFormat = {
         }
       ],
       defaultValue: 'Black',
-      show (data) {
-        return !data.customfilebool;
-      }
+      show: data => !hasDesignDimension(data)
     },
     FontFamily: {
       ref: 'FontFamily',

@@ -25,14 +25,14 @@ class RowHeader extends React.PureComponent {
         onClick={this.handleSelect}
         style={rowStyle}
       >
-        <HeaderPadding
-          styleBuilder={styleBuilder}
-          styling={styling}
-        />
         <Tooltip
           isTooltipActive={!inEditState}
           tooltipText={entry.displayValue}
         >
+          <HeaderPadding
+            styleBuilder={styleBuilder}
+            styling={styling}
+          />
           {entry.displayValue}
         </Tooltip>
       </td>

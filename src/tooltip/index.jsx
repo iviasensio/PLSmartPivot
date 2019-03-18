@@ -9,7 +9,8 @@ const handleCalculateTooltipPosition = (event) => {
   tooltip.style.left = `${event.clientX}px`;
   tooltip.style.top = `${event.clientY}px`;
 };
-class Tooltip extends React.Component {
+
+class Tooltip extends React.PureComponent {
   constructor (props) {
     super(props);
     this.state = {
@@ -18,19 +19,10 @@ class Tooltip extends React.Component {
     this.handleRenderTooltip = this.handleRenderTooltip.bind(this);
   }
 
-  shouldComponentUpdate (nextProps, nextState) {
-    const { showTooltip } = this.state;
-    if (nextState.showTooltip === showTooltip) {
-      return false;
-    }
-    return true;
-  }
-
   handleRenderTooltip () {
     const { showTooltip } = this.state;
     this.setState({ showTooltip: !showTooltip });
   }
-
 
   render () {
     const { children, tooltipText } = this.props;
@@ -60,7 +52,11 @@ class Tooltip extends React.Component {
 }
 
 Tooltip.propTypes = {
-  children: PropTypes.string.isRequired,
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node
+  ]).isRequired,
   tooltipText: PropTypes.string.isRequired
 };
+
 export default Tooltip;
