@@ -108,7 +108,12 @@ DataCell.propTypes = {
   }).isRequired,
   qlik: PropTypes.shape({
     backendApi: PropTypes.shape({
-      selectValues: PropTypes.func.isRequired
+      selectValues: function (props, propName) {
+        if (props.isSnapshot || typeof props[propName] === 'function') {
+          return null;
+        }
+        return new Error('Missing implementation of qlik.backendApi.selectValues.');
+      }
     }).isRequired
   }).isRequired,
   styleBuilder: PropTypes.shape({

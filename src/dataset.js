@@ -67,12 +67,20 @@ function getDimensionIndexes (dimensionsInformation, designDimensionIndex) {
 }
 
 export async function initializeCubes ({ component, layout }) {
-  const properties = await component.backendApi.getProperties();
-  const originCubeDefinition = properties.qHyperCubeDef;
   const app = qlik.currApp(component);
   const designDimensionIndex = findDesignDimension(layout.qHyperCube.qDataPages[0].qMatrix);
   const dimensionsInformation = layout.qHyperCube.qDimensionInfo;
   const dimensionIndexes = getDimensionIndexes(dimensionsInformation, designDimensionIndex);
+
+  let properties;
+  if (component.backendApi.isSnapshot) {
+    // Fetch properties of source
+    properties = (await app.getObjectProperties(layout.sourceObjectId)).properties;
+  } else {
+    properties = await component.backendApi.getProperties();
+  }
+
+  const originCubeDefinition = properties.qHyperCubeDef;
   const designCube = await buildDesignCube(originCubeDefinition, dimensionIndexes, app);
   const dataCube = await buildDataCube(originCubeDefinition, dimensionIndexes, app);
 
