@@ -43,7 +43,7 @@ It's specifically focused on financial reports, trying to solve some common need
 - ...
 
 ### Basic Guide
-![alt tag](https://github.com/iviasensio/Guides/blob/master/LetsComment/PLSmartPivot.png)
+![alt tag](https://github.com/iviasensio/Guides/blob/master/PLSmartPivot/PLSmartPivot.png)
 
 
 You'll find a manual 'P&LSmart Pivot Extension Manual.pdf' and one app example 'P&LDemo4.qvf'.
