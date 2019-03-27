@@ -1,8 +1,11 @@
-const CopyWebpackPlugin = require('copy-webpack-plugin');
 const StyleLintPlugin = require('stylelint-webpack-plugin');
-const settings = require('./settings');
+const packageJSON = require('./package.json');
+const path = require('path');
 
-console.log('Webpack mode:', settings.mode); // eslint-disable-line no-console
+const DIST = path.resolve("./dist");
+const MODE = process.env.NODE_ENV || 'development';
+
+console.log('Webpack mode:', MODE); // eslint-disable-line no-console
 
 const config = {
   devtool: 'source-map',
@@ -21,7 +24,7 @@ const config = {
       root: '_'
     }
   },
-  mode: settings.mode,
+  mode: MODE,
   module: {
     rules: [
       {
@@ -61,17 +64,11 @@ const config = {
     ]
   },
   output: {
-    filename: `${settings.name}.js`,
+    filename: `${packageJSON.name}.js`,
     libraryTarget: 'amd',
-    path: settings.buildDestination
+    path: DIST
   },
   plugins: [
-    new CopyWebpackPlugin([
-      `assets/${settings.name}.qext`,
-      `assets/${settings.name}.png`,
-      'assets/wbfolder.wbl',
-      'resources/Excel.png'
-    ], {}),
     new StyleLintPlugin({
       files: '**/*.less'
     })

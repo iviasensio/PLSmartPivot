@@ -19,7 +19,7 @@ $RECYCLE.BIN/
 
 # Temporary build files
 node_modules/
-build/
+dist/
 BUMPED_VERSION
 
 # =========================

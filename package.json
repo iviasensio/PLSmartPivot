@@ -1,18 +1,15 @@
 {
   "name": "qlik-smart-pivot",
   "version": "0.0.1",
-  "description": "Formatted table for P&L reports.",
-  "keywords": "smart pivot qliksense extension",
+  "description": "Profit & Loss reporting with color and font customizations.",
+  "homepage": "",
   "repository": "https://github.com/iviasensio/PLSmartPivot",
   "author": "Ivan Felipe Asensio <ivan.felipe@qlik.com>",
   "license": "MIT",
   "scripts": {
     "build": "gulp build",
+    "build:zip": "gulp zip",
     "eslint": "eslint src",
-    "eslint:fix": "eslint --fix src",
-    "test": "karma start karma.conf.js",
-    "test-once": "karma start karma.conf.js --single-run",
-    "watch": "gulp watch",
     "stylelint": "stylelint src/main.less"
   },
   "devDependencies": {
@@ -24,7 +21,6 @@
     "@babel/preset-react": "7.0.0",
     "babel-eslint": "10.0.1",
     "babel-loader": "8.0.4",
-    "copy-webpack-plugin": "4.5.3",
     "css-loader": "1.0.0",
     "del": "2.0.2",
     "enzyme": "3.8.0",
@@ -33,15 +29,8 @@
     "eslint-loader": "2.1.1",
     "eslint-plugin-react": "7.11.1",
     "gulp": "4.0.0",
-    "gulp-json-editor": "2.4.3",
+    "gulp-util": "^3.0.7",
     "gulp-zip": "3.0.2",
-    "jasmine-core": "3.2.1",
-    "jasmine-enzyme": "7.0.1",
-    "karma": "3.0.0",
-    "karma-chrome-launcher": "2.2.0",
-    "karma-jasmine": "1.1.2",
-    "karma-sourcemap-loader": "0.3.7",
-    "karma-webpack": "3.0.5",
     "less": "3.8.1",
     "less-loader": "4.1.0",
     "lodash.merge": "4.6.1",
@@ -49,9 +38,7 @@
     "stylelint": "8.4.0",
     "stylelint-webpack-plugin": "0.10.5",
     "text-loader": "0.0.1",
-    "webpack": "4.20.2",
-    "webpack-cli": "3.1.2",
-    "webpack-dev-server": "3.1.10"
+    "webpack": "4.20.2"
   },
   "dependencies": {
     "prop-types": "15.6.2",
