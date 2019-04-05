@@ -16,11 +16,6 @@ It's specifically focused on financial reports, trying to solve some common need
 You'll find a manual [Qlik Sense P&LSmart Pivot Extension Manual.pdf](resources/Qlik Sense P&LSmart Pivot Extension Manual.pdf) and one app example [P&LSmartPivot_demo.qvf](resources/P&LSmartPivot_demo.qvf).
 
 
-# If the import does not work at first time
-- remove [Accounts.csv](resources/Accounts.csv), [Accounts2.csv](resources/Accounts2.csv) and [Excel.png](resources/Excel.png), zip it again and import.
-- Then reintroduce [Accounts.csv](resources/Accounts.csv), [Accounts2.csv](resources/Accounts2.csv) and [Excel.png](resources/Excel.png), zip it again and import.
-
-
 # Installation
 
 1. Download the extension zip, `qlik-smart-pivot_<version>.zip`, from the latest release(https://github.com/qlik-oss/PLSmartPivot/releases/latest)

@@ -1,23 +1,61 @@
 var gulp = require('gulp');
+var gutil = require('gulp-util');
 var zip = require('gulp-zip');
 var del = require('del');
-var path = require('path');
-var settings = require('./settings');
 var webpackConfig = require('./webpack.config');
 var webpack = require('webpack');
-var WebpackDevServer = require('webpack-dev-server');
-var jeditor = require("gulp-json-editor");
+var pkg = require('./package.json');
 
-var srcFiles = path.resolve('./src/**/*.*');
+var DIST = './dist';
+var VERSION = process.env.VERSION || 'local-dev';
 
-gulp.task('remove-build-folder', function(){
-  return del([settings.buildDestination], { force: true });
+gulp.task('qext', function () {
+	var qext = {
+		name: 'P&L pivot',
+		type: 'visualization',
+		description: pkg.description + '\nVersion: ' + VERSION,
+		version: VERSION,
+		icon: 'table',
+		preview: 'qlik-smart-pivot.png',
+		keywords: 'qlik-sense, visualization',
+		author: pkg.author,
+		homepage: pkg.homepage,
+		license: pkg.license,
+		repository: pkg.repository,
+		dependencies: {
+			'qlik-sense': '>=5.5.x'
+		}
+	};
+	if (pkg.contributors) {
+		qext.contributors = pkg.contributors;
+	}
+	var src = require('stream').Readable({
+		objectMode: true
+	});
+	src._read = function () {
+		this.push(new gutil.File({
+			cwd: '',
+			base: '',
+			path: pkg.name + '.qext',
+			contents: Buffer.from(JSON.stringify(qext, null, 4))
+		}));
+		this.push(null);
+	};
+	return src.pipe(gulp.dest(DIST));
+});
+
+gulp.task('clean', function(){
+  return del([DIST], { force: true });
 });
 
 gulp.task('zip-build', function(){
-  return gulp.src(settings.buildDestination + '/**/*')
-    .pipe(zip(`${settings.name}_${settings.version}.zip`))
-    .pipe(gulp.dest(settings.buildDestination));
+  return gulp.src(DIST + '/**/*')
+    .pipe(zip(`${pkg.name}_${VERSION}.zip`))
+    .pipe(gulp.dest(DIST));
+});
+
+gulp.task('add-assets', function(){
+  return gulp.src('./assets/**/*').pipe(gulp.dest(DIST));
 });
 
 gulp.task('webpack-build', done => {
@@ -36,40 +74,14 @@ gulp.task('webpack-build', done => {
   });
 });
 
-gulp.task('update-qext-version', function () {
-  return gulp.src(`${settings.buildDestination}/${settings.name}.qext`)
-    .pipe(jeditor({
-      'version': settings.version
-    }))
-    .pipe(gulp.dest(settings.buildDestination));
-});
-
 gulp.task('build',
-  gulp.series('remove-build-folder', 'webpack-build', 'update-qext-version', 'zip-build')
+  gulp.series('clean', 'webpack-build', 'qext', 'add-assets')
+);
+
+gulp.task('zip',
+  gulp.series('build', 'zip-build')
 );
 
 gulp.task('default',
   gulp.series('build')
 );
-
-gulp.task('watch', () => new Promise((resolve, reject) => {
-  webpackConfig.entry.unshift('webpack-dev-server/client?http://localhost:' + settings.port);
-  const compiler = webpack(webpackConfig);
-  const originalOutputFileSystem = compiler.outputFileSystem;
-  const devServer = new WebpackDevServer(compiler, {
-    headers: {
-      "Access-Control-Allow-Origin": "*"
-    },
-  }).listen(settings.port, 'localhost', error => {
-    compiler.outputFileSystem = originalOutputFileSystem;
-    if (error) {
-      console.error(error); // eslint-disable-line no-console
-      return reject(error);
-    }
-
-    // eslint-disable-next-line no-console
-    console.log('Listening at localhost:' + settings.port);
-
-    resolve(null, devServer);
-  });
-}));
