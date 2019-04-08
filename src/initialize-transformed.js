@@ -108,8 +108,8 @@ function generateMatrixCell ({ cell, dimension1Information, dimension2Informatio
 
 let lastRow = 0;
 function generateDataSet (component, dimensionsInformation, measurementsInformation, cubes) {
-  const dimension1 = [];
-  const dimension2 = [];
+  let dimension1 = [];
+  let dimension2 = [];
   const measurements = generateMeasurements(measurementsInformation);
   let matrix = [];
 
@@ -147,12 +147,7 @@ function generateDataSet (component, dimensionsInformation, measurementsInformat
       const currentDim1Entry = row[0].qText;
       const isSameDimension1AsPrevious = currentDim1Entry === previousDim1Entry;
       if (isSameDimension1AsPrevious) {
-        const updatedRow = matrix[matrix.length - 1].concat(matrixRow);
-
-        matrix = [
-          ...matrix.slice(0, matrix.length - 1),
-          updatedRow
-        ];
+        matrix[matrix.length - 1] = matrix[matrix.length - 1].concat(matrixRow);
       } else {
         matrix[matrix.length] = matrixRow;
       }
@@ -163,10 +158,45 @@ function generateDataSet (component, dimensionsInformation, measurementsInformat
   });
 
   // filter header dimensions to only have distinct values
+  dimension1 = distinctArray(dimension1);
+  dimension2 = distinctArray(dimension2);
+
+  // Make sure all rows are saturated, otherwise data risks being displayed in the wrong column
+  matrix = matrix.map((row, rowIndex) => {
+    if (row.length == dimension2.length) {
+      // Row is saturated
+      return row;
+    }
+
+    // Row is not saturated, so must add empty cells to fill the gaps
+    let newRow = [];
+    let cellIndex = 0;
+    dimension2.forEach(dim => {
+      measurements.forEach(measurement => {
+        if (cellIndex < row.length
+          && row[cellIndex].parents.dimension2.elementNumber === dim.elementNumber
+          && row[cellIndex].parents.measurement.header === measurement.name) {
+          newRow.push(row[cellIndex]);
+          cellIndex++;
+        } else {
+          newRow.push({
+            displayValue: '',
+            parents: {
+              dimension1: { elementNumber: rowIndex },
+              dimension2: { elementNumber: dim.elementNumber },
+              measurement: { header: measurement.name }
+            }
+          });
+        }
+      });
+    });
+
+    return newRow;
+  });
 
   return {
-    dimension1: distinctArray(dimension1),
-    dimension2: distinctArray(dimension2),
+    dimension1: dimension1,
+    dimension2: dimension2,
     matrix,
     measurements
   };

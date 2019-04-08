@@ -33,24 +33,26 @@ class DataCell extends React.PureComponent {
       styling
     } = this.props;
 
-    const isColumnPercentageBased = (/%/).test(measurement.format);
-    let formattedMeasurementValue = formatMeasurementValue(measurement, styling);
-    if (styleBuilder.hasComments()) {
-      formattedMeasurementValue = '.';
-    }
-    let textAlignment = 'Right';
-    const textAlignmentProp = styling.options.textAlignment;
-    if (textAlignmentProp) {
-      textAlignment = textAlignmentProp;
-    }
+    let textAlignment = styling.options.textAlignment || 'Right';
 
     let cellStyle = {
       fontFamily: styling.options.fontFamily,
       ...styleBuilder.getStyle(),
       paddingLeft: '5px',
       textAlign: textAlignment
-
     };
+
+    const isEmptyCell = measurement.displayValue === '';
+    const isColumnPercentageBased = (/%/).test(measurement.format);
+    let formattedMeasurementValue;
+    if (isEmptyCell) {
+      formattedMeasurementValue = '';
+      cellStyle.cursor = 'default';
+    } else if (styleBuilder.hasComments()) {
+      formattedMeasurementValue = '.';
+    } else {
+      formattedMeasurementValue = formatMeasurementValue(measurement, styling);
+    }
 
     const { semaphoreColors, semaphoreColors: { fieldsToApplyTo } } = styling;
     const isValidSemaphoreValue = !styleBuilder.hasComments() && !isNaN(measurement.value);
@@ -79,7 +81,7 @@ class DataCell extends React.PureComponent {
     return (
       <td
         className={`${cellClass}${general.cellSuffix}`}
-        onClick={this.handleSelect}
+        onClick={isEmptyCell ? null : this.handleSelect}
         style={cellStyle}
       >
         <Tooltip
