@@ -50,7 +50,7 @@ const MeasurementColumnHeader = ({ baseCSS, general, hasSecondDimension, measure
   };
   return (
     <th
-      className={`grid-cells2 ${general.cellSuffix}`}
+      className={`grid-cells2${general.cellSuffix}`}
       style={style}
     >
       <span
