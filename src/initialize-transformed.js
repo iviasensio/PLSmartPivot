@@ -113,7 +113,6 @@ function generateDataSet (component, dimensionsInformation, measurementsInformat
   const measurements = generateMeasurements(measurementsInformation);
   let matrix = [];
 
-  let previousDim1Entry;
   const hasDesignDimension = cubes.design;
   const hasSecondDimension = hasDesignDimension ? dimensionsInformation.length > 2 : dimensionsInformation.length > 1;
   cubes.data.forEach(row => {
@@ -127,7 +126,7 @@ function generateDataSet (component, dimensionsInformation, measurementsInformat
       dimension2.push(dimension2Entry);
       firstDataCell = 2;
     }
-    const matrixRow = row
+    let matrixRow = row
       .slice(firstDataCell, row.length)
       .map((cell, cellIndex) => {
         const measurementInformation = measurements[cellIndex];
@@ -143,18 +142,17 @@ function generateDataSet (component, dimensionsInformation, measurementsInformat
         return generatedCell;
       });
 
+    let appendToRowIndex = matrix.length;
     if (hasSecondDimension) {
-      const currentDim1Entry = row[0].qText;
-      const isSameDimension1AsPrevious = currentDim1Entry === previousDim1Entry;
-      if (isSameDimension1AsPrevious) {
-        matrix[matrix.length - 1] = matrix[matrix.length - 1].concat(matrixRow);
-      } else {
-        matrix[matrix.length] = matrixRow;
+      // See if there already is a row for the current dim1
+      for (let i = 0; i < matrix.length; i++) {
+        if (matrix[i][0].parents.dimension1.header === matrixRow[0].parents.dimension1.header) {
+          appendToRowIndex = i;
+          matrixRow = matrix[i].concat(matrixRow);
+        }
       }
-      previousDim1Entry = currentDim1Entry;
-    } else {
-      matrix[matrix.length] = matrixRow;
     }
+    matrix[appendToRowIndex] = matrixRow;
   });
 
   // filter header dimensions to only have distinct values
