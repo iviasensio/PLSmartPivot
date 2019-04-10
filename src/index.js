@@ -20,12 +20,16 @@ export default {
   },
   data: {
     dimensions: {
-      max: 3,
+      max: function (nMeasures) {
+        return nMeasures < 9 ? 2 : 1;
+      },
       min: 1,
       uses: 'dimensions'
     },
     measures: {
-      max: 8,
+      max: function (nDims) {
+        return nDims < 2 ? 9 : 8;
+      },
       min: 1,
       uses: 'measures'
     }
