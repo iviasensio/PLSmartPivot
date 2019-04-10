@@ -1,10 +1,11 @@
 import initializeTransformed from './initialize-transformed';
 
-async function initialize ({ $element, layout, component, cubes }) {
+async function initialize ({ $element, layout, component, dataCube, designList }) {
   const transformedProperties = await initializeTransformed({
     $element,
     component,
-    cubes,
+    dataCube,
+    designList,
     layout
   });
 
