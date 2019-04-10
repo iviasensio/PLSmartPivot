@@ -18,6 +18,9 @@ const definition = {
       },
       uses: 'data'
     },
+    sorting: {
+      uses: 'sorting'
+    },
     settings: {
       items: {
         ConceptSemaphores: conceptSemaphores,
@@ -28,8 +31,25 @@ const definition = {
       },
       uses: 'settings'
     },
-    sorting: {
-      uses: 'sorting'
+    about: {
+      component: 'items',
+      label: 'About',
+      items: {
+        header: {
+          label: 'P&L pivot',
+          style: 'header',
+          component: 'text'
+        },
+        paragraph1: {
+          label: `P&L pivot is a Qlik Sense extension which allows you to display Profit & Loss
+            reporting with color and font customizations.`,
+          component: 'text'
+        },
+        paragraph2: {
+          label: 'P&L pivot is based upon an extension created by Ivan Felipe Asensio.',
+          component: 'text'
+        }
+      }
     }
   },
   type: 'items'
