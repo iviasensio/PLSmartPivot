@@ -55,7 +55,7 @@ const pagination = {
       ref: 'errormessage',
       label: 'Default error message',
       type: 'string',
-      defaultValue: 'Ups! It seems you asked for too many data. Please filter more to see the whole picture.'
+      defaultValue: 'Unable to display all the data. Apply more filters to limit the amount of displayed data.'
     }
   }
 };
