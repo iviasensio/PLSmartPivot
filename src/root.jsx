@@ -10,6 +10,7 @@ const Root = ({ state, qlik, editmodeClass }) => (
       <HeadersTable
         data={state.data}
         general={state.general}
+        isKpi
         qlik={qlik}
         styling={state.styling}
       />
@@ -28,6 +29,7 @@ const Root = ({ state, qlik, editmodeClass }) => (
         <HeadersTable
           data={state.data}
           general={state.general}
+          isKpi={false}
           qlik={qlik}
           styling={state.styling}
         />

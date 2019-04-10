@@ -40,13 +40,15 @@ const DataTable = ({ data, general, qlik, renderData, styling }) => {
 
             return (
               <tr key={dimensionEntry.displayValue}>
-                <RowHeader
-                  entry={dimensionEntry}
-                  qlik={qlik}
-                  rowStyle={rowStyle}
-                  styleBuilder={styleBuilder}
-                  styling={styling}
-                />
+                {!renderData ?
+                  <RowHeader
+                    entry={dimensionEntry}
+                    qlik={qlik}
+                    rowStyle={rowStyle}
+                    styleBuilder={styleBuilder}
+                    styling={styling}
+                  /> : null
+                }
                 {renderData && injectSeparators(
                   matrix[dimensionIndex],
                   styling.useSeparatorColumns,

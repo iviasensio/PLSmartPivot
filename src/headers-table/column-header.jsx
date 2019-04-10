@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { HEADER_FONT_SIZE } from '../initialize-transformed';
 import Tooltip from '../tooltip/index.jsx';
 
 class ColumnHeader extends React.PureComponent {
@@ -16,11 +17,12 @@ class ColumnHeader extends React.PureComponent {
   render () {
     const { baseCSS, cellSuffix, colSpan, entry, styling, qlik } = this.props;
     const inEditState = qlik.inEditState();
+    const isMediumFontSize = styling.headerOptions.fontSizeAdjustment === HEADER_FONT_SIZE.MEDIUM;
 
     const style = {
       ...baseCSS,
       fontSize: `${14 + styling.headerOptions.fontSizeAdjustment}px`,
-      height: '45px',
+      height: isMediumFontSize ? '45px' : '35px',
       verticalAlign: 'middle'
     };
 
@@ -33,6 +35,7 @@ class ColumnHeader extends React.PureComponent {
       >
         <Tooltip
           isTooltipActive={!inEditState}
+          styling={styling}
           tooltipText={entry.displayValue}
         >
           {entry.displayValue}

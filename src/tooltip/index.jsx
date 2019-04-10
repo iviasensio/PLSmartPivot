@@ -25,23 +25,21 @@ class Tooltip extends React.PureComponent {
   }
 
   render () {
-    const { children, tooltipText } = this.props;
+    const { children, styling, tooltipText } = this.props;
     const { showTooltip } = this.state;
-
     return (
       <div
         onMouseMove={handleCalculateTooltipPosition}
         onMouseOut={this.handleRenderTooltip}
         onMouseOver={this.handleRenderTooltip}
+        style={{ fontFamily: styling.options.fontFamily }}
       >
         {children}
 
         {showTooltip
           ? (
-            <div
-              className="tooltip-wrapper"
-            >
-              <p>
+            <div className="tooltip-wrapper">
+              <p style={{ fontFamily: styling.options.fontFamily }}>
                 {tooltipText}
               </p>
             </div>
@@ -56,6 +54,11 @@ Tooltip.propTypes = {
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node
   ]).isRequired,
+  styling: PropTypes.shape({
+    options: PropTypes.shape({
+      fontFamily: PropTypes.string.isRequired
+    }).isRequired
+  }).isRequired,
   tooltipText: PropTypes.string.isRequired
 };
 

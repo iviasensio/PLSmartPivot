@@ -6,7 +6,7 @@ import Tooltip from '../tooltip/index.jsx';
 const MeasurementColumnHeader = ({ baseCSS, general, hasSecondDimension, measurement, styling }) => {
   const title = `${measurement.name} ${measurement.magnitudeLabelSuffix}`;
   const { fontSizeAdjustment } = styling.headerOptions;
-  const isMediumFontSize = styling.headerOptions.fontSizeAdjustment === HEADER_FONT_SIZE.MEDIUM;
+  const isMediumFontSize = fontSizeAdjustment === HEADER_FONT_SIZE.MEDIUM;
 
   if (hasSecondDimension) {
     const isPercentageFormat = measurement.format.substring(measurement.format.length - 1) === '%';
@@ -20,7 +20,7 @@ const MeasurementColumnHeader = ({ baseCSS, general, hasSecondDimension, measure
       ...baseCSS,
       cursor: 'default',
       fontSize: `${baseFontSize + fontSizeAdjustment}px`,
-      height: isMediumFontSize ? '50px' : '25px',
+      height: isMediumFontSize ? '45px' : '35px',
       verticalAlign: 'middle'
     };
     return (
@@ -28,24 +28,21 @@ const MeasurementColumnHeader = ({ baseCSS, general, hasSecondDimension, measure
         className={`${cellClass}${general.cellSuffix}`}
         style={cellStyle}
       >
-        <span className="wrapclass25">
-          <Tooltip
-            tooltipText={title}
-          >
-            {title}
-          </Tooltip>
-        </span>
+        <Tooltip
+          tooltipText={title}
+          styling={styling}
+        >
+          {title}
+        </Tooltip>
       </th>
     );
   }
 
-  const isLong = (title.length > 11 && fontSizeAdjustment === 0) || (title.length > 12 && fontSizeAdjustment === -2);
-  const suffixWrap = isLong ? '70' : 'empty';
   const style = {
     ...baseCSS,
     cursor: 'default',
     fontSize: `${15 + fontSizeAdjustment}px`,
-    height: isMediumFontSize ? '100px' : '80px',
+    height: isMediumFontSize ? '90px' : '70px',
     verticalAlign: 'middle'
   };
   return (
@@ -53,12 +50,12 @@ const MeasurementColumnHeader = ({ baseCSS, general, hasSecondDimension, measure
       className={`grid-cells2${general.cellSuffix}`}
       style={style}
     >
-      <span
-        className={`wrapclass${suffixWrap}`}
-        style={{ fontFamily: styling.headerOptions.fontFamily }}
+      <Tooltip
+        tooltipText={title}
+        styling={styling}
       >
         {title}
-      </span>
+      </Tooltip>
     </th>
   );
 };

@@ -27,6 +27,7 @@ class RowHeader extends React.PureComponent {
       >
         <Tooltip
           isTooltipActive={!inEditState}
+          styling={styling}
           tooltipText={entry.displayValue}
         >
           <HeaderPadding

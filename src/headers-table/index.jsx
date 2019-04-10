@@ -5,7 +5,7 @@ import ColumnHeader from './column-header.jsx';
 import MeasurementColumnHeader from './measurement-column-header.jsx';
 import { injectSeparators } from '../utilities';
 
-const HeadersTable = ({ data, general, qlik, styling }) => {
+const HeadersTable = ({ data, general, qlik, styling, isKpi }) => {
   const baseCSS = {
     backgroundColor: styling.headerOptions.colorSchema,
     color: styling.headerOptions.textColor,
@@ -26,15 +26,17 @@ const HeadersTable = ({ data, general, qlik, styling }) => {
       <table className="header">
         <tbody>
           <tr>
-            <ExportColumnHeader
-              allowExcelExport={general.allowExcelExport}
-              baseCSS={baseCSS}
-              general={general}
-              hasSecondDimension={hasSecondDimension}
-              styling={styling}
-              title={dimension1[0].name}
-            />
-            {!hasSecondDimension && measurements.map(measurementEntry => (
+            {isKpi ?
+              <ExportColumnHeader
+                allowExcelExport={general.allowExcelExport}
+                baseCSS={baseCSS}
+                general={general}
+                hasSecondDimension={hasSecondDimension}
+                styling={styling}
+                title={dimension1[0].name}
+              /> : null
+            }
+            {!isKpi && !hasSecondDimension && measurements.map(measurementEntry => (
               <MeasurementColumnHeader
                 baseCSS={baseCSS}
                 general={general}
@@ -44,7 +46,7 @@ const HeadersTable = ({ data, general, qlik, styling }) => {
                 styling={styling}
               />
             ))}
-            {hasSecondDimension && injectSeparators(dimension2, styling.useSeparatorColumns).map((entry, index) => {
+            {!isKpi && hasSecondDimension && injectSeparators(dimension2, styling.useSeparatorColumns).map((entry, index) => {
               if (entry.isSeparator) {
                 const separatorStyle = {
                   color: 'white',
@@ -137,7 +139,8 @@ HeadersTable.propTypes = {
   styling: PropTypes.shape({
     headerOptions: PropTypes.shape({}),
     options: PropTypes.shape({})
-  }).isRequired
+  }).isRequired,
+  isKpi: PropTypes.bool.isRequired
 };
 
 export default HeadersTable;
