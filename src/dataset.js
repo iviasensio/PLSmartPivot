@@ -6,7 +6,7 @@ function createCube (definition, app) {
   });
 }
 
-async function buildDataCube (originCubeDefinition, dimensionIndexes, app) {
+async function buildDataCube (originCubeDefinition, hasTwoDimensions, app) {
   const cubeDefinition = {
     ...originCubeDefinition,
     qInitialDataFetch: [
@@ -15,62 +15,18 @@ async function buildDataCube (originCubeDefinition, dimensionIndexes, app) {
         qWidth: 10
       }
     ],
-    qDimensions: [originCubeDefinition.qDimensions[dimensionIndexes.dimension1]],
+    qDimensions: [originCubeDefinition.qDimensions[0]],
     qMeasures: originCubeDefinition.qMeasures
   };
-  if (dimensionIndexes.dimension2) {
-    cubeDefinition.qDimensions.push(originCubeDefinition.qDimensions[dimensionIndexes.dimension2]);
+  if (hasTwoDimensions) {
+    cubeDefinition.qDimensions.push(originCubeDefinition.qDimensions[1]);
   }
   const cube = await createCube(cubeDefinition, app);
-
   return cube.qHyperCube.qDataPages[0].qMatrix;
 }
 
-async function buildDesignCube (originCubeDefinition, dimensionIndexes, app) {
-  if (!dimensionIndexes.design) {
-    return null;
-  }
-  const cube = await createCube({
-    qInitialDataFetch: [
-      {
-        qHeight: 1000,
-        qWidth: 1
-      }
-    ],
-    qDimensions: [originCubeDefinition.qDimensions[dimensionIndexes.design]]
-  }, app);
-
-  return cube.qHyperCube.qDataPages[0].qMatrix;
-}
-
-const STYLE_SEPARATOR_COUNT = 7;
-function findDesignDimension (qMatrix) {
-  return qMatrix[0].map(entry => (entry.qText.match(/;/g) || []).length).indexOf(STYLE_SEPARATOR_COUNT);
-}
-
-function getDimensionIndexes (dimensionsInformation, designDimensionIndex) {
-  const hasDesign = designDimensionIndex !== -1;
-  const nonDesignDimensionCount = hasDesign ? dimensionsInformation.length - 1 : dimensionsInformation.length;
-  const dimension1 = designDimensionIndex === 0 ? 1 : 0;
-  let dimension2 = false;
-  if (nonDesignDimensionCount === 2) {
-    dimension2 = hasDesign && designDimensionIndex < 2 ? 2 : 1;
-  }
-  const design = hasDesign && designDimensionIndex;
-  const firstMeasurementIndex = dimensionsInformation.length;
-  return {
-    design,
-    dimension1,
-    dimension2,
-    firstMeasurementIndex
-  };
-}
-
-export async function initializeCubes ({ component, layout }) {
+export async function initializeDataCube (component, layout) {
   const app = qlik.currApp(component);
-  const designDimensionIndex = findDesignDimension(layout.qHyperCube.qDataPages[0].qMatrix);
-  const dimensionsInformation = layout.qHyperCube.qDimensionInfo;
-  const dimensionIndexes = getDimensionIndexes(dimensionsInformation, designDimensionIndex);
 
   let properties;
   if (component.backendApi.isSnapshot) {
@@ -80,12 +36,24 @@ export async function initializeCubes ({ component, layout }) {
     properties = await component.backendApi.getProperties();
   }
 
-  const originCubeDefinition = properties.qHyperCubeDef;
-  const designCube = await buildDesignCube(originCubeDefinition, dimensionIndexes, app);
-  const dataCube = await buildDataCube(originCubeDefinition, dimensionIndexes, app);
+  return buildDataCube(
+    properties.qHyperCubeDef, layout.qHyperCube.qDimensionInfo.length === 2, app);
+}
 
-  return {
-    design: designCube,
-    data: dataCube
-  };
+export function initializeDesignList (component, layout) {
+  if (!layout.stylingfield) {
+    return null;
+  }
+
+  return new Promise(resolve => {
+    const app = qlik.currApp(component);
+    const stylingField = app.field(layout.stylingfield);
+    const listener = function () {
+      const data = stylingField.rows.map(row => row.qText);
+      stylingField.OnData.unbind(listener);
+      resolve(data);
+    };
+    stylingField.OnData.bind(listener);
+    stylingField.getData();
+  });
 }

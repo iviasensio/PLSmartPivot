@@ -107,15 +107,16 @@ function generateMatrixCell ({ cell, dimension1Information, dimension2Informatio
 }
 
 let lastRow = 0;
-function generateDataSet (component, dimensionsInformation, measurementsInformation, cubes) {
+function generateDataSet (
+  component, dimensionsInformation, measurementsInformation, dataCube) {
+
+  const measurements = generateMeasurements(measurementsInformation);
   let dimension1 = [];
   let dimension2 = [];
-  const measurements = generateMeasurements(measurementsInformation);
   let matrix = [];
 
-  const hasDesignDimension = cubes.design;
-  const hasSecondDimension = hasDesignDimension ? dimensionsInformation.length > 2 : dimensionsInformation.length > 1;
-  cubes.data.forEach(row => {
+  const hasSecondDimension = dimensionsInformation.length > 1;
+  dataCube.forEach(row => {
     lastRow += 1;
     const dimension1Entry = generateDimensionEntry(dimensionsInformation[0], row[0]);
     dimension1.push(dimension1Entry);
@@ -200,7 +201,7 @@ function generateDataSet (component, dimensionsInformation, measurementsInformat
   };
 }
 
-function initializeTransformed ({ $element, component, cubes, layout }) {
+function initializeTransformed ({ $element, component, dataCube, designList, layout }) {
   const dimensionsInformation = component.backendApi.getDimensionInfos();
   const measurementsInformation = component.backendApi.getMeasureInfos();
   const dimensionCount = layout.qHyperCube.qDimensionInfo.length;
@@ -211,19 +212,18 @@ function initializeTransformed ({ $element, component, cubes, layout }) {
     dimension2,
     measurements,
     matrix
-  } = generateDataSet(component, dimensionsInformation, measurementsInformation, cubes);
+  } = generateDataSet(component, dimensionsInformation, measurementsInformation, dataCube);
 
   const customSchemaBasic = [];
   const customSchemaFull = [];
   let customHeadersCount = 0;
 
-  if (cubes.design) {
-    const allTextLines = cubes.design.map(entry => entry[0].qText);
-    const headers = allTextLines[0].split(';');
+  if (designList && designList.length > 0) {
+    const headers = designList[0].split(';');
     customHeadersCount = headers.length;
-    for (let lineNumber = 0; lineNumber < allTextLines.length; lineNumber += 1) {
+    for (let lineNumber = 0; lineNumber < designList.length; lineNumber += 1) {
       customSchemaFull[lineNumber] = new Array(headers.length);
-      const data = allTextLines[lineNumber].split(';');
+      const data = designList[lineNumber].split(';');
 
       if (data.length === headers.length) {
         for (let headerIndex = 0; headerIndex < headers.length; headerIndex += 1) {
@@ -267,7 +267,7 @@ function initializeTransformed ({ $element, component, cubes, layout }) {
         count: customHeadersCount,
         full: customSchemaFull
       },
-      hasCustomFileStyle: Boolean(cubes.design),
+      hasCustomFileStyle: Boolean(designList),
       headerOptions: {
         alignment: getAlignment(layout.HeaderAlign),
         colorSchema: layout.HeaderColorSchema.color,

@@ -1,12 +1,53 @@
+const qlik = window.require('qlik');
+
 // fixes case for when there are 3 dimensions, missies the case with 1 design dimension and 1 data dimension
 function hasDesignDimension (data) {
   return data.qHyperCubeDef.qDimensions.length > 2;
+}
+
+function getFieldList () {
+  return new Promise(function (resolve) {
+    const app = qlik.currApp();
+    app.getList('FieldList').then(function (model) {
+      // Close the model to prevent any updates.
+      app.destroySessionObject(model.layout.qInfo.qId);
+
+      // This is a bit iffy, might be smarter to reject and handle empty lists on the props instead.
+      if (!model.layout.qFieldList.qItems) {
+        return resolve([]);
+      }
+      // Resolve an array with master objects.
+      return resolve(model.layout.qFieldList.qItems.map(function (item) {
+        return {
+          value: item.qName,
+          label: item.qName
+        };
+      }));
+    });
+  });
 }
 
 const tableFormat = {
   type: 'items',
   label: 'Table Format',
   items: {
+    StylingField: {
+      ref: 'stylingfield',
+      disabledRef: '',
+      type: 'string',
+      component: 'dropdown',
+      label: 'Style with field',
+      options: function () {
+        return getFieldList().then(function (items) {
+          items.unshift(
+            {
+              value: '',
+              label: 'None'
+            });
+          return items;
+        });
+      }
+    },
     IndentBool: {
       ref: 'indentbool',
       type: 'boolean',
