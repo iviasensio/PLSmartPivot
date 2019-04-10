@@ -162,33 +162,24 @@ function generateDataSet (
 
   // Make sure all rows are saturated, otherwise data risks being displayed in the wrong column
   matrix = matrix.map((row, rowIndex) => {
-    if (row.length == dimension2.length) {
+    if ((hasSecondDimension && row.length == dimension2.length)
+      || (!hasSecondDimension && row.length == measurements.length)) {
       // Row is saturated
       return row;
     }
 
     // Row is not saturated, so must add empty cells to fill the gaps
     let newRow = [];
-    let cellIndex = 0;
-    dimension2.forEach(dim => {
-      measurements.forEach(measurement => {
-        if (cellIndex < row.length
-          && row[cellIndex].parents.dimension2.elementNumber === dim.elementNumber
-          && row[cellIndex].parents.measurement.header === measurement.name) {
-          newRow.push(row[cellIndex]);
-          cellIndex++;
-        } else {
-          newRow.push({
-            displayValue: '',
-            parents: {
-              dimension1: { elementNumber: rowIndex },
-              dimension2: { elementNumber: dim.elementNumber },
-              measurement: { header: measurement.name }
-            }
-          });
-        }
+    if (hasSecondDimension) {
+      // Got a second dimension, so need to add measurements for all values of the second dimension
+      let rowDataIndex = 0;
+      dimension2.forEach(dim => {
+        rowDataIndex = appendMissingCells(
+          row, newRow, rowDataIndex, measurements, rowIndex, dim.elementNumber);
       });
-    });
+    } else {
+      appendMissingCells(row, newRow, 0, measurements, rowIndex);
+    }
 
     return newRow;
   });
@@ -199,6 +190,39 @@ function generateDataSet (
     matrix,
     measurements
   };
+}
+
+/*
+ * Appends the cells of the source row, as well as those missing, to the destination row, starting
+ * from the given source index. Returns the source index of the next source cell after this has
+ * completed. If there is a second dimension the dim2ElementNumber should be set to the current
+ * index of the dimension2 value being processed.
+ */
+function appendMissingCells (
+  sourceRow, destRow, sourceIndex, measurements, dim1ElementNumber, dim2ElementNumber = -1) {
+
+  let index = sourceIndex;
+  measurements.forEach(measurement => {
+    if (index < sourceRow.length
+      && (dim2ElementNumber === -1
+        || sourceRow[index].parents.dimension2.elementNumber === dim2ElementNumber)
+      && sourceRow[index].parents.measurement.header === measurement.name) {
+      // Source contains the expected cell
+      destRow.push(sourceRow[index]);
+      index++;
+    } else {
+      // Source doesn't contain the expected cell, so add empty
+      destRow.push({
+        displayValue: '',
+        parents: {
+          dimension1: { elementNumber: dim1ElementNumber },
+          dimension2: { elementNumber: dim2ElementNumber },
+          measurement: { header: measurement.name }
+        }
+      });
+    }
+  });
+  return index;
 }
 
 function initializeTransformed ({ $element, component, dataCube, designList, layout }) {
