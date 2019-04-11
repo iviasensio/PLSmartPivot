@@ -54,21 +54,17 @@ class DataCell extends React.PureComponent {
       formattedMeasurementValue = formatMeasurementValue(measurement, styling);
     }
 
-    const { semaphoreColors, semaphoreColors: { fieldsToApplyTo } } = styling;
-    const isValidSemaphoreValue = !styleBuilder.hasComments() && !isNaN(measurement.value);
-    const dimension1Row = measurement.parents.dimension1.elementNumber;
-    const isSpecifiedMetricField = fieldsToApplyTo.metricsSpecificFields.indexOf(dimension1Row) !== -1;
-    const shouldHaveSemaphoreColors = (fieldsToApplyTo.applyToMetric || isSpecifiedMetricField);
-    if (isValidSemaphoreValue && shouldHaveSemaphoreColors) {
-      const { backgroundColor, color } = getSemaphoreColors(measurement, semaphoreColors);
-      cellStyle = {
-        ...styleBuilder.getStyle(),
-        backgroundColor,
-        color,
-        fontFamily: styling.options.fontFamily,
-        paddingLeft: '5px',
-        textAlign: textAlignment
-      };
+    const { conditionalColoring } = styling;
+    if (conditionalColoring.enabled) {
+      const isValidConditionalColoringValue = !styleBuilder.hasComments() && !isNaN(measurement.value);
+      const isSpecifiedRow =
+        conditionalColoring.rows.indexOf(measurement.parents.dimension1.header) !== -1;
+      const shouldHaveConditionalColoring = conditionalColoring.colorAllRows || isSpecifiedRow;
+      if (isValidConditionalColoringValue && shouldHaveConditionalColoring) {
+        const { color, textColor } = getConditionalColor(measurement, conditionalColoring);
+        cellStyle.backgroundColor = color.color;
+        cellStyle.color = textColor.color;
+      }
     }
 
     let cellClass = 'grid-cells';
@@ -176,12 +172,12 @@ function formatMeasurementValue (measurement, styling) {
   return formattedMeasurementValue;
 }
 
-function getSemaphoreColors (measurement, semaphoreColors) {
-  if (measurement.value < semaphoreColors.status.critical) {
-    return semaphoreColors.statusColors.critical;
+function getConditionalColor (measurement, conditionalColoring) {
+  if (measurement.value < conditionalColoring.threshold.poor) {
+    return conditionalColoring.colors.poor;
   }
-  if (measurement.value < semaphoreColors.status.medium) {
-    return semaphoreColors.statusColors.medium;
+  if (measurement.value < conditionalColoring.threshold.fair) {
+    return conditionalColoring.colors.fair;
   }
-  return semaphoreColors.statusColors.normal;
+  return conditionalColoring.colors.good;
 }

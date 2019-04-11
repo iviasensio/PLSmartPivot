@@ -1,8 +1,7 @@
 import pagination from './pagination';
 import header from './header';
 import tableFormat from './table-format';
-import conceptSemaphores from './concept-semaphores';
-import metricSemaphores from './metric-semaphores';
+import conditionalColoring from './conditional-coloring';
 
 const definition = {
   component: 'accordion',
@@ -23,10 +22,9 @@ const definition = {
     },
     settings: {
       items: {
-        ConceptSemaphores: conceptSemaphores,
         Formatted: tableFormat,
         Header: header,
-        MetricSemaphores: metricSemaphores,
+        ConditionalColoring: conditionalColoring,
         Pagination: pagination
       },
       uses: 'settings'
