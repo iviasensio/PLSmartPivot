@@ -68,7 +68,7 @@ function generateMeasurements (information) {
 
 function generateDimensionEntry (information, data) {
   return {
-    displayValue: data.qText,
+    displayValue: data.qText || data.qNum,
     elementNumber: data.qElemNumber,
     name: information.qFallbackTitle,
     value: data.qNum
