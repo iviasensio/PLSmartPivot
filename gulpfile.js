@@ -15,7 +15,7 @@ gulp.task('qext', function () {
 		type: 'visualization',
 		description: pkg.description + '\nVersion: ' + VERSION,
 		version: VERSION,
-		icon: 'table',
+		icon: 'pivot-table',
 		preview: 'qlik-smart-pivot.png',
 		keywords: 'qlik-sense, visualization',
 		author: pkg.author,
