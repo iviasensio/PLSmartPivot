@@ -1,6 +1,5 @@
 /* eslint-disable */
 .qv-object-qlik-smart-pivot {
-  @TableBorder: 1px solid #d3d3d3;
   @KpiTableWidth: 230px;
 
   *,
@@ -33,18 +32,13 @@
   }
 
   table {
-    border-collapse: collapse;
-    border-spacing: 0;
+    border-collapse: separate;
+    border-spacing: 1px;
     width: auto;
-    border-left: @TableBorder;
-    border-right: @TableBorder;
-    border-top: @TableBorder;
   }
 
   td,
   th {
-    border: 1px solid #fff;
-    border-collapse: collapse;
     padding: 5px !important; // prevent overwriting from single object
     white-space: nowrap;
     overflow: hidden;
@@ -70,7 +64,6 @@
   th.main-kpi {
     text-align: center;
     vertical-align: middle;
-    border-bottom: @TableBorder;
   }
 
   .numeric {
