@@ -258,9 +258,16 @@
     .row-wrapper {
       height: calc(~"100% - 97px");
       width: 100%;
-      overflow: scroll;
+      overflow: auto;
       padding: 0;
       margin-top: 0;
+    }
+
+    // Use overlay-scrollbars for webkit-browsers
+    @media screen and (-webkit-min-device-pixel-ratio: 0) {
+      .row-wrapper {
+        overflow: overlay;
+      }
     }
   }
 
