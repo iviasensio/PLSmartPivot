@@ -18,8 +18,7 @@ function getAlignment (option) {
 function getFontSizeAdjustment (option) {
   const fontSizeAdjustmentOptions = {
     1: HEADER_FONT_SIZE.SMALL,
-    2: HEADER_FONT_SIZE.MEDIUM,
-    3: 2
+    2: HEADER_FONT_SIZE.MEDIUM
   };
 
   return fontSizeAdjustmentOptions[option] || 0;

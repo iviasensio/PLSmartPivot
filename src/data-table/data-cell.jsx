@@ -85,6 +85,7 @@ class DataCell extends React.PureComponent {
         style={cellStyle}
       >
         <Tooltip
+          styling={styling}
           tooltipText={formattedMeasurementValue}
         >
           {formattedMeasurementValue}

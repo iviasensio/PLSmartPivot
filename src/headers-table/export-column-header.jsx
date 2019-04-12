@@ -10,7 +10,7 @@ const ExportColumnHeader = ({ baseCSS, general, title, allowExcelExport, hasSeco
     ...baseCSS,
     cursor: 'default',
     fontSize: `${16 + styling.headerOptions.fontSizeAdjustment}px`,
-    height: isMediumFontSize ? '100px' : '80px',
+    height: isMediumFontSize ? '90px' : '70px',
     verticalAlign: 'middle',
     width: '230px'
   };
