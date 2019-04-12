@@ -281,39 +281,26 @@ function initializeTransformed ({ $element, component, dataCube, designList, lay
         fontSizeAdjustment: getFontSizeAdjustment(layout.lettersize),
         textAlignment: layout.cellTextAlignment
       },
-      semaphoreColors: {
-        fieldsToApplyTo: {
-          applyToAll: layout.allsemaphores,
-          applyToMetric: layout.allmetrics,
-          specificFields: [
-            layout.conceptsemaphore1,
-            layout.conceptsemaphore2,
-            layout.conceptsemaphore3,
-            layout.conceptsemaphore4,
-            layout.conceptsemaphore5,
-            layout.conceptsemaphore6,
-            layout.conceptsemaphore7,
-            layout.conceptsemaphore9,
-            layout.conceptsemaphore10
-          ],
-          metricsSpecificFields: layout.metricssemaphore.split(',').map(entry => Number(entry))
+      conditionalColoring: {
+        enabled: layout.conditionalcoloring.enabled,
+        colorAllRows: layout.conditionalcoloring.colorall,
+        rows: layout.conditionalcoloring.rows.map(row => row.rowname),
+        threshold: {
+          poor: layout.conditionalcoloring.threshold_poor,
+          fair: layout.conditionalcoloring.threshold_fair
         },
-        status: {
-          critical: layout.metricsstatus1,
-          medium: layout.metricsstatus2
-        },
-        statusColors: {
-          critical: {
-            backgroundColor: layout.colorstatus1.color,
-            color: layout.colorstatus1text.color
+        colors: {
+          poor: {
+            color: layout.conditionalcoloring.color_poor,
+            textColor: layout.conditionalcoloring.textcolor_poor
           },
-          medium: {
-            backgroundColor: layout.colorstatus2.color,
-            color: layout.colorstatus2text.color
+          fair: {
+            color: layout.conditionalcoloring.color_fair,
+            textColor: layout.conditionalcoloring.textcolor_fair
           },
-          normal: {
-            backgroundColor: layout.colorstatus3.color,
-            color: layout.colorstatus3text.color
+          good: {
+            color: layout.conditionalcoloring.color_good,
+            textColor: layout.conditionalcoloring.textcolor_good
           }
         }
       },
