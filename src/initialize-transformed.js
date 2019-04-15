@@ -90,7 +90,8 @@ function generateMatrixCell ({ cell, dimension1Information, dimension2Informatio
         header: dimension1Information.qText
       },
       measurement: {
-        header: measurementInformation.name
+        header: measurementInformation.name,
+        index: measurementInformation.index
       }
     },
     value: cell.qNum
@@ -130,6 +131,7 @@ function generateDataSet (
       .slice(firstDataCell, row.length)
       .map((cell, cellIndex) => {
         const measurementInformation = measurements[cellIndex];
+        measurementInformation.index = cellIndex;
         const dimension1Information = row[0]; // eslint-disable-line prefer-destructuring
         const dimension2Information = hasSecondDimension ? row[1] : null;
         const generatedCell = generateMatrixCell({
@@ -201,7 +203,7 @@ function appendMissingCells (
   sourceRow, destRow, sourceIndex, measurements, dim1ElementNumber, dim2ElementNumber = -1) {
 
   let index = sourceIndex;
-  measurements.forEach(measurement => {
+  measurements.forEach((measurement, measureIndex) => {
     if (index < sourceRow.length
       && (dim2ElementNumber === -1
         || sourceRow[index].parents.dimension2.elementNumber === dim2ElementNumber)
@@ -216,7 +218,10 @@ function appendMissingCells (
         parents: {
           dimension1: { elementNumber: dim1ElementNumber },
           dimension2: { elementNumber: dim2ElementNumber },
-          measurement: { header: measurement.name }
+          measurement: {
+            header: measurement.name,
+            index: measureIndex
+          }
         }
       });
     }
@@ -309,6 +314,10 @@ function initializeTransformed ({ $element, component, dataCube, designList, lay
         enabled: layout.conditionalcoloring.enabled,
         colorAllRows: layout.conditionalcoloring.colorall,
         rows: layout.conditionalcoloring.rows.map(row => row.rowname),
+        colorAllMeasures: typeof layout.conditionalcoloring.colorallmeasures === 'undefined'
+          || layout.conditionalcoloring.colorallmeasures,
+        measures: !layout.conditionalcoloring.measures
+          ? [] : layout.conditionalcoloring.measures.split(',').map(index => Number(index)),
         threshold: {
           poor: layout.conditionalcoloring.threshold_poor,
           fair: layout.conditionalcoloring.threshold_fair

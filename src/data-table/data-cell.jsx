@@ -59,7 +59,10 @@ class DataCell extends React.PureComponent {
       const isValidConditionalColoringValue = !styleBuilder.hasComments() && !isNaN(measurement.value);
       const isSpecifiedRow =
         conditionalColoring.rows.indexOf(measurement.parents.dimension1.header) !== -1;
-      const shouldHaveConditionalColoring = conditionalColoring.colorAllRows || isSpecifiedRow;
+      const isSpecifiedMeasure =
+        conditionalColoring.measures.indexOf(measurement.parents.measurement.index) !== -1;
+      const shouldHaveConditionalColoring = (conditionalColoring.colorAllRows || isSpecifiedRow)
+        && (conditionalColoring.colorAllMeasures || isSpecifiedMeasure);
       if (isValidConditionalColoringValue && shouldHaveConditionalColoring) {
         const { color, textColor } = getConditionalColor(measurement, conditionalColoring);
         cellStyle.backgroundColor = color.color;
