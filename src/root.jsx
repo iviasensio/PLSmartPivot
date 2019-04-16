@@ -5,48 +5,50 @@ import DataTable from './data-table/index.jsx';
 import { LinkedScrollWrapper, LinkedScrollSection } from './linked-scroll';
 
 const Root = ({ state, qlik, editmodeClass }) => (
-  <LinkedScrollWrapper>
-    <div className={`kpi-table ${editmodeClass}`}>
-      <HeadersTable
-        data={state.data}
-        general={state.general}
-        isKpi
-        qlik={qlik}
-        styling={state.styling}
-      />
-      <LinkedScrollSection linkVertical>
-        <DataTable
-          data={state.data}
-          general={state.general}
-          qlik={qlik}
-          renderData={false}
-          styling={state.styling}
-        />
-      </LinkedScrollSection>
-    </div>
-    <div className={`data-table ${editmodeClass}`}>
-      <LinkedScrollSection linkHorizontal>
+  <div className="root">
+    <LinkedScrollWrapper>
+      <div className={`kpi-table ${editmodeClass}`}>
         <HeadersTable
           data={state.data}
           general={state.general}
-          isKpi={false}
+          isKpi
           qlik={qlik}
           styling={state.styling}
         />
-      </LinkedScrollSection>
-      <LinkedScrollSection
-        linkHorizontal
-        linkVertical
-      >
-        <DataTable
-          data={state.data}
-          general={state.general}
-          qlik={qlik}
-          styling={state.styling}
-        />
-      </LinkedScrollSection>
-    </div>
-  </LinkedScrollWrapper>
+        <LinkedScrollSection linkVertical>
+          <DataTable
+            data={state.data}
+            general={state.general}
+            qlik={qlik}
+            renderData={false}
+            styling={state.styling}
+          />
+        </LinkedScrollSection>
+      </div>
+      <div className={`data-table ${editmodeClass}`}>
+        <LinkedScrollSection linkHorizontal>
+          <HeadersTable
+            data={state.data}
+            general={state.general}
+            isKpi={false}
+            qlik={qlik}
+            styling={state.styling}
+          />
+        </LinkedScrollSection>
+        <LinkedScrollSection
+          linkHorizontal
+          linkVertical
+        >
+          <DataTable
+            data={state.data}
+            general={state.general}
+            qlik={qlik}
+            styling={state.styling}
+          />
+        </LinkedScrollSection>
+      </div>
+    </LinkedScrollWrapper>
+  </div>
 );
 
 Root.propTypes = {

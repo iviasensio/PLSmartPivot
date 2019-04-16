@@ -18,7 +18,6 @@ const MeasurementColumnHeader = ({ baseCSS, general, hasSecondDimension, measure
     }
     const cellStyle = {
       ...baseCSS,
-      cursor: 'default',
       fontSize: `${baseFontSize + fontSizeAdjustment}px`,
       height: isMediumFontSize ? '45px' : '35px',
       verticalAlign: 'middle'
@@ -40,7 +39,6 @@ const MeasurementColumnHeader = ({ baseCSS, general, hasSecondDimension, measure
 
   const style = {
     ...baseCSS,
-    cursor: 'default',
     fontSize: `${15 + fontSizeAdjustment}px`,
     height: isMediumFontSize ? '90px' : '70px',
     verticalAlign: 'middle'
