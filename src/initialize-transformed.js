@@ -161,7 +161,7 @@ function generateDataSet (
 
   // Make sure all rows are saturated, otherwise data risks being displayed in the wrong column
   matrix = matrix.map((row, rowIndex) => {
-    if ((hasSecondDimension && row.length == dimension2.length)
+    if ((hasSecondDimension && row.length == (dimension2.length * measurements.length))
       || (!hasSecondDimension && row.length == measurements.length)) {
       // Row is saturated
       return row;
