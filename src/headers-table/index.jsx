@@ -77,7 +77,7 @@ const HeadersTable = ({ data, general, qlik, styling, isKpi }) => {
               );
             })}
           </tr>
-          {hasSecondDimension && (
+          {!isKpi && hasSecondDimension && (
             <tr>
               {injectSeparators(dimension2, styling.useSeparatorColumns).map((dimensionEntry, index) => {
                 if (dimensionEntry.isSeparator) {
