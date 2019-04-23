@@ -61,6 +61,36 @@ const conditionalColoring = {
         return data.conditionalcoloring.enabled && !data.conditionalcoloring.colorall;
       }
     },
+    ColorAllMeasures: {
+      ref: 'conditionalcoloring.colorallmeasures',
+      type: 'boolean',
+      label: 'Color all measures',
+      component: 'switch',
+      defaultValue: true,
+      options: [
+        {
+          value: true,
+          label: 'All measures'
+        },
+        {
+          value: false,
+          label: 'Specified measures'
+        }
+      ],
+      show (data) {
+        return data.conditionalcoloring.enabled;
+      }
+    },
+    Measures: {
+      ref: 'conditionalcoloring.measures',
+      translation: 'Measure indices (ex: 0,3)',
+      type: 'string',
+      defaultValue: '',
+      show (data) {
+        return data.conditionalcoloring.enabled
+          && data.conditionalcoloring.colorallmeasures === false;
+      }
+    },
     ThresholdPoor: {
       ref: 'conditionalcoloring.threshold_poor',
       translation: 'Poor is less than',
