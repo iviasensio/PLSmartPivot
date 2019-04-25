@@ -1,5 +1,9 @@
-import paint from './paint.jsx';
 import definition from './definition';
+import { initializeDataCube, initializeDesignList } from './dataset';
+import initializeStore from './store';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import Root from './root.jsx';
 import './main.less';
 
 if (!window._babelPolyfill) { // eslint-disable-line no-underscore-dangle
@@ -53,16 +57,34 @@ export default {
     exportData: true,
     snapshot: true
   },
-  paint ($element, layout) {
-    try {
-      paint($element, layout, this);
-    } catch (exception) {
-      console.error(exception); // eslint-disable-line no-console
-      throw exception;
-    }
+  paint: async function ($element, layout) {
+    const dataCube = await initializeDataCube(this, layout);
+    const designList = await initializeDesignList(this, layout);
+    const state = await initializeStore({
+      $element,
+      component: this,
+      dataCube,
+      designList,
+      layout
+    });
+    const editmodeClass = this.inAnalysisState() ? '' : 'edit-mode';
+    const jsx = (
+      <Root
+        editmodeClass={editmodeClass}
+        qlik={this}
+        state={state}
+      />
+    );
+
+    ReactDOM.render(jsx, $element[0]);
   },
   snapshot: {
     canTakeSnapshot: true
+  },
+  setSnapshotData: async function (snapshotLayout) {
+    snapshotLayout.snapshotData.dataCube = await initializeDataCube(this, snapshotLayout);
+    snapshotLayout.snapshotData.designList = await initializeDesignList(this, snapshotLayout);
+    return snapshotLayout;
   },
   version: 1.0
 };

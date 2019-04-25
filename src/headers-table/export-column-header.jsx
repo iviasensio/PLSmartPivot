@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import ExportButton from '../export-button.jsx';
 import { HEADER_FONT_SIZE } from '../initialize-transformed';
 
-const ExportColumnHeader = ({ baseCSS, general, title, allowExcelExport, hasSecondDimension, styling }) => {
+const ExportColumnHeader = ({ id, baseCSS, general, title, allowExcelExport, hasSecondDimension, styling }) => {
   const rowSpan = hasSecondDimension ? 2 : 1;
   const isMediumFontSize = styling.headerOptions.fontSizeAdjustment === HEADER_FONT_SIZE.MEDIUM;
   const style = {
@@ -22,6 +22,7 @@ const ExportColumnHeader = ({ baseCSS, general, title, allowExcelExport, hasSeco
       style={style}
     >
       <ExportButton
+        id={id}
         excelExport={allowExcelExport}
         general={general}
       />
@@ -31,6 +32,7 @@ const ExportColumnHeader = ({ baseCSS, general, title, allowExcelExport, hasSeco
 };
 
 ExportColumnHeader.propTypes = {
+  id: PropTypes.string.isRequired,
   allowExcelExport: PropTypes.bool.isRequired,
   baseCSS: PropTypes.shape({}).isRequired,
   general: PropTypes.shape({}).isRequired,
