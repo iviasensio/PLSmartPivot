@@ -31,7 +31,13 @@ export async function initializeDataCube (component, layout) {
   }
 
   const app = qlik.currApp(component);
-  const hyperCubeDef = (await component.backendApi.getProperties()).qHyperCubeDef;
+  const properties = (await component.backendApi.getProperties());
+
+  // If this is a master object, fetch the hyperCubeDef of the original object
+  const hyperCubeDef = properties.qExtendsId
+    ? (await app.getObjectProperties(properties.qExtendsId)).properties.qHyperCubeDef
+    : properties.qHyperCubeDef;
+
   return buildDataCube(hyperCubeDef, layout.qHyperCube.qDimensionInfo.length === 2, app);
 }
 
