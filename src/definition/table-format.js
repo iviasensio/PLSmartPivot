@@ -29,14 +29,14 @@ function getFieldList () {
 
 const tableFormat = {
   type: 'items',
-  label: 'Table Format',
+  label: 'Table format',
   items: {
     StylingField: {
       ref: 'stylingfield',
       disabledRef: '',
       type: 'string',
       component: 'dropdown',
-      label: 'Style with field',
+      label: 'Style template field',
       options: function () {
         return getFieldList().then(function (items) {
           items.unshift(
@@ -58,7 +58,7 @@ const tableFormat = {
     SeparatorColumns: {
       ref: 'separatorcols',
       type: 'boolean',
-      label: 'Separator Columns',
+      label: 'Column separators',
       defaultValue: false
     },
     rowEvenBGColor: {
@@ -89,7 +89,7 @@ const tableFormat = {
       ref: 'BodyTextColorSchema',
       type: 'string',
       component: 'dropdown',
-      label: 'Text Body Color',
+      label: 'Text body color',
       options: [
         {
           value: 'Black',
@@ -139,7 +139,7 @@ const tableFormat = {
       ref: 'FontFamily',
       type: 'string',
       component: 'dropdown',
-      label: 'FontFamily',
+      label: 'Font family',
       options: [
         {
           value: 'QlikView Sans, -apple-system, sans-serif',
@@ -174,7 +174,7 @@ const tableFormat = {
     },
     DataFontSize: {
       ref: 'lettersize',
-      translation: 'Font Size',
+      translation: 'Font size',
       type: 'number',
       component: 'buttongroup',
       options: [
@@ -191,7 +191,7 @@ const tableFormat = {
     },
     textAlignment: {
       ref: 'cellTextAlignment',
-      label: 'Cell Text alignment',
+      label: 'Cell text alignment',
       component: 'buttongroup',
       options: [
         {
@@ -212,7 +212,7 @@ const tableFormat = {
     ColumnWidthSlider: {
       type: 'number',
       component: 'slider',
-      label: 'Column Width',
+      label: 'Column width',
       ref: 'columnwidthslider',
       min: 1,
       max: 3,
@@ -246,7 +246,7 @@ const tableFormat = {
       ref: 'filteroncellclick',
       type: 'boolean',
       component: 'switch',
-      label: 'Filter data when cell clicked',
+      label: 'Allow selection in cells',
       options: [
         {
           value: true,

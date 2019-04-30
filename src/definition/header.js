@@ -1,10 +1,10 @@
 const header = {
   type: 'items',
-  label: 'Header Format',
+  label: 'Header format',
   items: {
     Align: {
       ref: 'HeaderAlign',
-      translation: 'Header Alignment',
+      translation: 'Header alignment',
       type: 'number',
       component: 'buttongroup',
       options: [
@@ -29,14 +29,14 @@ const header = {
         index: 6,
         color: '#4477aa'
       },
-      label: 'Background Header Color',
+      label: 'Background color',
       ref: 'HeaderColorSchema',
       type: 'object',
       dualOutput: true
     },
     HeaderTextColor: {
       ref: 'HeaderTextColorSchema',
-      label: 'Text Header Color',
+      label: 'Text color',
       component: 'color-picker',
       defaultValue: {
         index: 1,
@@ -47,7 +47,7 @@ const header = {
     },
     HeaderFontSize: {
       ref: 'lettersizeheader',
-      translation: 'Font Size',
+      translation: 'Font size',
       type: 'number',
       component: 'buttongroup',
       options: [

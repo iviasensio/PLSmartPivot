@@ -1,6 +1,6 @@
 const conditionalColoring = {
   type: 'items',
-  label: 'Color by condition',
+  label: 'Color by performance',
   items: {
     Enabled: {
       ref: 'conditionalcoloring.enabled',
@@ -22,7 +22,7 @@ const conditionalColoring = {
     ColorAllRows: {
       ref: 'conditionalcoloring.colorall',
       type: 'boolean',
-      label: 'Color all rows by condition',
+      label: 'Color all rows',
       component: 'switch',
       defaultValue: true,
       options: [
@@ -83,7 +83,7 @@ const conditionalColoring = {
     },
     Measures: {
       ref: 'conditionalcoloring.measures',
-      translation: 'Measure indices (ex: 0,3)',
+      translation: 'Measures by index (ex: 0,3)',
       type: 'string',
       defaultValue: '',
       show (data) {
@@ -93,7 +93,7 @@ const conditionalColoring = {
     },
     ThresholdPoor: {
       ref: 'conditionalcoloring.threshold_poor',
-      translation: 'Poor is less than',
+      translation: 'Poor range limit',
       type: 'number',
       defaultValue: -0.1,
       show (data) {
@@ -102,7 +102,7 @@ const conditionalColoring = {
     },
     ColorPoor: {
       ref: 'conditionalcoloring.color_poor',
-      label: 'Poor color fill',
+      label: 'Poor background color',
       type: 'object',
       component: 'color-picker',
       dualOutput: true,
@@ -130,7 +130,7 @@ const conditionalColoring = {
     },
     ThresholdFair: {
       ref: 'conditionalcoloring.threshold_fair',
-      translation: 'Fair is less than',
+      translation: 'Fair range limit',
       type: 'number',
       defaultValue: 0,
       show (data) {
@@ -139,7 +139,7 @@ const conditionalColoring = {
     },
     ColorFair: {
       ref: 'conditionalcoloring.color_fair',
-      label: 'Fair color fill',
+      label: 'Fair background color',
       type: 'object',
       component: 'color-picker',
       dualOutput: true,
@@ -167,7 +167,7 @@ const conditionalColoring = {
     },
     ColorGood: {
       ref: 'conditionalcoloring.color_good',
-      label: 'Good color fill',
+      label: 'Good background color',
       type: 'object',
       component: 'color-picker',
       dualOutput: true,
