@@ -6,7 +6,7 @@ const pagination = {
       ref: 'maxloops',
       type: 'number',
       component: 'dropdown',
-      label: 'Max Pagination Loops',
+      label: 'Max pagination loops',
       options: [
         {
           value: 1,
