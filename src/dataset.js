@@ -26,21 +26,20 @@ async function buildDataCube (originCubeDefinition, hasTwoDimensions, app) {
 }
 
 export async function initializeDataCube (component, layout) {
-  const app = qlik.currApp(component);
-
-  let properties;
   if (component.backendApi.isSnapshot) {
-    // Fetch properties of source
-    properties = (await app.getObjectProperties(layout.sourceObjectId)).properties;
-  } else {
-    properties = await component.backendApi.getProperties();
+    return layout.snapshotData.dataCube;
   }
 
-  return buildDataCube(
-    properties.qHyperCubeDef, layout.qHyperCube.qDimensionInfo.length === 2, app);
+  const app = qlik.currApp(component);
+  const hyperCubeDef = (await component.backendApi.getProperties()).qHyperCubeDef;
+  return buildDataCube(hyperCubeDef, layout.qHyperCube.qDimensionInfo.length === 2, app);
 }
 
 export function initializeDesignList (component, layout) {
+  if (component.backendApi.isSnapshot) {
+    return layout.snapshotData.designList;
+  }
+
   if (!layout.stylingfield) {
     return null;
   }

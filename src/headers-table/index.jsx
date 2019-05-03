@@ -28,6 +28,7 @@ const HeadersTable = ({ data, general, qlik, styling, isKpi }) => {
           <tr>
             {isKpi ?
               <ExportColumnHeader
+                id={qlik.options.id}
                 allowExcelExport={general.allowExcelExport}
                 baseCSS={baseCSS}
                 general={general}

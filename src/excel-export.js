@@ -1,19 +1,32 @@
-function removeAllTooltips (node) {
-  const tooltips = node.querySelectorAll('.tooltip');
-  [].forEach.call(tooltips, tooltip => {
-    if (tooltip.parentNode) {
-      tooltip.parentNode.removeChild(tooltip);
+function cleanupNodes (node) {
+  const removables = node.querySelectorAll('.tooltip,input');
+  [].forEach.call(removables, removeable => {
+    if (removeable.parentNode) {
+      removeable.parentNode.removeChild(removeable);
     }
   });
 }
 
-function buildTableHTML (title, subtitle, footnote) {
+function buildTableHTML (id, title, subtitle, footnote) {
   const titleHTML = `<p style="font-size:15pt"><b>${title}</b></p>`;
   const subtitleHTML = `<p style="font-size:11pt">${subtitle}</p>`;
-  const footnoteHTML = `<p style="font-size:11pt"><i>Note:</i>${footnote}</p>`;
-  const dataTableClone = document.querySelector('.data-table').cloneNode(true);
+  const footnoteHTML = `<p style="font-size:11pt">${footnote}</p>`;
+  const container = document.querySelector(`[tid="${id}"]`);
+  const kpiTableClone = container.querySelector('.kpi-table').cloneNode(true);
+  const dataTableClone = container.querySelector('.data-table').cloneNode(true);
+  cleanupNodes(kpiTableClone);
+  cleanupNodes(kpiTableClone);
 
-  removeAllTooltips(dataTableClone);
+  const kpiTableBodies = kpiTableClone.querySelectorAll('tbody');
+  const dataTableBodies = dataTableClone.querySelectorAll('tbody');
+  const kpiHeader = kpiTableBodies[0].querySelector('tr');
+  const dataTableHeaders = dataTableBodies[0].querySelectorAll('tr');
+  const kpiRows = kpiTableBodies[1].querySelectorAll('tr');
+  const dataRows = dataTableBodies[1].querySelectorAll('tr');
+  let combinedRows = '';
+  for (let i = 0; i < kpiRows.length; i++) {
+    combinedRows += `<tr>${kpiRows[i].innerHTML}${dataRows[i].innerHTML}</tr>`;
+  }
 
   const tableHTML = `
     <html
@@ -41,8 +54,23 @@ function buildTableHTML (title, subtitle, footnote) {
       <body>
         ${titleHTML.length > 0 ? titleHTML : ''}
         ${subtitleHTML.length > 0 ? subtitleHTML : ''}
+        <div>
+          <table>
+            <tbody>
+              <tr>
+              ${kpiHeader.innerHTML}
+              ${dataTableHeaders[0].innerHTML}
+              </tr>
+              ${dataTableHeaders.length > 1 ? dataTableHeaders[1].outerHTML : ''}
+            </tbody>
+          </table>
+          <table>
+            <tbody>
+              ${combinedRows}
+            </tbody>
+          </table>
+        </div>
         ${footnoteHTML.length > 0 ? footnoteHTML : ''}
-        ${dataTableClone.outerHTML}
       </body>
     </html>
     `.split('>.<')
@@ -55,15 +83,15 @@ function buildTableHTML (title, subtitle, footnote) {
 
 function downloadXLS (html) {
   const filename = 'analysis.xls';
+  const blobObject = new Blob([html]);
+
   // IE/Edge
   if (window.navigator.msSaveOrOpenBlob) {
-    const blobObject = new Blob([html]);
     return window.navigator.msSaveOrOpenBlob(blobObject, filename);
   }
 
-  const dataURI = generateDataURI(html);
   const link = window.document.createElement('a');
-  link.href = dataURI;
+  link.href = URL.createObjectURL(blobObject);
   link.download = filename;
   document.body.appendChild(link);
   link.click();
@@ -72,15 +100,8 @@ function downloadXLS (html) {
   return true;
 }
 
-function generateDataURI (html) {
-  const dataType = 'data:application/vnd.ms-excel;base64,';
-  const data = window.btoa(unescape(encodeURIComponent(html)));
-
-  return `${dataType}${data}`;
-}
-
-export function exportXLS (title, subtitle, footnote) {
+export function exportXLS (id, title, subtitle, footnote) {
   // original was removing icon when starting export, disable and some spinner instead, shouldn't take enough time to warrant either..?
-  const table = buildTableHTML(title, subtitle, footnote);
+  const table = buildTableHTML(id, title, subtitle, footnote);
   downloadXLS(table);
 }
