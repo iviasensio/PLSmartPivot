@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { ApplyPreMask } from '../masking';
+import { addSeparators } from '../utilities';
 import Tooltip from '../tooltip/index.jsx';
 
 class DataCell extends React.PureComponent {
@@ -43,9 +45,11 @@ class DataCell extends React.PureComponent {
     const isEmptyCell = measurement.displayValue === '';
     const isColumnPercentageBased = (/%/).test(measurement.format);
     let formattedMeasurementValue;
-    if (isEmptyCell || styleBuilder.hasComments()) {
+    if (isEmptyCell) {
       formattedMeasurementValue = '';
       cellStyle.cursor = 'default';
+    } else if (styleBuilder.hasComments()) {
+      formattedMeasurementValue = '.';
     } else {
       formattedMeasurementValue = formatMeasurementValue(measurement, styling);
     }
@@ -125,11 +129,51 @@ DataCell.propTypes = {
 export default DataCell;
 
 function formatMeasurementValue (measurement, styling) {
-  if (isNaN(measurement.value)) {
-    return styling.symbolForNulls;
+  const isColumnPercentageBased = (/%/).test(measurement.format);
+  let formattedMeasurementValue = '';
+  if (isColumnPercentageBased) {
+    if (isNaN(measurement.value)) {
+      formattedMeasurementValue = styling.symbolForNulls;
+    } else {
+      formattedMeasurementValue = ApplyPreMask('0,00%', measurement.value);
+    }
   } else {
-    return measurement.displayValue;
+    let magnitudeDivider;
+    switch (measurement.magnitude.toLowerCase()) {
+      case 'k':
+        magnitudeDivider = 1000;
+        break;
+      case 'm':
+        magnitudeDivider = 1000000;
+        break;
+      default:
+        magnitudeDivider = 1;
+    }
+    const formattingStringWithoutMagnitude = measurement.format.replace(/k|K|m|M/gi, '');
+    if (isNaN(measurement.value)) {
+      formattedMeasurementValue = styling.symbolForNulls;
+    } else {
+      let preFormatValue = measurement.value;
+      if (isColumnPercentageBased) {
+        preFormatValue *= 100;
+      }
+      switch (formattingStringWithoutMagnitude) {
+        case '#.##0':
+          formattedMeasurementValue = addSeparators((preFormatValue / magnitudeDivider), '.', ',', 0);
+          break;
+        case '#,##0':
+          formattedMeasurementValue = addSeparators((preFormatValue / magnitudeDivider), ',', '.', 0);
+          break;
+        default:
+          formattedMeasurementValue = ApplyPreMask(
+            formattingStringWithoutMagnitude,
+            (preFormatValue / magnitudeDivider)
+          );
+          break;
+      }
+    }
   }
+  return formattedMeasurementValue;
 }
 
 function getConditionalColor (measurement, conditionalColoring) {

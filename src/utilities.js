@@ -9,6 +9,21 @@ export function distinctArray (array) {
     .map(entry => JSON.parse(entry));
 }
 
+export function addSeparators (number, thousandSeparator, decimalSeparator, numberOfDecimals) {
+  const numberString = number.toFixed(numberOfDecimals);
+  const numberStringParts = numberString.split('.');
+  let [
+    wholeNumber,
+    decimal
+  ] = numberStringParts;
+  decimal = numberStringParts.length > 1 ? decimalSeparator + decimal : '';
+  const regexCheckForThousand = /(\d+)(\d{3})/;
+  while (regexCheckForThousand.test(wholeNumber)) {
+    wholeNumber = wholeNumber.replace(regexCheckForThousand, `$1${thousandSeparator}$2`);
+  }
+  return wholeNumber + decimal;
+}
+
 export function Deferred () {
   this.promise = new Promise((resolve, reject) => {
     this.resolve = resolve;
