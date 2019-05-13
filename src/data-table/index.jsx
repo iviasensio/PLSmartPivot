@@ -73,7 +73,7 @@ const DataTable = ({ data, general, qlik, renderData, styling }) => {
                   }
 
                   const { dimension1: dimension1Info, dimension2, measurement } = measurementData.parents;
-                  const id = `${dimension1Info.elementNumber}-${dimension2 && dimension2.elementNumber}-${measurement.header}`;
+                  const id = `${dimension1Info.elementNumber}-${dimension2 && dimension2.elementNumber}-${measurement.header}-${measurement.index}`;
                   return (
                     <DataCell
                       data={data}
