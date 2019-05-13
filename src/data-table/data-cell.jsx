@@ -17,10 +17,10 @@ class DataCell extends React.PureComponent {
       return;
     }
 
-    qlik.backendApi.selectValues(0, [measurement.parents.dimension1.elementNumber], true);
+    qlik.backendApi.selectValues(0, [measurement.parents.dimension1.elementNumber], false);
 
     if (hasSecondDimension) {
-      qlik.backendApi.selectValues(1, [measurement.parents.dimension2.elementNumber], true);
+      qlik.backendApi.selectValues(1, [measurement.parents.dimension2.elementNumber], false);
     }
   }
 
