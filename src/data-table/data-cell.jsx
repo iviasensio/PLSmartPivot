@@ -1,3 +1,4 @@
+import qlik from 'qlik';
 import React from 'react';
 import PropTypes from 'prop-types';
 import Tooltip from '../tooltip/index.jsx';
@@ -9,16 +10,33 @@ class DataCell extends React.PureComponent {
   }
 
   handleSelect () {
-    const { data: { meta: { dimensionCount } }, general: { allowFilteringByClick }, measurement, qlik } = this.props;
+    const {
+      data: {
+        headers,
+        meta: {
+          dimensionCount,
+          altState
+        }
+      },
+      general: {
+        allowFilteringByClick
+      },
+      measurement,
+      component
+    } = this.props;
+
     const hasSecondDimension = dimensionCount > 1;
     if (!allowFilteringByClick) {
       return;
     }
 
-    qlik.backendApi.selectValues(0, [measurement.parents.dimension1.elementNumber], false);
+    const app = qlik.currApp(component);
+    app.field(headers.dimension1[0].name, altState)
+      .select([measurement.parents.dimension1.elementNumber], false, false);
 
     if (hasSecondDimension) {
-      qlik.backendApi.selectValues(1, [measurement.parents.dimension2.elementNumber], false);
+      app.field(headers.dimension2[0].name, altState)
+        .select([measurement.parents.dimension2.elementNumber], false, false);
     }
   }
 
@@ -88,7 +106,12 @@ class DataCell extends React.PureComponent {
 DataCell.propTypes = {
   data: PropTypes.shape({
     headers: PropTypes.shape({
+      dimension1: PropTypes.array.isRequired,
       measurements: PropTypes.array.isRequired
+    }).isRequired,
+    meta: PropTypes.shape({
+      altState: PropTypes.string.isRequired,
+      dimensionCount: PropTypes.number.isRequired
     }).isRequired
   }).isRequired,
   general: PropTypes.shape({
@@ -99,16 +122,7 @@ DataCell.propTypes = {
     name: PropTypes.string,
     value: PropTypes.any
   }).isRequired,
-  qlik: PropTypes.shape({
-    backendApi: PropTypes.shape({
-      selectValues: function (props, propName) {
-        if (props.isSnapshot || typeof props[propName] === 'function') {
-          return null;
-        }
-        return new Error('Missing implementation of qlik.backendApi.selectValues.');
-      }
-    }).isRequired
-  }).isRequired,
+  component: PropTypes.shape({}).isRequired,
   styleBuilder: PropTypes.shape({
     hasComments: PropTypes.func.isRequired
   }).isRequired,

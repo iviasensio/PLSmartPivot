@@ -1,3 +1,4 @@
+import qlik from 'qlik';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { HEADER_FONT_SIZE } from '../initialize-transformed';
@@ -10,13 +11,14 @@ class ColumnHeader extends React.PureComponent {
   }
 
   handleSelect () {
-    const { entry, qlik } = this.props;
-    qlik.backendApi.selectValues(1, [entry.elementNumber], true);
+    const { entry, altState, component } = this.props;
+    const app = qlik.currApp(component);
+    app.field(entry.name, altState).select([entry.elementNumber], false, false);
   }
 
   render () {
-    const { baseCSS, cellWidth, colSpan, entry, styling, qlik } = this.props;
-    const inEditState = qlik.inEditState();
+    const { baseCSS, cellWidth, colSpan, entry, styling, component } = this.props;
+    const inEditState = component.inEditState();
     const isMediumFontSize = styling.headerOptions.fontSizeAdjustment === HEADER_FONT_SIZE.MEDIUM;
 
     const style = {
@@ -56,19 +58,12 @@ ColumnHeader.propTypes = {
   cellWidth: PropTypes.string,
   colSpan: PropTypes.number,
   entry: PropTypes.shape({
+    displayValue: PropTypes.string.isRequired,
     elementNumber: PropTypes.number.isRequired,
     name: PropTypes.string.isRequired
   }).isRequired,
-  qlik: PropTypes.shape({
-    backendApi: PropTypes.shape({
-      selectValues: function (props, propName) {
-        if (props.isSnapshot || typeof props[propName] === 'function') {
-          return null;
-        }
-        return new Error('Missing implementation of qlik.backendApi.selectValues.');
-      }
-    }).isRequired
-  }).isRequired,
+  altState: PropTypes.string.isRequired,
+  component: PropTypes.shape({}).isRequired,
   styling: PropTypes.shape({
     headerOptions: PropTypes.shape({
       fontSizeAdjustment: PropTypes.number.isRequired

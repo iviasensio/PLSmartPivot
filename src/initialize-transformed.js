@@ -238,7 +238,8 @@ function initializeTransformed ({ $element, component, dataCube, designList, lay
       },
       matrix, // 2d array of all rows/cells to render in body of datatable
       meta: {
-        dimensionCount: dimensionsInformation.length
+        dimensionCount: dimensionsInformation.length,
+        altState: layout.qStateName || ""
       }
     },
     general: {
