@@ -68,7 +68,7 @@ const HeadersTable = ({ data, general, qlik, styling, isKpi }) => {
               return (
                 <ColumnHeader
                   baseCSS={baseCSS}
-                  cellSuffix={general.cellSuffix}
+                  cellWidth={general.cellWidth}
                   colSpan={measurements.length}
                   entry={entry}
                   key={entry.displayValue}

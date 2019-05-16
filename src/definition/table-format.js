@@ -214,10 +214,10 @@ const tableFormat = {
       component: 'slider',
       label: 'Column width',
       ref: 'columnwidthslider',
-      min: 1,
-      max: 3,
-      step: 1,
-      defaultValue: 2
+      min: 20,
+      max: 250,
+      step: 10,
+      defaultValue: 50
     },
     SymbolForNulls: {
       ref: 'symbolfornulls',

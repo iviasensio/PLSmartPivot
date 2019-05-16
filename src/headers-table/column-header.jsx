@@ -15,7 +15,7 @@ class ColumnHeader extends React.PureComponent {
   }
 
   render () {
-    const { baseCSS, cellSuffix, colSpan, entry, styling, qlik } = this.props;
+    const { baseCSS, cellWidth, colSpan, entry, styling, qlik } = this.props;
     const inEditState = qlik.inEditState();
     const isMediumFontSize = styling.headerOptions.fontSizeAdjustment === HEADER_FONT_SIZE.MEDIUM;
 
@@ -23,12 +23,14 @@ class ColumnHeader extends React.PureComponent {
       ...baseCSS,
       fontSize: `${14 + styling.headerOptions.fontSizeAdjustment}px`,
       height: isMediumFontSize ? '43px' : '33px',
-      verticalAlign: 'middle'
+      verticalAlign: 'middle',
+      minWidth: cellWidth,
+      maxWidth: cellWidth
     };
 
     return (
       <th
-        className={`grid-cells2${cellSuffix}`}
+        className="grid-cells"
         colSpan={colSpan}
         onClick={this.handleSelect}
         style={style}
@@ -46,13 +48,12 @@ class ColumnHeader extends React.PureComponent {
 }
 
 ColumnHeader.defaultProps = {
-  cellSuffix: '',
   colSpan: 1
 };
 
 ColumnHeader.propTypes = {
   baseCSS: PropTypes.shape({}).isRequired,
-  cellSuffix: PropTypes.string,
+  cellWidth: PropTypes.string,
   colSpan: PropTypes.number,
   entry: PropTypes.shape({
     elementNumber: PropTypes.number.isRequired,
