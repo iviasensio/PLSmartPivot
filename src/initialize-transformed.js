@@ -33,31 +33,10 @@ function getCellSuffix (option) {
   return cellSuffixOptions[option] || '';
 }
 
-function getMeasurementFormat (measurement) {
-  if (measurement.qNumFormat.qType === 'U' || measurement.qNumFormat.qFmt === '##############') {
-    return '#.##0';
-  } else if (measurement.qNumFormat.qType === 'R') {
-    return measurement.qNumFormat.qFmt.replace(/(|)/gi, '');
-  }
-  return measurement.qNumFormat.qFmt;
-}
-
-function getMagnitudeLabelSuffix (magnitudeOption) {
-  const magnitudeLabelSuffixOptions = {
-    'k': ' (k)',
-    'm': ' (m)'
-  };
-
-  return magnitudeLabelSuffixOptions[magnitudeOption] || '';
-}
-
 function generateMeasurements (information) {
   return information.map(measurement => {
-    const format = getMeasurementFormat(measurement);
-    const formatMagnitude = format.substr(format.length - 1).toLowerCase();
     const transformedMeasurement = {
-      format,
-      magnitudeLabelSuffix: getMagnitudeLabelSuffix(formatMagnitude),
+      format: measurement.qNumFormat.qFmt || '#.##0',
       name: measurement.qFallbackTitle
     };
 
@@ -78,11 +57,6 @@ function generateMatrixCell ({ cell, dimension1Information, dimension2Informatio
   const matrixCell = {
     displayValue: cell.qText,
     format: measurementInformation.format,
-    magnitude: measurementInformation.magnitudeLabelSuffix.substring(
-      measurementInformation.magnitudeLabelSuffix.length - 2,
-      measurementInformation.magnitudeLabelSuffix.length - 1
-    ),
-    magnitudeLabelSuffix: measurementInformation.magnitudeLabelSuffix,
     name: measurementInformation.name,
     parents: {
       dimension1: {
