@@ -4,7 +4,7 @@ import { HEADER_FONT_SIZE } from '../initialize-transformed';
 import Tooltip from '../tooltip/index.jsx';
 
 const MeasurementColumnHeader = ({ baseCSS, general, hasSecondDimension, measurement, styling }) => {
-  const title = `${measurement.name} ${measurement.magnitudeLabelSuffix}`;
+  const title = `${measurement.name}`;
   const { fontSizeAdjustment } = styling.headerOptions;
   const isMediumFontSize = fontSizeAdjustment === HEADER_FONT_SIZE.MEDIUM;
 
