@@ -28,7 +28,7 @@ const HeadersTable = ({ data, general, component, styling, isKpi }) => {
           <tr>
             {isKpi ?
               <ExportColumnHeader
-                id={component.$scope.layout.qInfo.qId}
+                component={component}
                 allowExcelExport={general.allowExcelExport}
                 baseCSS={baseCSS}
                 general={general}
