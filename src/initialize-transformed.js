@@ -227,6 +227,18 @@ function initializeTransformed ({ $element, component, dataCube, designList, lay
     }
   }
 
+  let cellWidth;
+  if (layout.fitchartwidth) {
+    // The widths are calculated based on the current element width. Note: this could use % to set
+    // the widths as percentages of the available width. However, this often results in random
+    // columns getting 1px wider than the others because of rounding necessary to fill the width.
+    // This 1px causes missalignment between the data- and header tables.
+    cellWidth = '';
+  } else {
+    // If using the previous solution just set 60px
+    cellWidth = `${layout.columnwidthslider > 10 ? layout.columnwidthslider : 60}px`;
+  }
+
   // top level properties could be reducers and then components connect to grab what they want,
   // possibly with reselect for some presentational transforms (moving some of the presentational logic like formatting and such)
   const transformedProperties = {
@@ -245,13 +257,13 @@ function initializeTransformed ({ $element, component, dataCube, designList, lay
     general: {
       allowExcelExport: layout.allowexportxls,
       allowFilteringByClick: layout.filteroncellclick,
-      // If using the previous solution just set 60px
-      cellWidth: `${layout.columnwidthslider > 10 ? layout.columnwidthslider : 60}px`,
+      cellWidth: cellWidth,
       errorMessage: layout.errormessage,
       footnote: layout.footnote,
       maxLoops,
       subtitle: layout.subtitle,
-      title: layout.title
+      title: layout.title,
+      useColumnSeparator: layout.separatorcols && dimensionCount > 1
     },
     selection: {
       dimensionSelectionCounts: dimensionsInformation.map(dimensionInfo => dimensionInfo.qStateCounts.qSelected)
@@ -305,8 +317,7 @@ function initializeTransformed ({ $element, component, dataCube, designList, lay
         }
       },
       symbolForNulls: layout.symbolfornulls,
-      usePadding: layout.indentbool,
-      useSeparatorColumns: dimensionCount === 1 ? false : layout.separatorcols
+      usePadding: layout.indentbool
     }
   };
 

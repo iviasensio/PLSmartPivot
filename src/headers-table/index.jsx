@@ -5,121 +5,124 @@ import ColumnHeader from './column-header.jsx';
 import MeasurementColumnHeader from './measurement-column-header.jsx';
 import { injectSeparators } from '../utilities';
 
-const HeadersTable = ({ data, general, component, styling, isKpi }) => {
-  const baseCSS = {
-    backgroundColor: styling.headerOptions.colorSchema,
-    color: styling.headerOptions.textColor,
-    fontFamily: styling.options.fontFamily,
-    textAlign: styling.headerOptions.alignment
-  };
+class HeadersTable extends React.PureComponent {
+  render () {
+    const {
+      cellWidth,
+      columnSeparatorWidth,
+      component,
+      data,
+      general,
+      isKpi,
+      styling
+    } = this.props;
 
-  const {
-    dimension1,
-    dimension2,
-    measurements
-  } = data.headers;
+    const baseCSS = {
+      backgroundColor: styling.headerOptions.colorSchema,
+      color: styling.headerOptions.textColor,
+      fontFamily: styling.options.fontFamily,
+      textAlign: styling.headerOptions.alignment
+    };
 
-  const hasSecondDimension = dimension2.length > 0;
+    const {
+      dimension1,
+      dimension2,
+      measurements
+    } = data.headers;
 
-  return (
-    <div className="header-wrapper">
-      <table className="header">
-        <tbody>
-          <tr>
-            {isKpi ?
-              <ExportColumnHeader
-                component={component}
-                allowExcelExport={general.allowExcelExport}
-                baseCSS={baseCSS}
-                general={general}
-                hasSecondDimension={hasSecondDimension}
-                styling={styling}
-                title={dimension1[0].name}
-              /> : null
-            }
-            {!isKpi && !hasSecondDimension && measurements.map(measurementEntry => (
-              <MeasurementColumnHeader
-                baseCSS={baseCSS}
-                general={general}
-                hasSecondDimension={hasSecondDimension}
-                key={`${measurementEntry.displayValue}-${measurementEntry.name}-${measurementEntry.index}`}
-                measurement={measurementEntry}
-                styling={styling}
-              />
-            ))}
-            {!isKpi && hasSecondDimension && injectSeparators(dimension2, styling.useSeparatorColumns).map((entry, index) => {
-              if (entry.isSeparator) {
-                const separatorStyle = {
-                  color: 'white',
-                  fontFamily: styling.options.fontFamily,
-                  fontSize: `${13 + styling.headerOptions.fontSizeAdjustment}px`
-                };
+    const hasSecondDimension = dimension2.length > 0;
 
-                return (
-                  <th
-                    className="empty"
-                    key={index}
-                    style={separatorStyle}
-                  >
-                    *
-                  </th>
-                );
-              }
-              return (
-                <ColumnHeader
-                  altState={data.meta.altState}
+    const separatorStyle = {
+      minWidth: columnSeparatorWidth,
+      maxWidth: columnSeparatorWidth
+    };
+
+    return (
+      <div className="header-wrapper">
+        <table className="header">
+          <tbody>
+            <tr>
+              {isKpi ?
+                <ExportColumnHeader
+                  allowExcelExport={general.allowExcelExport}
                   baseCSS={baseCSS}
-                  cellWidth={general.cellWidth}
-                  colSpan={measurements.length}
-                  entry={entry}
-                  key={entry.displayValue}
                   component={component}
+                  general={general}
+                  hasSecondDimension={hasSecondDimension}
+                  styling={styling}
+                  title={dimension1[0].name}
+                /> : null
+              }
+              {!isKpi && !hasSecondDimension && measurements.map(measurementEntry => (
+                <MeasurementColumnHeader
+                  baseCSS={baseCSS}
+                  cellWidth={cellWidth}
+                  hasSecondDimension={hasSecondDimension}
+                  key={`${measurementEntry.displayValue}-${measurementEntry.name}-${measurementEntry.index}`}
+                  measurement={measurementEntry}
                   styling={styling}
                 />
-              );
-            })}
-          </tr>
-          {!isKpi && hasSecondDimension && (
-            <tr>
-              {injectSeparators(dimension2, styling.useSeparatorColumns).map((dimensionEntry, index) => {
-                if (dimensionEntry.isSeparator) {
-                  const separatorStyle = {
-                    color: 'white',
-                    fontFamily: styling.options.fontFamily,
-                    fontSize: `${12 + styling.headerOptions.fontSizeAdjustment}px`
-                  };
-
+              ))}
+              {!isKpi && hasSecondDimension && injectSeparators(dimension2, columnSeparatorWidth).map((entry, index) => {
+                if (entry.isSeparator) {
                   return (
                     <th
                       className="empty"
                       key={index}
                       style={separatorStyle}
-                    >
-                      *
-                    </th>
+                    />
                   );
                 }
-                return measurements.map(measurementEntry => (
-                  <MeasurementColumnHeader
+                return (
+                  <ColumnHeader
+                    altState={data.meta.altState}
                     baseCSS={baseCSS}
-                    dimensionEntry={dimensionEntry}
-                    general={general}
-                    hasSecondDimension={hasSecondDimension}
-                    key={`${measurementEntry.displayValue}-${measurementEntry.name}-${measurementEntry.index}-${dimensionEntry.name}`}
-                    measurement={measurementEntry}
+                    cellWidth={cellWidth}
+                    colSpan={measurements.length}
+                    component={component}
+                    entry={entry}
+                    key={entry.displayValue}
                     styling={styling}
                   />
-                ));
+                );
               })}
             </tr>
-          )}
-        </tbody>
-      </table>
-    </div>
-  );
-};
+            {!isKpi && hasSecondDimension && (
+              <tr>
+                {injectSeparators(dimension2, columnSeparatorWidth).map((dimensionEntry, index) => {
+                  if (dimensionEntry.isSeparator) {
+                    return (
+                      <th
+                        className="empty"
+                        key={index}
+                        style={separatorStyle}
+                      />
+                    );
+                  }
+                  return measurements.map(measurementEntry => (
+                    <MeasurementColumnHeader
+                      baseCSS={baseCSS}
+                      cellWidth={cellWidth}
+                      dimensionEntry={dimensionEntry}
+                      hasSecondDimension={hasSecondDimension}
+                      key={`${measurementEntry.displayValue}-${measurementEntry.name}-${measurementEntry.index}-${dimensionEntry.name}`}
+                      measurement={measurementEntry}
+                      styling={styling}
+                    />
+                  ));
+                })}
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </div>
+    );
+  }
+}
 
 HeadersTable.propTypes = {
+  cellWidth: PropTypes.string.isRequired,
+  columnSeparatorWidth: PropTypes.string.isRequired,
   data: PropTypes.shape({
     headers: PropTypes.shape({
       dimension1: PropTypes.array,

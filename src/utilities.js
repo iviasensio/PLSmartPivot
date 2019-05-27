@@ -16,7 +16,7 @@ export function Deferred () {
   });
 }
 
-export function injectSeparators (array, shouldHaveSeparator, suppliedOptions) {
+export function injectSeparators (array, columnSeparatorWidth, suppliedOptions) {
   const defaultOptions = {
     atEvery: 1,
     separator: { isSeparator: true }
@@ -26,7 +26,7 @@ export function injectSeparators (array, shouldHaveSeparator, suppliedOptions) {
     ...suppliedOptions
   };
 
-  if (!shouldHaveSeparator) {
+  if (!columnSeparatorWidth) {
     return array;
   }
   return array.reduce((result, entry, index) => {

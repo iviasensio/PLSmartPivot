@@ -42,7 +42,7 @@ class DataCell extends React.PureComponent {
 
   render () {
     const {
-      general,
+      cellWidth,
       measurement,
       styleBuilder,
       styling
@@ -55,17 +55,15 @@ class DataCell extends React.PureComponent {
       ...styleBuilder.getStyle(),
       paddingLeft: '5px',
       textAlign: textAlignment,
-      minWidth: general.cellWidth,
-      maxWidth: general.cellWidth
+      minWidth: cellWidth,
+      maxWidth: cellWidth
     };
 
     const isEmptyCell = measurement.displayValue === '';
     let formattedMeasurementValue;
-    if (isEmptyCell) {
+    if (isEmptyCell || styleBuilder.hasComments()) {
       formattedMeasurementValue = '';
       cellStyle.cursor = 'default';
-    } else if (styleBuilder.hasComments()) {
-      formattedMeasurementValue = '.';
     } else {
       formattedMeasurementValue = formatMeasurementValue(measurement, styling);
     }
@@ -104,6 +102,7 @@ class DataCell extends React.PureComponent {
 }
 
 DataCell.propTypes = {
+  cellWidth: PropTypes.string.isRequired,
   data: PropTypes.shape({
     headers: PropTypes.shape({
       dimension1: PropTypes.array.isRequired,
@@ -114,9 +113,7 @@ DataCell.propTypes = {
       dimensionCount: PropTypes.number.isRequired
     }).isRequired
   }).isRequired,
-  general: PropTypes.shape({
-    cellWidth: PropTypes.string.isRequired
-  }).isRequired,
+  general: PropTypes.shape({}).isRequired,
   measurement: PropTypes.shape({
     format: PropTypes.string,
     name: PropTypes.string,

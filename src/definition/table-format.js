@@ -209,6 +209,23 @@ const tableFormat = {
       ],
       defaultValue: 'right'
     },
+    FitChartWidth: {
+      ref: 'fitchartwidth',
+      type: 'boolean',
+      component: 'switch',
+      label: 'Fill chart width',
+      options: [
+        {
+          value: true,
+          label: 'On'
+        },
+        {
+          value: false,
+          label: 'Off'
+        }
+      ],
+      defaultValue: false
+    },
     ColumnWidthSlider: {
       type: 'number',
       component: 'slider',
@@ -217,7 +234,8 @@ const tableFormat = {
       min: 20,
       max: 250,
       step: 10,
-      defaultValue: 50
+      defaultValue: 50,
+      show: data => !data.fitchartwidth
     },
     SymbolForNulls: {
       ref: 'symbolfornulls',
