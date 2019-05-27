@@ -9,10 +9,10 @@ class ExportButton extends React.PureComponent {
   }
 
   handleExport () {
-    const { id, excelExport, general } = this.props;
+    const { component, excelExport, general } = this.props;
     const { title, subtitle, footnote } = general;
     if (excelExport) {
-      exportXLS(id, title, subtitle, footnote);
+      exportXLS(component.$element, title, subtitle, footnote);
     }
   }
 
@@ -34,7 +34,7 @@ ExportButton.defaultProps = {
 };
 
 ExportButton.propTypes = {
-  id: PropTypes.string.isRequired,
+  component: PropTypes.shape({}).isRequired,
   excelExport: PropTypes.bool,
   general: PropTypes.shape({}).isRequired
 };

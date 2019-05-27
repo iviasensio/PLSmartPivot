@@ -7,13 +7,12 @@ function cleanupNodes (node) {
   });
 }
 
-function buildTableHTML (id, title, subtitle, footnote) {
+function buildTableHTML (containerElement, title, subtitle, footnote) {
   const titleHTML = `<p style="font-size:15pt"><b>${title}</b></p>`;
   const subtitleHTML = `<p style="font-size:11pt">${subtitle}</p>`;
   const footnoteHTML = `<p style="font-size:11pt">${footnote}</p>`;
-  const container = document.querySelector(`[tid="${id}"]`);
-  const kpiTableClone = container.querySelector('.kpi-table').cloneNode(true);
-  const dataTableClone = container.querySelector('.data-table').cloneNode(true);
+  const kpiTableClone = containerElement[0].querySelector('.kpi-table').cloneNode(true);
+  const dataTableClone = containerElement[0].querySelector('.data-table').cloneNode(true);
   cleanupNodes(kpiTableClone);
   cleanupNodes(kpiTableClone);
 
@@ -100,8 +99,8 @@ function downloadXLS (html) {
   return true;
 }
 
-export function exportXLS (id, title, subtitle, footnote) {
+export function exportXLS (containerElement, title, subtitle, footnote) {
   // original was removing icon when starting export, disable and some spinner instead, shouldn't take enough time to warrant either..?
-  const table = buildTableHTML(id, title, subtitle, footnote);
+  const table = buildTableHTML(containerElement, title, subtitle, footnote);
   downloadXLS(table);
 }
