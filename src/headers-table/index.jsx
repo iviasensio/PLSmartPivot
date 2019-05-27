@@ -42,7 +42,7 @@ const HeadersTable = ({ data, general, component, styling, isKpi }) => {
                 baseCSS={baseCSS}
                 general={general}
                 hasSecondDimension={hasSecondDimension}
-                key={`${measurementEntry.displayValue}-${measurementEntry.name}`}
+                key={`${measurementEntry.displayValue}-${measurementEntry.name}-${measurementEntry.index}`}
                 measurement={measurementEntry}
                 styling={styling}
               />
@@ -105,7 +105,7 @@ const HeadersTable = ({ data, general, component, styling, isKpi }) => {
                     dimensionEntry={dimensionEntry}
                     general={general}
                     hasSecondDimension={hasSecondDimension}
-                    key={`${measurementEntry.displayValue}-${measurementEntry.name}-${dimensionEntry.name}`}
+                    key={`${measurementEntry.displayValue}-${measurementEntry.name}-${measurementEntry.index}-${dimensionEntry.name}`}
                     measurement={measurementEntry}
                     styling={styling}
                   />
