@@ -24,7 +24,6 @@ class DataCell extends React.PureComponent {
 
   render () {
     const {
-      data,
       general,
       measurement,
       styleBuilder,
@@ -37,11 +36,12 @@ class DataCell extends React.PureComponent {
       fontFamily: styling.options.fontFamily,
       ...styleBuilder.getStyle(),
       paddingLeft: '5px',
-      textAlign: textAlignment
+      textAlign: textAlignment,
+      minWidth: general.cellWidth,
+      maxWidth: general.cellWidth
     };
 
     const isEmptyCell = measurement.displayValue === '';
-    const isColumnPercentageBased = (/%/).test(measurement.format);
     let formattedMeasurementValue;
     if (isEmptyCell) {
       formattedMeasurementValue = '';
@@ -68,16 +68,9 @@ class DataCell extends React.PureComponent {
       }
     }
 
-    let cellClass = 'grid-cells';
-    const hasTwoDimensions = data.headers.dimension2 && data.headers.dimension2.length > 0;
-    const shouldUseSmallCells = isColumnPercentageBased && data.headers.measurements.length > 1 && hasTwoDimensions;
-    if (shouldUseSmallCells) {
-      cellClass = 'grid-cells-small';
-    }
-
     return (
       <td
-        className={`${cellClass}${general.cellSuffix}`}
+        className="grid-cells"
         onClick={isEmptyCell ? null : this.handleSelect}
         style={cellStyle}
       >
@@ -99,7 +92,7 @@ DataCell.propTypes = {
     }).isRequired
   }).isRequired,
   general: PropTypes.shape({
-    cellSuffix: PropTypes.string.isRequired
+    cellWidth: PropTypes.string.isRequired
   }).isRequired,
   measurement: PropTypes.shape({
     format: PropTypes.string,

@@ -11,20 +11,20 @@ const MeasurementColumnHeader = ({ baseCSS, general, hasSecondDimension, measure
   if (hasSecondDimension) {
     const isPercentageFormat = measurement.format.substring(measurement.format.length - 1) === '%';
     let baseFontSize = 14;
-    let cellClass = 'grid-cells2';
     if (isPercentageFormat) {
       baseFontSize = 13;
-      cellClass = 'grid-cells2-small';
     }
     const cellStyle = {
       ...baseCSS,
       fontSize: `${baseFontSize + fontSizeAdjustment}px`,
       height: isMediumFontSize ? '45px' : '35px',
-      verticalAlign: 'middle'
+      verticalAlign: 'middle',
+      minWidth: general.cellWidth,
+      maxWidth: general.cellWidth
     };
     return (
       <th
-        className={`${cellClass}${general.cellSuffix}`}
+        className="grid-cells"
         style={cellStyle}
       >
         <Tooltip
@@ -41,11 +41,13 @@ const MeasurementColumnHeader = ({ baseCSS, general, hasSecondDimension, measure
     ...baseCSS,
     fontSize: `${15 + fontSizeAdjustment}px`,
     height: isMediumFontSize ? '90px' : '70px',
-    verticalAlign: 'middle'
+    verticalAlign: 'middle',
+    minWidth: general.cellWidth,
+    maxWidth: general.cellWidth
   };
   return (
     <th
-      className={`grid-cells2${general.cellSuffix}`}
+      className="grid-cells"
       style={style}
     >
       <Tooltip
@@ -65,7 +67,7 @@ MeasurementColumnHeader.defaultProps = {
 MeasurementColumnHeader.propTypes = {
   baseCSS: PropTypes.shape({}).isRequired,
   general: PropTypes.shape({
-    cellSuffix: PropTypes.string.isRequired
+    cellWidth: PropTypes.string.isRequired
   }).isRequired,
   hasSecondDimension: PropTypes.bool,
   measurement: PropTypes.shape({

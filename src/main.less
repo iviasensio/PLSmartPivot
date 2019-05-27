@@ -12,9 +12,7 @@
     pointer-events: none;
   }
 
-  ._cell(@Width: 50px) {
-    min-width: @Width !important;
-    max-width: @Width !important;
+  .grid-cells {
     cursor: pointer;
     line-height: 1em !important;
   }
@@ -74,67 +72,6 @@
     text-align: right;
   }
 
-  // ***************** 
-  // Medium column size 
-  // ***************** 
-
-  .grid-cells {
-    position: relative;
-    ._cell(70px);
-  }
-
-  .grid-cells2 {
-    ._cell(70px);
-  }
-
-  .grid-cells-small {
-    ._cell(52px);
-  }
-
-  .grid-cells2-small {
-    ._cell(52px);
-  }
-
-  // ***************** 
-  // Small column size 
-  // ***************** 
-  .grid-cells-s {
-    ._cell(67px);
-  }
-
-  .grid-cells2-s {
-    ._cell(67px);
-  }
-
-  .grid-cells-small-s {
-    ._cell(52px);
-  }
-
-  .grid-cells2-small-s {
-    ._cell(52px);
-  }
-
-  // ***************** 
-  // Large column size 
-  // ***************** 
-  .grid-cells-l {
-    ._cell(82px);
-  }
-
-  .grid-cells2-l {
-    ._cell(82px);
-  }
-
-  .grid-cells-small-l {
-    ._cell(66px);
-  }
-
-  .grid-cells2-small-l {
-    ._cell(66px);
-  }
-
-  // END OF GRID CELLS
-
   // First Column 
   .fdim-cells {
     min-width: 230px !Important;
@@ -147,14 +84,6 @@
     cursor: default;
     background-color: #808080 !important;
     color: #fff;
-  }
-
-  .grid-cells-header {
-    padding: 0;
-  }
-
-  .grid-cells-title {
-    min-width: 522px;
   }
 
   .grid {

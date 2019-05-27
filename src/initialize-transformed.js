@@ -24,15 +24,6 @@ function getFontSizeAdjustment (option) {
   return fontSizeAdjustmentOptions[option] || 0;
 }
 
-function getCellSuffix (option) {
-  const cellSuffixOptions = {
-    1: '-s',
-    3: '-l'
-  };
-
-  return cellSuffixOptions[option] || '';
-}
-
 function generateMeasurements (information) {
   return information.map(measurement => {
     const transformedMeasurement = {
@@ -253,7 +244,8 @@ function initializeTransformed ({ $element, component, dataCube, designList, lay
     general: {
       allowExcelExport: layout.allowexportxls,
       allowFilteringByClick: layout.filteroncellclick,
-      cellSuffix: getCellSuffix(layout.columnwidthslider), // TOOD: move to matrix cells or is it headers.measurements?
+      // If using the previous solution just set 60px
+      cellWidth: `${layout.columnwidthslider > 10 ? layout.columnwidthslider : 60}px`,
       errorMessage: layout.errormessage,
       footnote: layout.footnote,
       maxLoops,
