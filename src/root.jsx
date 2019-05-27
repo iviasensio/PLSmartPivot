@@ -4,7 +4,7 @@ import HeadersTable from './headers-table/index.jsx';
 import DataTable from './data-table/index.jsx';
 import { LinkedScrollWrapper, LinkedScrollSection } from './linked-scroll';
 
-const Root = ({ state, qlik, editmodeClass }) => (
+const Root = ({ state, component, editmodeClass }) => (
   <div className="root">
     <LinkedScrollWrapper>
       <div className={`kpi-table ${editmodeClass}`}>
@@ -12,14 +12,14 @@ const Root = ({ state, qlik, editmodeClass }) => (
           data={state.data}
           general={state.general}
           isKpi
-          qlik={qlik}
+          component={component}
           styling={state.styling}
         />
         <LinkedScrollSection linkVertical>
           <DataTable
             data={state.data}
             general={state.general}
-            qlik={qlik}
+            component={component}
             renderData={false}
             styling={state.styling}
           />
@@ -31,7 +31,7 @@ const Root = ({ state, qlik, editmodeClass }) => (
             data={state.data}
             general={state.general}
             isKpi={false}
-            qlik={qlik}
+            component={component}
             styling={state.styling}
           />
         </LinkedScrollSection>
@@ -42,7 +42,7 @@ const Root = ({ state, qlik, editmodeClass }) => (
           <DataTable
             data={state.data}
             general={state.general}
-            qlik={qlik}
+            component={component}
             styling={state.styling}
           />
         </LinkedScrollSection>
@@ -52,7 +52,7 @@ const Root = ({ state, qlik, editmodeClass }) => (
 );
 
 Root.propTypes = {
-  qlik: PropTypes.shape({}).isRequired,
+  component: PropTypes.shape({}).isRequired,
   state: PropTypes.shape({
     data: PropTypes.object.isRequired,
     general: PropTypes.object.isRequired,

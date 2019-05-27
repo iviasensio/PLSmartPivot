@@ -22,7 +22,9 @@ async function buildDataCube (originCubeDefinition, hasTwoDimensions, app) {
     cubeDefinition.qDimensions.push(originCubeDefinition.qDimensions[1]);
   }
   const cube = await createCube(cubeDefinition, app);
-  return cube.qHyperCube.qDataPages[0].qMatrix;
+  const cubeMatrix = cube.qHyperCube.qDataPages[0].qMatrix;
+  app.destroySessionObject(cube.qInfo.qId);
+  return cubeMatrix;
 }
 
 export async function initializeDataCube (component, layout) {
@@ -37,6 +39,7 @@ export async function initializeDataCube (component, layout) {
   const hyperCubeDef = properties.qExtendsId
     ? (await app.getObjectProperties(properties.qExtendsId)).properties.qHyperCubeDef
     : properties.qHyperCubeDef;
+  hyperCubeDef.qStateName = layout.qStateName || "";
 
   return buildDataCube(hyperCubeDef, layout.qHyperCube.qDimensionInfo.length === 2, app);
 }

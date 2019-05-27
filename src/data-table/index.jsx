@@ -5,7 +5,7 @@ import DataCell from './data-cell.jsx';
 import RowHeader from './row-header.jsx';
 import { injectSeparators } from '../utilities';
 
-const DataTable = ({ data, general, qlik, renderData, styling }) => {
+const DataTable = ({ data, general, component, renderData, styling }) => {
   const {
     headers: {
       dimension1,
@@ -42,8 +42,9 @@ const DataTable = ({ data, general, qlik, renderData, styling }) => {
               <tr key={dimensionEntry.displayValue}>
                 {!renderData ?
                   <RowHeader
+                    altState={data.meta.altState}
                     entry={dimensionEntry}
-                    qlik={qlik}
+                    component={component}
                     rowStyle={rowStyle}
                     styleBuilder={styleBuilder}
                     styling={styling}
@@ -80,7 +81,7 @@ const DataTable = ({ data, general, qlik, renderData, styling }) => {
                       general={general}
                       key={`${dimensionEntry.displayValue}-${id}`}
                       measurement={measurementData}
-                      qlik={qlik}
+                      component={component}
                       styleBuilder={styleBuilder}
                       styling={styling}
                     />
@@ -107,7 +108,7 @@ DataTable.propTypes = {
     matrix: PropTypes.arrayOf(PropTypes.array.isRequired).isRequired
   }).isRequired,
   general: PropTypes.shape({}).isRequired,
-  qlik: PropTypes.shape({}).isRequired,
+  component: PropTypes.shape({}).isRequired,
   renderData: PropTypes.bool,
   styling: PropTypes.shape({
     hasCustomFileStyle: PropTypes.bool.isRequired

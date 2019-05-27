@@ -5,7 +5,7 @@ import ColumnHeader from './column-header.jsx';
 import MeasurementColumnHeader from './measurement-column-header.jsx';
 import { injectSeparators } from '../utilities';
 
-const HeadersTable = ({ data, general, qlik, styling, isKpi }) => {
+const HeadersTable = ({ data, general, component, styling, isKpi }) => {
   const baseCSS = {
     backgroundColor: styling.headerOptions.colorSchema,
     color: styling.headerOptions.textColor,
@@ -28,7 +28,7 @@ const HeadersTable = ({ data, general, qlik, styling, isKpi }) => {
           <tr>
             {isKpi ?
               <ExportColumnHeader
-                id={qlik.options.id}
+                id={component.$scope.layout.qInfo.qId}
                 allowExcelExport={general.allowExcelExport}
                 baseCSS={baseCSS}
                 general={general}
@@ -67,12 +67,13 @@ const HeadersTable = ({ data, general, qlik, styling, isKpi }) => {
               }
               return (
                 <ColumnHeader
+                  altState={data.meta.altState}
                   baseCSS={baseCSS}
                   cellWidth={general.cellWidth}
                   colSpan={measurements.length}
                   entry={entry}
                   key={entry.displayValue}
-                  qlik={qlik}
+                  component={component}
                   styling={styling}
                 />
               );
@@ -124,19 +125,13 @@ HeadersTable.propTypes = {
       dimension1: PropTypes.array,
       dimension2: PropTypes.array,
       measurements: PropTypes.array
+    }),
+    meta: PropTypes.shape({
+      altState: PropTypes.string.isRequired
     })
   }).isRequired,
   general: PropTypes.shape({}).isRequired,
-  qlik: PropTypes.shape({
-    backendApi: PropTypes.shape({
-      selectValues: function (props, propName) {
-        if (props.isSnapshot || typeof props[propName] === 'function') {
-          return null;
-        }
-        return new Error('Missing implementation of qlik.backendApi.selectValues.');
-      }
-    }).isRequired
-  }).isRequired,
+  component: PropTypes.shape({}).isRequired,
   styling: PropTypes.shape({
     headerOptions: PropTypes.shape({}),
     options: PropTypes.shape({})

@@ -71,7 +71,7 @@ export default {
     const jsx = (
       <Root
         editmodeClass={editmodeClass}
-        qlik={this}
+        component={this}
         state={state}
       />
     );
