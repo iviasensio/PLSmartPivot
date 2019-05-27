@@ -83,7 +83,7 @@ function buildTableHTML (id, title, subtitle, footnote) {
 
 function downloadXLS (html) {
   const filename = 'analysis.xls';
-  const blobObject = new Blob([html]);
+  const blobObject = new Blob([html], { type: 'application/vnd.ms-excel' });
 
   // IE/Edge
   if (window.navigator.msSaveOrOpenBlob) {
