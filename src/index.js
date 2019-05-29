@@ -49,7 +49,9 @@ export default {
           qWidth: 10
         }
       ],
-      qMeasures: []
+      qMeasures: [],
+      qSuppressMissing: true,
+      qSuppressZero: false
     }
   },
   support: {

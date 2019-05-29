@@ -6,19 +6,19 @@ function createCube (definition, app) {
   });
 }
 
-async function buildDataCube (originCubeDefinition, hasTwoDimensions, app) {
+async function buildDataCube (originCubeDefinition, originCube, app) {
   const cubeDefinition = {
     ...originCubeDefinition,
     qInitialDataFetch: [
       {
-        qHeight: 1000,
-        qWidth: 10
+        qHeight: originCube.qSize.qcy,
+        qWidth: originCube.qSize.qcx
       }
     ],
     qDimensions: [originCubeDefinition.qDimensions[0]],
     qMeasures: originCubeDefinition.qMeasures
   };
-  if (hasTwoDimensions) {
+  if (originCube.qDimensionInfo.length === 2) {
     cubeDefinition.qDimensions.push(originCubeDefinition.qDimensions[1]);
   }
   const cube = await createCube(cubeDefinition, app);
@@ -41,7 +41,7 @@ export async function initializeDataCube (component, layout) {
     : properties.qHyperCubeDef;
   hyperCubeDef.qStateName = layout.qStateName || "";
 
-  return buildDataCube(hyperCubeDef, layout.qHyperCube.qDimensionInfo.length === 2, app);
+  return buildDataCube(hyperCubeDef, layout.qHyperCube, app);
 }
 
 export function initializeDesignList (component, layout) {
