@@ -17,7 +17,7 @@ class ColumnHeader extends React.PureComponent {
   }
 
   render () {
-    const { baseCSS, cellWidth, colSpan, entry, styling, component } = this.props;
+    const { baseCSS, cellWidth, colSpan, component, entry, styling } = this.props;
     const inEditState = component.inEditState();
     const isMediumFontSize = styling.headerOptions.fontSizeAdjustment === HEADER_FONT_SIZE.MEDIUM;
 
@@ -55,7 +55,7 @@ ColumnHeader.defaultProps = {
 
 ColumnHeader.propTypes = {
   baseCSS: PropTypes.shape({}).isRequired,
-  cellWidth: PropTypes.string,
+  cellWidth: PropTypes.string.isRequired,
   colSpan: PropTypes.number,
   entry: PropTypes.shape({
     displayValue: PropTypes.string.isRequired,

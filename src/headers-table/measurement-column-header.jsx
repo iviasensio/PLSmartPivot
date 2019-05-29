@@ -3,10 +3,17 @@ import PropTypes from 'prop-types';
 import { HEADER_FONT_SIZE } from '../initialize-transformed';
 import Tooltip from '../tooltip/index.jsx';
 
-const MeasurementColumnHeader = ({ baseCSS, general, hasSecondDimension, measurement, styling }) => {
+const MeasurementColumnHeader = ({ baseCSS, cellWidth, hasSecondDimension, measurement, styling }) => {
   const title = `${measurement.name}`;
   const { fontSizeAdjustment } = styling.headerOptions;
   const isMediumFontSize = fontSizeAdjustment === HEADER_FONT_SIZE.MEDIUM;
+
+  const cellStyle = {
+    ...baseCSS,
+    verticalAlign: 'middle',
+    minWidth: cellWidth,
+    maxWidth: cellWidth
+  };
 
   if (hasSecondDimension) {
     const isPercentageFormat = measurement.format.substring(measurement.format.length - 1) === '%';
@@ -14,14 +21,9 @@ const MeasurementColumnHeader = ({ baseCSS, general, hasSecondDimension, measure
     if (isPercentageFormat) {
       baseFontSize = 13;
     }
-    const cellStyle = {
-      ...baseCSS,
-      fontSize: `${baseFontSize + fontSizeAdjustment}px`,
-      height: isMediumFontSize ? '45px' : '35px',
-      verticalAlign: 'middle',
-      minWidth: general.cellWidth,
-      maxWidth: general.cellWidth
-    };
+    cellStyle.fontSize = `${baseFontSize + fontSizeAdjustment}px`;
+    cellStyle.height = isMediumFontSize ? '45px' : '35px';
+
     return (
       <th
         className="grid-cells"
@@ -37,18 +39,12 @@ const MeasurementColumnHeader = ({ baseCSS, general, hasSecondDimension, measure
     );
   }
 
-  const style = {
-    ...baseCSS,
-    fontSize: `${15 + fontSizeAdjustment}px`,
-    height: isMediumFontSize ? '90px' : '70px',
-    verticalAlign: 'middle',
-    minWidth: general.cellWidth,
-    maxWidth: general.cellWidth
-  };
+  cellStyle.fontSize = `${15 + fontSizeAdjustment}px`;
+  cellStyle.height = isMediumFontSize ? '90px' : '70px';
   return (
     <th
       className="grid-cells"
-      style={style}
+      style={cellStyle}
     >
       <Tooltip
         tooltipText={title}
@@ -66,9 +62,7 @@ MeasurementColumnHeader.defaultProps = {
 
 MeasurementColumnHeader.propTypes = {
   baseCSS: PropTypes.shape({}).isRequired,
-  general: PropTypes.shape({
-    cellWidth: PropTypes.string.isRequired
-  }).isRequired,
+  cellWidth: PropTypes.string.isRequired,
   hasSecondDimension: PropTypes.bool,
   measurement: PropTypes.shape({
     name: PropTypes.string.isRequired
