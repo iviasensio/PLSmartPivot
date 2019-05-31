@@ -1,6 +1,8 @@
 import definition from './definition';
+import { exportXLS } from './excel-export';
 import { initializeDataCube, initializeDesignList } from './dataset';
 import initializeStore from './store';
+import qlik from 'qlik';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Root from './root.jsx';
@@ -11,11 +13,6 @@ if (!window._babelPolyfill) { // eslint-disable-line no-underscore-dangle
 }
 
 export default {
-  controller: [
-    '$scope',
-    '$timeout',
-    function controller () {}
-  ],
   design: {
     dimensions: {
       max: 1,
@@ -87,6 +84,27 @@ export default {
     snapshotLayout.snapshotData.dataCube = await initializeDataCube(this, snapshotLayout);
     snapshotLayout.snapshotData.designList = await initializeDesignList(this, snapshotLayout);
     return snapshotLayout;
+  },
+  getContextMenu: async function (obj, menu) {
+    const app = qlik.currApp(this);
+    const isPersonalResult = await app.global.isPersonalMode();
+    if (!this.$scope.layout.allowexportxls || (isPersonalResult && isPersonalResult.qReturn)) {
+      return menu;
+    }
+
+    menu.addItem({
+      translation: "Export as XLS",
+      tid: "export-excel",
+      icon: "export",
+      select: () => {
+        exportXLS(
+          this.$element,
+          this.$scope.layout.title,
+          this.$scope.layout.subtitle,
+          this.$scope.layout.footnote);
+      }
+    });
+    return menu;
   },
   version: 1.0
 };
