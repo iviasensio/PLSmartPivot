@@ -75,7 +75,6 @@ class HeadersTable extends React.PureComponent {
                 }
                 return (
                   <ColumnHeader
-                    altState={data.meta.altState}
                     baseCSS={baseCSS}
                     cellWidth={cellWidth}
                     colSpan={measurements.length}
@@ -128,9 +127,6 @@ HeadersTable.propTypes = {
       dimension1: PropTypes.array,
       dimension2: PropTypes.array,
       measurements: PropTypes.array
-    }),
-    meta: PropTypes.shape({
-      altState: PropTypes.string.isRequired
     })
   }).isRequired,
   general: PropTypes.shape({}).isRequired,
