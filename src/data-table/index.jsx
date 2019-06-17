@@ -58,7 +58,6 @@ class DataTable extends React.PureComponent {
                 <tr key={dimensionEntry.displayValue}>
                   {!renderData ?
                     <RowHeader
-                      altState={data.meta.altState}
                       component={component}
                       entry={dimensionEntry}
                       rowStyle={rowStyle}

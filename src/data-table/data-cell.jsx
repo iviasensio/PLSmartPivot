@@ -1,4 +1,3 @@
-import qlik from 'qlik';
 import React from 'react';
 import PropTypes from 'prop-types';
 import Tooltip from '../tooltip/index.jsx';
@@ -12,10 +11,8 @@ class DataCell extends React.PureComponent {
   handleSelect () {
     const {
       data: {
-        headers,
         meta: {
-          dimensionCount,
-          altState
+          dimensionCount
         }
       },
       general: {
@@ -30,13 +27,9 @@ class DataCell extends React.PureComponent {
       return;
     }
 
-    const app = qlik.currApp(component);
-    app.field(headers.dimension1[0].name, altState)
-      .select([measurement.parents.dimension1.elementNumber], false, false);
-
+    component.backendApi.selectValues(0, [measurement.parents.dimension1.elementNumber], false);
     if (hasSecondDimension) {
-      app.field(headers.dimension2[0].name, altState)
-        .select([measurement.parents.dimension2.elementNumber], false, false);
+      component.backendApi.selectValues(1, [measurement.parents.dimension2.elementNumber], false);
     }
   }
 
@@ -105,11 +98,9 @@ DataCell.propTypes = {
   cellWidth: PropTypes.string.isRequired,
   data: PropTypes.shape({
     headers: PropTypes.shape({
-      dimension1: PropTypes.array.isRequired,
       measurements: PropTypes.array.isRequired
     }).isRequired,
     meta: PropTypes.shape({
-      altState: PropTypes.string.isRequired,
       dimensionCount: PropTypes.number.isRequired
     }).isRequired
   }).isRequired,
@@ -119,7 +110,16 @@ DataCell.propTypes = {
     name: PropTypes.string,
     value: PropTypes.any
   }).isRequired,
-  component: PropTypes.shape({}).isRequired,
+  component: PropTypes.shape({
+    backendApi: PropTypes.shape({
+      selectValues: function (props, propName) {
+        if (props.isSnapshot || typeof props[propName] === 'function') {
+          return null;
+        }
+        return new Error('Missing implementation of qlik.backendApi.selectValues.');
+      }
+    }).isRequired
+  }).isRequired,
   styleBuilder: PropTypes.shape({
     hasComments: PropTypes.func.isRequired
   }).isRequired,

@@ -36,10 +36,11 @@ export async function initializeDataCube (component, layout) {
   const properties = (await component.backendApi.getProperties());
 
   // If this is a master object, fetch the hyperCubeDef of the original object
-  const hyperCubeDef = properties.qExtendsId
+  let hyperCubeDef = properties.qExtendsId
     ? (await app.getObjectProperties(properties.qExtendsId)).properties.qHyperCubeDef
     : properties.qHyperCubeDef;
-  hyperCubeDef.qStateName = layout.qStateName || "";
+  hyperCubeDef = JSON.parse(JSON.stringify(hyperCubeDef));
+  hyperCubeDef.qStateName = layout.qStateName;
 
   return buildDataCube(hyperCubeDef, layout.qHyperCube.qDimensionInfo.length === 2, app);
 }
