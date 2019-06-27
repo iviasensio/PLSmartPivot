@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import ExportButton from '../export-button.jsx';
 import { HEADER_FONT_SIZE } from '../initialize-transformed';
+import Tooltip from '../tooltip/index.jsx';
 
-const ExportColumnHeader = ({ component, baseCSS, general, title, allowExcelExport, hasSecondDimension, styling }) => {
+const Dim1Header = ({ component, baseCSS, title, hasSecondDimension, styling }) => {
+  const inEditState = component.inEditState();
   const rowSpan = hasSecondDimension ? 2 : 1;
   const isMediumFontSize = styling.headerOptions.fontSizeAdjustment === HEADER_FONT_SIZE.MEDIUM;
   const style = {
@@ -21,21 +22,20 @@ const ExportColumnHeader = ({ component, baseCSS, general, title, allowExcelExpo
       rowSpan={rowSpan}
       style={style}
     >
-      <ExportButton
-        component={component}
-        excelExport={allowExcelExport}
-        general={general}
-      />
-      {title}
+      <Tooltip
+        isTooltipActive={!inEditState}
+        styling={styling}
+        tooltipText={title}
+      >
+        {title}
+      </Tooltip>
     </th>
   );
 };
 
-ExportColumnHeader.propTypes = {
-  component: PropTypes.shape({}).isRequired,
-  allowExcelExport: PropTypes.bool.isRequired,
+Dim1Header.propTypes = {
   baseCSS: PropTypes.shape({}).isRequired,
-  general: PropTypes.shape({}).isRequired,
+  component: PropTypes.shape({}).isRequired,
   hasSecondDimension: PropTypes.bool.isRequired,
   styling: PropTypes.shape({
     headerOptions: PropTypes.shape({
@@ -45,4 +45,4 @@ ExportColumnHeader.propTypes = {
   title: PropTypes.string.isRequired
 };
 
-export default ExportColumnHeader;
+export default Dim1Header;

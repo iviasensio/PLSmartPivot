@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import ExportColumnHeader from './export-column-header.jsx';
+import Dim1Header from './dim1-header.jsx';
 import ColumnHeader from './column-header.jsx';
 import MeasurementColumnHeader from './measurement-column-header.jsx';
 import { injectSeparators } from '../utilities';
@@ -12,7 +12,6 @@ class HeadersTable extends React.PureComponent {
       columnSeparatorWidth,
       component,
       data,
-      general,
       isKpi,
       styling
     } = this.props;
@@ -43,11 +42,9 @@ class HeadersTable extends React.PureComponent {
           <tbody>
             <tr>
               {isKpi ?
-                <ExportColumnHeader
-                  allowExcelExport={general.allowExcelExport}
+                <Dim1Header
                   baseCSS={baseCSS}
                   component={component}
-                  general={general}
                   hasSecondDimension={hasSecondDimension}
                   styling={styling}
                   title={dimension1[0].name}
@@ -129,7 +126,6 @@ HeadersTable.propTypes = {
       measurements: PropTypes.array
     })
   }).isRequired,
-  general: PropTypes.shape({}).isRequired,
   component: PropTypes.shape({}).isRequired,
   styling: PropTypes.shape({
     headerOptions: PropTypes.shape({}),
