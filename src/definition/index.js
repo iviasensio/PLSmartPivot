@@ -39,7 +39,7 @@ const definition = {
           component: 'text'
         },
         paragraph1: {
-          label: `P&L pivot is a Qlik Sense extension which allows you to display Profit & Loss
+          label: `P&L pivot is a Qlik Sense chart which allows you to display Profit & Loss
             reporting with color and font customizations.`,
           component: 'text'
         },
