@@ -71,56 +71,56 @@ function generateMatrixCell ({ cell, dimension1Information, dimension2Informatio
   return matrixCell;
 }
 
-let lastRow = 0;
-function generateDataSet (
-  component, dimensionsInformation, measurementsInformation, dataCube) {
 
+function generateDataSet (component, dimensionsInformation, measurementsInformation, dataCube) {
   const measurements = generateMeasurements(measurementsInformation);
   let dimension1 = [];
   let dimension2 = [];
   let matrix = [];
 
   const hasSecondDimension = dimensionsInformation.length > 1;
-  dataCube.forEach(row => {
-    lastRow += 1;
-    const dimension1Entry = generateDimensionEntry(dimensionsInformation[0], row[0]);
-    dimension1.push(dimension1Entry);
-    let dimension2Entry;
-    let firstDataCell = 1;
-    if (hasSecondDimension) {
-      dimension2Entry = generateDimensionEntry(dimensionsInformation[1], row[1]);
-      dimension2.push(dimension2Entry);
-      firstDataCell = 2;
-    }
-    let matrixRow = row
-      .slice(firstDataCell, row.length)
-      .map((cell, cellIndex) => {
-        const measurementInformation = measurements[cellIndex];
-        measurementInformation.index = cellIndex;
-        const dimension1Information = row[0]; // eslint-disable-line prefer-destructuring
-        const dimension2Information = hasSecondDimension ? row[1] : null;
-        const generatedCell = generateMatrixCell({
-          cell,
-          dimension1Information,
-          dimension2Information,
-          measurementInformation
+  // eslint-disable-next-line no-undefined
+  for (let index = 0; dataCube[index] !== undefined; index++) {
+    // eslint-disable-next-line no-loop-func
+    dataCube[index].forEach(row => {
+      const dimension1Entry = generateDimensionEntry(dimensionsInformation[0], row[0]);
+      dimension1.push(dimension1Entry);
+      let dimension2Entry;
+      let firstDataCell = 1;
+      if (hasSecondDimension) {
+        dimension2Entry = generateDimensionEntry(dimensionsInformation[1], row[1]);
+        dimension2.push(dimension2Entry);
+        firstDataCell = 2;
+      }
+      let matrixRow = row
+        .slice(firstDataCell, row.length)
+        .map((cell, cellIndex) => {
+          const measurementInformation = measurements[cellIndex];
+          measurementInformation.index = cellIndex;
+          const dimension1Information = row[0]; // eslint-disable-line prefer-destructuring
+          const dimension2Information = hasSecondDimension ? row[1] : null;
+          const generatedCell = generateMatrixCell({
+            cell,
+            dimension1Information,
+            dimension2Information,
+            measurementInformation
+          });
+          return generatedCell;
         });
 
-        return generatedCell;
-      });
-
-    let appendToRowIndex = matrix.length;
-    if (hasSecondDimension) {
+      let appendToRowIndex = matrix.length;
+      if (hasSecondDimension) {
       // See if there already is a row for the current dim1
-      for (let i = 0; i < matrix.length; i++) {
-        if (matrix[i][0].parents.dimension1.header === matrixRow[0].parents.dimension1.header) {
-          appendToRowIndex = i;
-          matrixRow = matrix[i].concat(matrixRow);
+        for (let i = 0; i < matrix.length; i++) {
+          if (matrix[i][0].parents.dimension1.header === matrixRow[0].parents.dimension1.header) {
+            appendToRowIndex = i;
+            matrixRow = matrix[i].concat(matrixRow);
+          }
         }
       }
-    }
-    matrix[appendToRowIndex] = matrixRow;
-  });
+      matrix[appendToRowIndex] = matrixRow;
+    });
+  }
 
   // filter header dimensions to only have distinct values
   dimension1 = distinctArray(dimension1);
@@ -194,12 +194,10 @@ function appendMissingCells (
   return index;
 }
 
-function initializeTransformed ({ $element, component, dataCube, designList, layout }) {
+function initializeTransformed ({ component, dataCube, designList, layout }) {
   const dimensionsInformation = component.backendApi.getDimensionInfos();
   const measurementsInformation = component.backendApi.getMeasureInfos();
   const dimensionCount = layout.qHyperCube.qDimensionInfo.length;
-  const rowCount = component.backendApi.getRowCount();
-  const maxLoops = layout.maxloops;
   const {
     dimension1,
     dimension2,
@@ -259,7 +257,6 @@ function initializeTransformed ({ $element, component, dataCube, designList, lay
       cellWidth: cellWidth,
       errorMessage: layout.errormessage,
       footnote: layout.footnote,
-      maxLoops,
       subtitle: layout.subtitle,
       title: layout.title,
       useColumnSeparator: layout.separatorcols && dimensionCount > 1
@@ -319,20 +316,6 @@ function initializeTransformed ({ $element, component, dataCube, designList, lay
       usePadding: layout.indentbool
     }
   };
-
-  if (rowCount > lastRow && rowCount <= (maxLoops * 1000)) {
-    const requestPage = [
-      {
-        qHeight: Math.min(1000, rowCount - lastRow),
-        qLeft: 0,
-        qTop: matrix.length,
-        qWidth: 10 // should be # of columns
-      }
-    ];
-    component.backendApi.getData(requestPage).then(() => {
-      component.paint($element, layout);
-    });
-  }
 
   return transformedProperties;
 }

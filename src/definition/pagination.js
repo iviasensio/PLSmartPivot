@@ -23,30 +23,6 @@ const pagination = {
         {
           value: 4,
           label: '40k cells'
-        },
-        {
-          value: 5,
-          label: '50k cells'
-        },
-        {
-          value: 6,
-          label: '60k cells'
-        },
-        {
-          value: 7,
-          label: '70k cells'
-        },
-        {
-          value: 8,
-          label: '80k cells'
-        },
-        {
-          value: 9,
-          label: '90k cells'
-        },
-        {
-          value: 10,
-          label: '100k cells'
         }
       ],
       defaultValue: 2
@@ -55,7 +31,8 @@ const pagination = {
       ref: 'errormessage',
       label: 'Default error message',
       type: 'string',
-      defaultValue: 'Unable to display all the data. Apply more filters to limit the amount of displayed data.'
+      defaultValue: `Unable to display all the data. 
+      Change the pagination size supported or apply more filters to limit the amount of displayed data.`
     }
   }
 };

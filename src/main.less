@@ -105,6 +105,20 @@
     width: 100%;
   }
 
+  .error {
+    position: absolute; /*Define position */
+    width: 100%; /* Full width (cover the whole page) */
+    height: 100%; /* Full height (cover the whole page) */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1000; /* Specify a stack order in case you're using a different order for other elements */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
   .kpi-table .fdim-cells,
   .data-table td {
     line-height: 1em !important;

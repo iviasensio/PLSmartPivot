@@ -5,6 +5,7 @@ import DataCell from './data-cell.jsx';
 import RowHeader from './row-header.jsx';
 import { injectSeparators } from '../utilities';
 
+// eslint-disable-next-line react/prefer-stateless-function
 class DataTable extends React.PureComponent {
   render () {
     const {
