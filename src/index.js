@@ -35,6 +35,9 @@ export default {
       uses: 'measures'
     }
   },
+  // Prevent conversion from and to this object
+  exportProperties: null,
+  importProperties: null,
   definition,
   initialProperties: {
     version: 1.0,
