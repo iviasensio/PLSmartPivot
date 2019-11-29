@@ -64,7 +64,8 @@ function generateMatrixCell ({ cell, dimension1Information, dimension2Informatio
 
   if (dimension2Information) {
     matrixCell.parents.dimension2 = {
-      elementNumber: dimension2Information.qElemNumber
+      elementNumber: dimension2Information.qElemNumber,
+      header: dimension2Information.qText
     };
   }
 
@@ -141,7 +142,7 @@ function generateDataSet (
       let rowDataIndex = 0;
       dimension2.forEach(dim => {
         rowDataIndex = appendMissingCells(
-          row, newRow, rowDataIndex, measurements, rowIndex, dim.elementNumber);
+          row, newRow, rowDataIndex, measurements, rowIndex, dim, dimension1);
       });
     } else {
       appendMissingCells(row, newRow, 0, measurements, rowIndex);
@@ -165,14 +166,11 @@ function generateDataSet (
  * index of the dimension2 value being processed.
  */
 function appendMissingCells (
-  sourceRow, destRow, sourceIndex, measurements, dim1ElementNumber, dim2ElementNumber = -1) {
+  sourceRow, destRow, sourceIndex, measurements, matrixIndex, dim2, dim1) {
 
   let index = sourceIndex;
   measurements.forEach((measurement, measureIndex) => {
-    if (index < sourceRow.length
-      && (dim2ElementNumber === -1
-        || sourceRow[index].parents.dimension2.elementNumber === dim2ElementNumber)
-      && sourceRow[index].parents.measurement.header === measurement.name) {
+    if (index < sourceRow.length) {
       // Source contains the expected cell
       destRow.push(sourceRow[index]);
       index++;
@@ -181,8 +179,14 @@ function appendMissingCells (
       destRow.push({
         displayValue: '',
         parents: {
-          dimension1: { elementNumber: dim1ElementNumber },
-          dimension2: { elementNumber: dim2ElementNumber },
+          dimension1: {
+            elementNumber: dim1[index].elementNumber,
+            header: dim1[index].displayValue
+          },
+          dimension2: {
+            elementNumber: dim2.elementNumber,
+            header: dim2.displayValue
+          },
           measurement: {
             header: measurement.name,
             index: measureIndex

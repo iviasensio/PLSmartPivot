@@ -50,7 +50,6 @@ export default {
         }
       ],
       qMeasures: [],
-      qSuppressMissing: true,
       qSuppressZero: false
     }
   },
