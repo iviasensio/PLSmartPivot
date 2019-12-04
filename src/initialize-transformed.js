@@ -180,8 +180,8 @@ function appendMissingCells (
         displayValue: '',
         parents: {
           dimension1: {
-            elementNumber: dim1[index].elementNumber,
-            header: dim1[index].displayValue
+            elementNumber: dim1[matrixIndex].elementNumber,
+            header: dim1[matrixIndex].displayValue
           },
           dimension2: {
             elementNumber: dim2.elementNumber,

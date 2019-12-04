@@ -32,45 +32,34 @@ class DataTable extends React.PureComponent {
       maxWidth: columnSeparatorWidth
     };
 
-    const renderMeasurementData = (dimIndex, atEvery, styleBuilder) => {
+    const renderMeasurementData = (dimIndex, atEvery) => {
       const injectSeparatorsArray = injectSeparators(
         matrix[dimIndex],
         columnSeparatorWidth,
         atEvery
       );
 
-      let measurementData;
-      injectSeparatorsArray.forEach((matrixRow) => {
-        if (dimension1[dimIndex].displayValue === matrixRow.parents.dimension1.header) {
-          dimension2.forEach((dim2) => {
-            if (dim2.displayValue === matrixRow.parents.dimension2.header) {
-              measurementData = matrixRow;
+      if (dimension2.length <= 0) {
+        return injectSeparatorsArray;
+      }
+
+      let measurementDataRow = [],
+        index = 0;
+      dimension2.forEach((dim2) => {
+        measurements.forEach((measure) => {
+          for (index = 0; index < injectSeparatorsArray.length; index++) {
+            if (dimension1[dimIndex].displayValue === injectSeparatorsArray[index].parents.dimension1.header) {
+              if (dim2.displayValue === injectSeparatorsArray[index].parents.dimension2.header) {
+                if (measure.name === injectSeparatorsArray[index].parents.measurement.header) {
+                  measurementDataRow.push(injectSeparatorsArray[index]);
+                  break;
+                }
+              }
             }
-          });
-        }
-        if (measurementData && measurementData.isSeparator) {
-          return (
-            <td
-              className="empty"
-              key={`${dimension1.displayValue}-${dimIndex}-separator`}
-              style={separatorStyle}
-            />
-          );
-        }
-        const id = `${dimension1.elementNumber}-${dimension2 && dimension2.elementNumber}-${measurementData.header}-${measurementData.index}`;
-        return (
-          <DataCell
-            cellWidth={cellWidth}
-            component={component}
-            data={data}
-            general={general}
-            key={`${dimension1.displayValue}-${id}`}
-            measurement={measurementData}
-            styleBuilder={styleBuilder}
-            styling={styling}
-          />
-        );
+          }
+        });
       });
+      return measurementDataRow;
     };
 
     return (
@@ -108,7 +97,33 @@ class DataTable extends React.PureComponent {
                       styling={styling}
                     /> : null
                   }
-                  {renderData && renderMeasurementData(dimensionIndex, { atEvery: measurements.length }, styleBuilder)}
+                  {renderData && renderMeasurementData(dimensionIndex, { atEvery: measurements.length }).map((measurementData, index) => {
+                    if (measurementData.isSeparator) {
+                      return (
+                        <td
+                          className="empty"
+                          key={`${dimensionEntry.displayValue}-${index}-separator`}
+                          style={separatorStyle}
+                        />
+                      );
+                    }
+
+                    // eslint-disable-next-line no-shadow
+                    const { dimension1: dimension1Info, dimension2, measurement } = measurementData.parents;
+                    const id = `${dimension1Info.elementNumber}-${dimension2 && dimension2.elementNumber}-${measurement.header}-${measurement.index}`;
+                    return (
+                      <DataCell
+                        cellWidth={cellWidth}
+                        component={component}
+                        data={data}
+                        general={general}
+                        key={`${dimensionEntry.displayValue}-${id}`}
+                        measurement={measurementData}
+                        styleBuilder={styleBuilder}
+                        styling={styling}
+                      />
+                    );
+                  })}
                 </tr>
               );
             })}
