@@ -5,6 +5,7 @@ import DataCell from './data-cell.jsx';
 import RowHeader from './row-header.jsx';
 import { injectSeparators } from '../utilities';
 
+// eslint-disable-next-line react/prefer-stateless-function
 class DataTable extends React.PureComponent {
   render () {
     const {
@@ -20,6 +21,7 @@ class DataTable extends React.PureComponent {
     const {
       headers: {
         dimension1,
+        dimension2,
         measurements
       },
       matrix
@@ -28,6 +30,36 @@ class DataTable extends React.PureComponent {
     const separatorStyle = {
       minWidth: columnSeparatorWidth,
       maxWidth: columnSeparatorWidth
+    };
+
+    const renderMeasurementData = (dimIndex, atEvery) => {
+      const injectSeparatorsArray = injectSeparators(
+        matrix[dimIndex],
+        columnSeparatorWidth,
+        atEvery
+      );
+
+      if (dimension2.length <= 0) {
+        return injectSeparatorsArray;
+      }
+
+      let measurementDataRow = [],
+        index = 0;
+      dimension2.forEach((dim2) => {
+        measurements.forEach((measure) => {
+          for (index = 0; index < injectSeparatorsArray.length; index++) {
+            if (dimension1[dimIndex].displayValue === injectSeparatorsArray[index].parents.dimension1.header) {
+              if (dim2.displayValue === injectSeparatorsArray[index].parents.dimension2.header) {
+                if (measure.name === injectSeparatorsArray[index].parents.measurement.header) {
+                  measurementDataRow.push(injectSeparatorsArray[index]);
+                  break;
+                }
+              }
+            }
+          }
+        });
+      });
+      return measurementDataRow;
     };
 
     return (
@@ -65,11 +97,7 @@ class DataTable extends React.PureComponent {
                       styling={styling}
                     /> : null
                   }
-                  {renderData && injectSeparators(
-                    matrix[dimensionIndex],
-                    columnSeparatorWidth,
-                    { atEvery: measurements.length }
-                  ).map((measurementData, index) => {
+                  {renderData && renderMeasurementData(dimensionIndex, { atEvery: measurements.length }).map((measurementData, index) => {
                     if (measurementData.isSeparator) {
                       return (
                         <td
@@ -80,6 +108,7 @@ class DataTable extends React.PureComponent {
                       );
                     }
 
+                    // eslint-disable-next-line no-shadow
                     const { dimension1: dimension1Info, dimension2, measurement } = measurementData.parents;
                     const id = `${dimension1Info.elementNumber}-${dimension2 && dimension2.elementNumber}-${measurement.header}-${measurement.index}`;
                     return (
@@ -112,6 +141,7 @@ DataTable.defaultProps = {
 DataTable.propTypes = {
   cellWidth: PropTypes.string.isRequired,
   columnSeparatorWidth: PropTypes.string.isRequired,
+  component: PropTypes.shape({}).isRequired,
   data: PropTypes.shape({
     headers: PropTypes.shape({
       dimension1: PropTypes.array.isRequired
@@ -119,7 +149,6 @@ DataTable.propTypes = {
     matrix: PropTypes.arrayOf(PropTypes.array.isRequired).isRequired
   }).isRequired,
   general: PropTypes.shape({}).isRequired,
-  component: PropTypes.shape({}).isRequired,
   renderData: PropTypes.bool,
   styling: PropTypes.shape({
     hasCustomFileStyle: PropTypes.bool.isRequired
