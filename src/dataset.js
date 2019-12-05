@@ -6,12 +6,15 @@ function createCube (definition, app) {
   });
 }
 
-async function buildDataCube (originCubeDefinition, originCube, app) {
+async function buildDataCube (originCubeDefinition, originCube, app, requestPage) {
   const cubeDefinition = {
     ...originCubeDefinition,
     qInitialDataFetch: [
       {
-        qHeight: originCube.qSize.qcy,
+        // eslint-disable-next-line no-undefined
+        qTop: requestPage === undefined ? 0 : requestPage[0].qTop,
+        qLeft: 0,
+        qHeight: 1000,
         qWidth: originCube.qSize.qcx
       }
     ],
@@ -28,12 +31,15 @@ async function buildDataCube (originCubeDefinition, originCube, app) {
 }
 
 export async function initializeDataCube (component, layout) {
+
   if (component.backendApi.isSnapshot) {
     return layout.snapshotData.dataCube;
   }
-
   const app = qlik.currApp(component);
   const properties = (await component.backendApi.getProperties());
+  const rowCount = component.backendApi.getRowCount();
+  const cellCount = rowCount * layout.qHyperCube.qSize.qcx;
+  const maxLoops = layout.maxloops;
 
   // If this is a master object, fetch the hyperCubeDef of the original object
   let hyperCubeDef = properties.qExtendsId
@@ -41,8 +47,25 @@ export async function initializeDataCube (component, layout) {
     : properties.qHyperCubeDef;
   hyperCubeDef = JSON.parse(JSON.stringify(hyperCubeDef));
   hyperCubeDef.qStateName = layout.qStateName;
-
-  return buildDataCube(hyperCubeDef, layout.qHyperCube, app);
+  const pagedCube = {};
+  let lastRow = 0;
+  if (cellCount < (maxLoops * 10000)) {
+    for (let index = 0; cellCount > lastRow; index += 1) {
+      const requestPage = [
+        {
+          qHeight: 1000,
+          qLeft: 0,
+          qTop: lastRow,
+          qWidth: 10 // should be # of columns
+        }
+      ];
+      // eslint-disable-next-line no-await-in-loop
+      pagedCube[index] = await buildDataCube(hyperCubeDef, layout.qHyperCube, app, requestPage);
+      lastRow = lastRow + 1000;
+    }
+    return pagedCube;
+  }
+  return null;
 }
 
 export function initializeDesignList (component, layout) {

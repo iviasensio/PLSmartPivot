@@ -1,8 +1,8 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import HeadersTable from './headers-table/index.jsx';
-import DataTable from './data-table/index.jsx';
-import { LinkedScrollWrapper, LinkedScrollSection } from './linked-scroll';
+import React from "react";
+import PropTypes from "prop-types";
+import HeadersTable from "./headers-table/index.jsx";
+import DataTable from "./data-table/index.jsx";
+import { LinkedScrollWrapper, LinkedScrollSection } from "./linked-scroll";
 
 class Root extends React.PureComponent {
   constructor (props) {
@@ -25,7 +25,7 @@ class Root extends React.PureComponent {
 
   render () {
     const { editmodeClass, component, state } = this.props;
-    const { data, general, styling } = state;
+    const { data, general, styling, error } = state;
 
     // Determine cell- and column separator width
     let cellWidth = '0px';
@@ -48,72 +48,80 @@ class Root extends React.PureComponent {
         let separatorWidth = 0;
         if (general.useColumnSeparator) {
           separatorCount = data.headers.dimension2.length - 1;
-          separatorWidth = Math.min(Math.floor(tableWidth * 0.2 / separatorCount), 8);
+          separatorWidth = Math.min(
+            Math.floor((tableWidth * 0.2) / separatorCount),
+            8
+          );
           columnSeparatorWidth = `${separatorWidth}px`;
         }
 
-        const separatorWidthSum = (separatorWidth + borderWidth) * separatorCount;
-        cellWidth = `${Math.floor((tableWidth - separatorWidthSum - headerMarginRight - borderWidth)
-          / rowCellCount) - borderWidth}px`;
+        const separatorWidthSum =
+          (separatorWidth + borderWidth) * separatorCount;
+        cellWidth = `${Math.floor(
+          (tableWidth - separatorWidthSum - headerMarginRight - borderWidth) /
+            rowCellCount) - borderWidth}px`;
       }
     }
 
     return (
       <div className="root">
-        <LinkedScrollWrapper>
-          <div className={`kpi-table ${editmodeClass}`}>
-            <HeadersTable
-              cellWidth={cellWidth}
-              columnSeparatorWidth={columnSeparatorWidth}
-              component={component}
-              data={data}
-              general={general}
-              isKpi
-              styling={styling}
-            />
-            <LinkedScrollSection linkVertical>
-              <DataTable
-                cellWidth={cellWidth}
-                columnSeparatorWidth={columnSeparatorWidth}
-                component={component}
-                data={data}
-                general={general}
-                renderData={false}
-                styling={styling}
-              />
-            </LinkedScrollSection>
+        {error ? (
+          <div className="error">
+            {state.layout.errormessage}
           </div>
-          <div
-            className={`data-table ${editmodeClass}`}
-            style={{ width: general.cellWidth ? 'auto' : '100%' }}
-            ref={this.onDataTableRefSet}
-          >
-            <LinkedScrollSection linkHorizontal>
+        ) : (
+          <LinkedScrollWrapper>
+            <div className={`kpi-table ${editmodeClass}`}>
               <HeadersTable
                 cellWidth={cellWidth}
                 columnSeparatorWidth={columnSeparatorWidth}
                 component={component}
                 data={data}
                 general={general}
-                isKpi={false}
+                isKpi
                 styling={styling}
               />
-            </LinkedScrollSection>
-            <LinkedScrollSection
-              linkHorizontal
-              linkVertical
+              <LinkedScrollSection linkVertical>
+                <DataTable
+                  cellWidth={cellWidth}
+                  columnSeparatorWidth={columnSeparatorWidth}
+                  component={component}
+                  data={data}
+                  general={general}
+                  renderData={false}
+                  styling={styling}
+                />
+              </LinkedScrollSection>
+            </div>
+            <div
+              className={`data-table ${editmodeClass}`}
+              style={{ width: general.cellWidth ? 'auto' : '100%' }}
+              ref={this.onDataTableRefSet}
             >
-              <DataTable
-                cellWidth={cellWidth}
-                columnSeparatorWidth={columnSeparatorWidth}
-                component={component}
-                data={data}
-                general={general}
-                styling={styling}
-              />
-            </LinkedScrollSection>
-          </div>
-        </LinkedScrollWrapper>
+              <LinkedScrollSection linkHorizontal>
+                <HeadersTable
+                  cellWidth={cellWidth}
+                  columnSeparatorWidth={columnSeparatorWidth}
+                  component={component}
+                  data={data}
+                  general={general}
+                  isKpi={false}
+                  styling={styling}
+                />
+              </LinkedScrollSection>
+              <LinkedScrollSection linkHorizontal linkVertical>
+                <DataTable
+                  cellWidth={cellWidth}
+                  columnSeparatorWidth={columnSeparatorWidth}
+                  component={component}
+                  data={data}
+                  general={general}
+                  styling={styling}
+                />
+              </LinkedScrollSection>
+            </div>
+          </LinkedScrollWrapper>
+        )}
       </div>
     );
   }
@@ -123,9 +131,9 @@ Root.propTypes = {
   component: PropTypes.shape({}).isRequired,
   editmodeClass: PropTypes.string.isRequired,
   state: PropTypes.shape({
-    data: PropTypes.object.isRequired,
-    general: PropTypes.object.isRequired,
-    styling: PropTypes.object.isRequired
+    data: PropTypes.object,
+    general: PropTypes.object,
+    styling: PropTypes.object
   }).isRequired
 };
 
