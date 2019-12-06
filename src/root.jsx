@@ -12,9 +12,12 @@ class Root extends React.PureComponent {
   }
 
   componentDidUpdate () {
-    const tableWidth = this.dataTableRef.getBoundingClientRect().width;
-    if (this.renderedTableWidth !== tableWidth) {
-      this.forceUpdate();
+    let tableWidth;
+    if (this.dataTableRef) {
+      tableWidth = this.dataTableRef.getBoundingClientRect().width;
+      if (this.renderedTableWidth !== tableWidth) {
+        this.forceUpdate();
+      }
     }
   }
 
@@ -66,7 +69,7 @@ class Root extends React.PureComponent {
     return (
       <div className="root">
         {error ? (
-          <div className="error">
+          <div className={`error ${editmodeClass}`}>
             {state.layout.errormessage}
           </div>
         ) : (
