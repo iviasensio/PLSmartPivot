@@ -33,7 +33,7 @@ class LinkedScrollWrapper extends React.PureComponent {
   unlinkComponent (component) {
     const componentIndex = this.scrollElements.map(element => element.component).indexOf(component);
     if (componentIndex !== -1) {
-      this.scrollElements.removeAt(componentIndex);
+      this.scrollElements.splice(componentIndex, 1);
       // eslint-disable-next-line react/no-find-dom-node
       const node = ReactDOM.findDOMNode(component);
       node.onscroll = null;
