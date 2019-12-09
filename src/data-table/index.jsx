@@ -48,7 +48,7 @@ class DataTable extends React.PureComponent {
       dimension2.forEach((dim2) => {
         measurements.forEach((measure) => {
           for (index = 0; index < injectSeparatorsArray.length; index++) {
-            if (dimension1[dimIndex].displayValue === injectSeparatorsArray[index].parents.dimension1.header) {
+            if (injectSeparatorsArray[index].parents && dimension1[dimIndex].displayValue === injectSeparatorsArray[index].parents.dimension1.header) {
               if (dim2.displayValue === injectSeparatorsArray[index].parents.dimension2.header) {
                 if (measure.name === injectSeparatorsArray[index].parents.measurement.header) {
                   measurementDataRow.push(injectSeparatorsArray[index]);
