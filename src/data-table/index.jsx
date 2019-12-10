@@ -43,19 +43,41 @@ class DataTable extends React.PureComponent {
         return injectSeparatorsArray;
       }
 
-      let measurementDataRow = [],
-        index = 0;
+      const measurementDataRow = [];
+      let index = 0,
+        match;
       dimension2.forEach((dim2) => {
-        measurements.forEach((measure) => {
+        measurements.forEach((measure, mesInd) => {
           for (index = 0; index < injectSeparatorsArray.length; index++) {
+            match = false;
             if (injectSeparatorsArray[index].parents && dimension1[dimIndex].displayValue === injectSeparatorsArray[index].parents.dimension1.header) {
               if (dim2.displayValue === injectSeparatorsArray[index].parents.dimension2.header) {
                 if (measure.name === injectSeparatorsArray[index].parents.measurement.header) {
                   measurementDataRow.push(injectSeparatorsArray[index]);
+                  match = true;
                   break;
                 }
               }
             }
+          }
+          if (!match) {
+            measurementDataRow.push({
+              displayValue: '',
+              parents: {
+                dimension1: {
+                  elementNumber: dimension1[dimIndex].elementNumber,
+                  header: dimension1[dimIndex].displayValue
+                },
+                dimension2: {
+                  elementNumber: dim2.elementNumber,
+                  header: dim2.displayValue
+                },
+                measurement: {
+                  header: measure.name,
+                  index: mesInd
+                }
+              }
+            });
           }
         });
       });

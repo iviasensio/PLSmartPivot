@@ -127,75 +127,12 @@ function generateDataSet (component, dimensionsInformation, measurementsInformat
   dimension1 = distinctArray(dimension1);
   dimension2 = distinctArray(dimension2);
 
-  // Make sure all rows are saturated, otherwise data risks being displayed in the wrong column
-  matrix = matrix.map((row, rowIndex) => {
-    if ((hasSecondDimension && row.length == (dimension2.length * measurements.length))
-      || (!hasSecondDimension && row.length == measurements.length)) {
-      // Row is saturated
-      return row;
-    }
-
-    // Row is not saturated, so must add empty cells to fill the gaps
-    let newRow = [];
-    if (hasSecondDimension) {
-      // Got a second dimension, so need to add measurements for all values of the second dimension
-      let rowDataIndex = 0;
-      dimension2.forEach(dim => {
-        rowDataIndex = appendMissingCells(
-          row, newRow, rowDataIndex, measurements, rowIndex, dim, dimension1);
-      });
-    } else {
-      appendMissingCells(row, newRow, 0, measurements, rowIndex);
-    }
-
-    return newRow;
-  });
-
   return {
     dimension1: dimension1,
     dimension2: dimension2,
     matrix,
     measurements
   };
-}
-
-/*
- * Appends the cells of the source row, as well as those missing, to the destination row, starting
- * from the given source index. Returns the source index of the next source cell after this has
- * completed. If there is a second dimension the dim2ElementNumber should be set to the current
- * index of the dimension2 value being processed.
- */
-function appendMissingCells (
-  sourceRow, destRow, sourceIndex, measurements, matrixIndex, dim2, dim1) {
-
-  let index = sourceIndex;
-  measurements.forEach((measurement, measureIndex) => {
-    if (index < sourceRow.length) {
-      // Source contains the expected cell
-      destRow.push(sourceRow[index]);
-      index++;
-    } else {
-      // Source doesn't contain the expected cell, so add empty
-      destRow.push({
-        displayValue: '',
-        parents: {
-          dimension1: {
-            elementNumber: dim1[matrixIndex].elementNumber,
-            header: dim1[matrixIndex].displayValue
-          },
-          dimension2: {
-            elementNumber: dim2.elementNumber,
-            header: dim2.displayValue
-          },
-          measurement: {
-            header: measurement.name,
-            index: measureIndex
-          }
-        }
-      });
-    }
-  });
-  return index;
 }
 
 function initializeTransformed ({ component, dataCube, designList, layout }) {
