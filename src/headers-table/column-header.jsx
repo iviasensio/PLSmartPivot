@@ -11,7 +11,7 @@ class ColumnHeader extends React.PureComponent {
 
   handleSelect () {
     const { component, entry } = this.props;
-    component.backendApi.selectValues(1, [entry.elementNumber], false);
+    component.selectValues(1, [entry.elementNumber], false);
   }
 
   render () {

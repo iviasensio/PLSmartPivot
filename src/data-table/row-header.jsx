@@ -12,7 +12,7 @@ class RowHeader extends React.PureComponent {
 
   handleSelect () {
     const { component, entry } = this.props;
-    component.backendApi.selectValues(0, [entry.elementNumber], false);
+    component.selectValues(0, [entry.elementNumber], false);
   }
 
   render () {

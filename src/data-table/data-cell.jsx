@@ -27,9 +27,9 @@ class DataCell extends React.PureComponent {
       return;
     }
 
-    component.backendApi.selectValues(0, [measurement.parents.dimension1.elementNumber], false);
+    component.selectValues(0, [measurement.parents.dimension1.elementNumber], false);
     if (hasSecondDimension) {
-      component.backendApi.selectValues(1, [measurement.parents.dimension2.elementNumber], false);
+      component.selectValues(1, [measurement.parents.dimension2.elementNumber], false);
     }
   }
 
