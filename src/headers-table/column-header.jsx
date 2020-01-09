@@ -1,3 +1,5 @@
+/* eslint-disable object-shorthand */
+/* eslint-disable space-before-function-paren */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { HEADER_FONT_SIZE } from '../initialize-transformed';
@@ -8,7 +10,7 @@ class ColumnHeader extends React.PureComponent {
     super(props);
     this.handleSelect = this.handleSelect.bind(this);
   }
-  
+
   // fixes console error for column selected values
   handleSelect() {
     const { component, entry } = this.props;

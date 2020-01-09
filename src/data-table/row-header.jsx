@@ -4,19 +4,19 @@ import HeaderPadding from './header-padding.jsx';
 import Tooltip from '../tooltip/index.jsx';
 
 class RowHeader extends React.PureComponent {
-  constructor(props) {
+  constructor (props) {
     super(props);
 
     this.handleSelect = this.handleSelect.bind(this);
   }
-  
+
   // fixes the console error on row selected values
-  handleSelect() {
+  handleSelect () {
     const { component, entry } = this.props;
     component.selectValues(0, [entry.elementNumber], false);
   }
 
-  render() {
+  render () {
     const { entry, rowStyle, styleBuilder, styling, component } = this.props;
     const inEditState = component.inEditState();
 
@@ -43,19 +43,19 @@ class RowHeader extends React.PureComponent {
 }
 
 RowHeader.propTypes = {
-  entry: PropTypes.shape({
-    displayValue: PropTypes.string.isRequired,
-    elementNumber: PropTypes.number.isRequired
-  }).isRequired,
   component: PropTypes.shape({
     backendApi: PropTypes.shape({
-      selectValues: function (props, propName) {
+      selectValues (props, propName) {
         if (props.isSnapshot || typeof props[propName] === 'function') {
           return null;
         }
         return new Error('Missing implementation of qlik.backendApi.selectValues.');
       }
     }).isRequired
+  }).isRequired,
+  entry: PropTypes.shape({
+    displayValue: PropTypes.string.isRequired,
+    elementNumber: PropTypes.number.isRequired
   }).isRequired,
   rowStyle: PropTypes.shape({}).isRequired,
   styleBuilder: PropTypes.shape({}).isRequired,

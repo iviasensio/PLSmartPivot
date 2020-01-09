@@ -1,3 +1,5 @@
+/* eslint-disable react/sort-prop-types */
+/* eslint-disable space-before-function-paren */
 import React from 'react';
 import PropTypes from 'prop-types';
 import Tooltip from '../tooltip/index.jsx';
@@ -41,9 +43,9 @@ class DataCell extends React.PureComponent {
       styling
     } = this.props;
 
-    let textAlignment = styling.options.textAlignment || 'Right';
+    const textAlignment = styling.options.textAlignment || 'Right';
 
-    let cellStyle = {
+    const cellStyle = {
       fontFamily: styling.options.fontFamily,
       ...styleBuilder.getStyle(),
       paddingLeft: '5px',
@@ -64,10 +66,10 @@ class DataCell extends React.PureComponent {
     const { conditionalColoring } = styling;
     if (conditionalColoring.enabled) {
       const isValidConditionalColoringValue = !styleBuilder.hasComments() && !isNaN(measurement.value);
-      const isSpecifiedRow =
-        conditionalColoring.rows.indexOf(measurement.parents.dimension1.header) !== -1;
-      const isSpecifiedMeasure =
-        conditionalColoring.measures.indexOf(measurement.parents.measurement.index) !== -1;
+      const isSpecifiedRow
+        = conditionalColoring.rows.indexOf(measurement.parents.dimension1.header) !== -1;
+      const isSpecifiedMeasure
+        = conditionalColoring.measures.indexOf(measurement.parents.measurement.index) !== -1;
       const shouldHaveConditionalColoring = (conditionalColoring.colorAllRows || isSpecifiedRow)
         && (conditionalColoring.colorAllMeasures || isSpecifiedMeasure);
       if (isValidConditionalColoringValue && shouldHaveConditionalColoring) {
@@ -112,7 +114,7 @@ DataCell.propTypes = {
   }).isRequired,
   component: PropTypes.shape({
     backendApi: PropTypes.shape({
-      selectValues: function (props, propName) {
+      selectValues (props, propName) {
         if (props.isSnapshot || typeof props[propName] === 'function') {
           return null;
         }
