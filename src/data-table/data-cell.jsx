@@ -3,12 +3,12 @@ import PropTypes from 'prop-types';
 import Tooltip from '../tooltip/index.jsx';
 
 class DataCell extends React.PureComponent {
-  constructor (props) {
+  constructor(props) {
     super(props);
     this.handleSelect = this.handleSelect.bind(this);
   }
 
-  handleSelect () {
+  handleSelect() {
     const {
       data: {
         meta: {
@@ -26,14 +26,14 @@ class DataCell extends React.PureComponent {
     if (!allowFilteringByClick) {
       return;
     }
-// fixes the console error on selection made from data cells
+    // fixes the console error on selection made from data cells
     component.selectValues(0, [measurement.parents.dimension1.elementNumber], false);
     if (hasSecondDimension) {
       component.selectValues(1, [measurement.parents.dimension2.elementNumber], false);
     }
   }
 
-  render () {
+  render() {
     const {
       cellWidth,
       measurement,
@@ -130,7 +130,7 @@ DataCell.propTypes = {
 
 export default DataCell;
 
-function formatMeasurementValue (measurement, styling) {
+function formatMeasurementValue(measurement, styling) {
   if (isNaN(measurement.value)) {
     return styling.symbolForNulls;
   }
@@ -138,7 +138,7 @@ function formatMeasurementValue (measurement, styling) {
   return measurement.displayValue;
 }
 
-function getConditionalColor (measurement, conditionalColoring) {
+function getConditionalColor(measurement, conditionalColoring) {
   if (measurement.value < conditionalColoring.threshold.poor) {
     return conditionalColoring.colors.poor;
   }
