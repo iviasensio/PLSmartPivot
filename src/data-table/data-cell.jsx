@@ -26,7 +26,7 @@ class DataCell extends React.PureComponent {
     if (!allowFilteringByClick) {
       return;
     }
-
+// fixes the console error on selection made from data cells
     component.selectValues(0, [measurement.parents.dimension1.elementNumber], false);
     if (hasSecondDimension) {
       component.selectValues(1, [measurement.parents.dimension2.elementNumber], false);

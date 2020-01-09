@@ -8,7 +8,7 @@ class ColumnHeader extends React.PureComponent {
     super(props);
     this.handleSelect = this.handleSelect.bind(this);
   }
-
+// fixes console error for column selected values
   handleSelect () {
     const { component, entry } = this.props;
     component.selectValues(1, [entry.elementNumber], false);

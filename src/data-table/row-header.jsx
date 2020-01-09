@@ -9,7 +9,7 @@ class RowHeader extends React.PureComponent {
 
     this.handleSelect = this.handleSelect.bind(this);
   }
-
+// fixes the console error on row selected values
   handleSelect () {
     const { component, entry } = this.props;
     component.selectValues(0, [entry.elementNumber], false);
