@@ -4,18 +4,18 @@ import HeaderPadding from './header-padding.jsx';
 import Tooltip from '../tooltip/index.jsx';
 
 class RowHeader extends React.PureComponent {
-  constructor (props) {
+  constructor(props) {
     super(props);
 
     this.handleSelect = this.handleSelect.bind(this);
   }
-// fixes the console error on row selected values
-  handleSelect () {
+  // fixes the console error on row selected values
+  handleSelect() {
     const { component, entry } = this.props;
     component.selectValues(0, [entry.elementNumber], false);
   }
 
-  render () {
+  render() {
     const { entry, rowStyle, styleBuilder, styling, component } = this.props;
     const inEditState = component.inEditState();
 
