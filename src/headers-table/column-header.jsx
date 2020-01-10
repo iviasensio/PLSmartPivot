@@ -1,20 +1,23 @@
+/* eslint-disable object-shorthand */
+/* eslint-disable space-before-function-paren */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { HEADER_FONT_SIZE } from '../initialize-transformed';
 import Tooltip from '../tooltip/index.jsx';
 
 class ColumnHeader extends React.PureComponent {
-  constructor (props) {
+  constructor(props) {
     super(props);
     this.handleSelect = this.handleSelect.bind(this);
   }
 
-  handleSelect () {
+  // fixes console error for column selected values
+  handleSelect() {
     const { component, entry } = this.props;
-    component.backendApi.selectValues(1, [entry.elementNumber], false);
+    component.selectValues(1, [entry.elementNumber], false);
   }
 
-  render () {
+  render() {
     const { baseCSS, cellWidth, colSpan, component, entry, styling } = this.props;
     const inEditState = component.inEditState();
     const isMediumFontSize = styling.headerOptions.fontSizeAdjustment === HEADER_FONT_SIZE.MEDIUM;
