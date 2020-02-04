@@ -115,19 +115,21 @@ export default {
       return menu;
     }
 
-    menu.addItem({
-      translation: 'Export as XLS',
-      tid: 'export-excel',
-      icon: 'export',
-      select: () => {
-        exportXLS(
-          this.$element,
-          this.$scope.layout.title,
-          this.$scope.layout.subtitle,
-          this.$scope.layout.footnote
-        );
-      }
-    });
+    if (typeof (this.backendApi.model.layout.qMeta.privileges[3]) !== 'undefined' && this.backendApi.model.layout.qMeta.privileges[3] === 'exportdata') {
+      menu.addItem({
+        translation: 'Export as XLS',
+        tid: 'export-excel',
+        icon: 'export',
+        select: () => {
+          exportXLS(
+            this.$element,
+            this.$scope.layout.title,
+            this.$scope.layout.subtitle,
+            this.$scope.layout.footnote
+          );
+        }
+      });
+    }
     return menu;
   },
   version: 1.0
