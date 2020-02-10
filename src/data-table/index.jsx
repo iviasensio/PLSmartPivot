@@ -33,27 +33,34 @@ class DataTable extends React.PureComponent {
     };
 
     const renderMeasurementData = (dimIndex, atEvery) => {
-      const injectSeparatorsArray = injectSeparators(
-        matrix[dimIndex],
-        columnSeparatorWidth,
-        atEvery
-      );
-
       if (dimension2.length <= 0) {
-        return injectSeparatorsArray;
+        return injectSeparators(
+          matrix[dimIndex],
+          columnSeparatorWidth,
+          atEvery
+        );
       }
-
       const measurementDataRow = [];
       let index = 0,
         match;
-      dimension2.forEach((dim2) => {
+      dimension2.forEach(dim2 => {
         measurements.forEach((measure, mesInd) => {
-          for (index = 0; index < injectSeparatorsArray.length; index++) {
+          for (index = 0; index < matrix[dimIndex].length; index++) {
             match = false;
-            if (injectSeparatorsArray[index].parents && dimension1[dimIndex].displayValue === injectSeparatorsArray[index].parents.dimension1.header) {
-              if (dim2.displayValue === injectSeparatorsArray[index].parents.dimension2.header) {
-                if (measure.name === injectSeparatorsArray[index].parents.measurement.header) {
-                  measurementDataRow.push(injectSeparatorsArray[index]);
+            if (
+              matrix[dimIndex][index].parents &&
+              dimension1[dimIndex].displayValue ===
+                matrix[dimIndex][index].parents.dimension1.header
+            ) {
+              if (
+                dim2.displayValue ===
+                matrix[dimIndex][index].parents.dimension2.header
+              ) {
+                if (
+                  measure.name ===
+                  matrix[dimIndex][index].parents.measurement.header
+                ) {
+                  measurementDataRow.push(matrix[dimIndex][index]);
                   match = true;
                   break;
                 }
@@ -62,7 +69,7 @@ class DataTable extends React.PureComponent {
           }
           if (!match) {
             measurementDataRow.push({
-              displayValue: '',
+              displayValue: "",
               parents: {
                 dimension1: {
                   elementNumber: dimension1[dimIndex].elementNumber,
@@ -81,8 +88,13 @@ class DataTable extends React.PureComponent {
           }
         });
       });
-      return measurementDataRow;
+      return injectSeparators(
+        measurementDataRow,
+        columnSeparatorWidth,
+        atEvery
+      );
     };
+
 
     return (
       <div className="row-wrapper">
