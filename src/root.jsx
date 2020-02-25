@@ -33,7 +33,7 @@ class Root extends React.PureComponent {
     // Determine cell- and column separator width
     let cellWidth = '0px';
     let columnSeparatorWidth = '';
-    if (this.dataTableRef) {
+    if (this.dataTableRef && !error) {
       const tableWidth = this.dataTableRef.getBoundingClientRect().width;
       this.renderedTableWidth = tableWidth;
 
