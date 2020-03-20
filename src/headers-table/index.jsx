@@ -77,7 +77,7 @@ class HeadersTable extends React.PureComponent {
                     colSpan={measurements.length}
                     component={component}
                     entry={entry}
-                    key={entry.displayValue}
+                    key={`${entry.displayValue}-${index}-separator`}
                     styling={styling}
                   />
                 );

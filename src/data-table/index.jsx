@@ -121,7 +121,7 @@ class DataTable extends React.PureComponent {
               };
 
               return (
-                <tr key={dimensionEntry.displayValue}>
+                <tr key={`${dimensionEntry.displayValue}-${dimensionIndex}-separator`}>
                   {!renderData ?
                     <RowHeader
                       component={component}
