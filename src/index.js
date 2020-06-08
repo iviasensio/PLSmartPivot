@@ -115,7 +115,7 @@ export default {
       return menu;
     }
 
-    if (typeof (this.backendApi.model.layout.qMeta.privileges[3]) !== 'undefined' && this.backendApi.model.layout.qMeta.privileges[3] === 'exportdata') {
+    if (this.backendApi.model.layout.qMeta.privileges.indexOf('exportdata') !== -1) {
       menu.addItem({
         translation: 'Export as XLS',
         tid: 'export-excel',
