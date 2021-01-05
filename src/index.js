@@ -108,7 +108,7 @@ export default {
   async getContextMenu (obj, menu) {
     const app = qlik.currApp(this);
     const isPersonalResult = await app.global.isPersonalMode();
-    // This check is done because the desktop wrapper blocks downloads. 
+    // This check is done because the desktop wrapper blocks downloads.
     // It also blocks this feature in QCS currently as isPersonalMode returns true
     if (
       !this.$scope.layout.allowexportxls ||
