@@ -86,6 +86,6 @@ export function initializeDesignList (component, layout) {
       resolve(data);
     };
     stylingField.OnData.bind(listener);
-    stylingField.getData();
+    stylingField.getData({ rows: 5000 });
   });
 }
