@@ -3,15 +3,15 @@ module.exports = {
     ecmaVersion: 6,
     ecmaFeatures: {
       jsx: true,
-      modules: true
+      modules: true,
     },
-    sourceType: "module"
+    sourceType: "module",
   },
   parser: "babel-eslint",
   env: {
     browser: true,
     es6: true,
-    node: true
+    node: true,
   },
   globals: {
     angular: false,
@@ -21,49 +21,63 @@ module.exports = {
     document: false,
     expect: false,
     it: false,
-    require: false
+    require: false,
   },
   rules: {
-    "indent": ["error", 2, { "SwitchCase": 1 }],
+    indent: ["warn", 2, { SwitchCase: 1 }],
     "linebreak-style": ["error", "unix"],
     "object-curly-spacing": ["error", "always"],
     "max-lines": ["warn", 300],
-    "max-len": ["warn", { "code": 120, "ignoreComments": true, "ignoreTrailingComments": false }],
+    "max-len": [
+      "warn",
+      { code: 120, ignoreComments: true, ignoreTrailingComments: false },
+    ],
     "no-console": ["warn"],
-    "no-mixed-operators": ["warn", {
-      "groups": [
-        ["==", "!=", "===", "!==", ">", ">=", "<", "<="],
-        ["&&", "||"],
-        ["in", "instanceof"]
-      ],
-      "allowSamePrecedence": true
-    }],
+    "no-mixed-operators": [
+      "warn",
+      {
+        groups: [
+          ["==", "!=", "===", "!==", ">", ">=", "<", "<="],
+          ["&&", "||"],
+          ["in", "instanceof"],
+        ],
+        allowSamePrecedence: true,
+      },
+    ],
+    "comma-dangle": ["off"],
+    "space-before-function-paren": ["off"],
     "no-multi-spaces": ["error"],
     "no-cond-assign": ["warn"],
     "no-fallthrough": ["warn"],
     "no-undef": ["error"],
     "no-unused-vars": ["error"],
-    "no-use-before-define": ["error", { "functions": false, "classes": false, "variables": false }],
+    "no-use-before-define": [
+      "error",
+      { functions: false, classes: false, variables: false },
+    ],
     "no-useless-escape": ["warn"],
     "no-useless-return": ["warn"],
-    "no-underscore-dangle": ["warn", { "allow": ["_id"] }],
+    "no-underscore-dangle": ["warn", { allow: ["_id"] }],
     "no-redeclare": ["error"],
     "no-restricted-syntax": ["warn"],
     "operator-linebreak": ["warn", "before"],
     "prefer-promise-reject-errors": ["warn"],
-    "padded-blocks": ["warn", { "blocks": "never", "switches": "never", "classes": "never" }],
-    "semi": ["error", "always"],
+    "padded-blocks": [
+      "warn",
+      { blocks: "never", switches: "never", classes: "never" },
+    ],
+    semi: ["error", "always"],
     "valid-typeof": ["warn"],
     "no-eval": ["error"],
     "no-implied-eval": ["error"],
     "no-debugger": ["warn"],
     "no-unreachable": ["warn"],
-    "quotes": ["warn", "single", { "avoidEscape": true }],
+    quotes: ["warn", "single", { avoidEscape: true }],
     "sort-imports": ["off"],
     "max-lines-per-function": ["off"], // marks the entire functions, a bit too noisy
-    "complexity": ["warn"],
-    "camelcase": ["warn"],
-    "max-statements": ["off"],  // marks the entire functions, a bit too noisy
+    complexity: ["warn"],
+    camelcase: ["warn"],
+    "max-statements": ["off"], // marks the entire functions, a bit too noisy
     "sort-vars": ["off"], // not much value for the work
     "init-declarations": ["off"],
     "capitalized-comments": ["off"],
@@ -99,13 +113,13 @@ module.exports = {
     "array-bracket-newline": ["warn"],
     "array-element-newline": ["warn"],
     "object-shorthand": ["warn"],
-    "eqeqeq": ["warn"],
+    eqeqeq: ["warn"],
     "no-empty-function": ["off"],
     "function-paren-newline": ["warn"],
     "no-invalid-this": ["warn"],
     "newline-per-chained-call": ["warn"],
     "no-unused-expressions": ["warn"],
-    "strict": ["warn"],
+    strict: ["warn"],
     "no-ternary": ["off"],
     "multiline-ternary": ["off"],
     "no-param-reassign": ["error"],
@@ -115,9 +129,9 @@ module.exports = {
     "default-case": ["warn"],
     "no-alert": ["warn"],
     "max-params": ["warn"],
-    "brace-style": ["warn", "1tbs", { "allowSingleLine": true }],
+    "brace-style": ["warn", "1tbs", { allowSingleLine: true }],
     "prefer-const": ["warn"],
-    "class-methods-use-this":["warn"],
+    "class-methods-use-this": ["warn"],
     // plugin:react
     "react/jsx-indent": ["warn", 2],
     "react/jsx-indent-props": ["warn", 2],
@@ -131,10 +145,7 @@ module.exports = {
     "react/jsx-max-depth": ["off"], // rule throws exception in single-dimension-measure
     "react/jsx-filename-extension": ["warn"],
     "react/prefer-stateless-function": ["warn"],
-    "react/no-set-state": ["warn"]
+    "react/no-set-state": ["warn"],
   },
-  extends: [
-    "eslint:all",
-    "plugin:react/all"
-  ]
-}
+  extends: ["eslint:all", "plugin:react/all"],
+};

@@ -5,37 +5,15 @@ import DataTable from "./data-table/index.jsx";
 import { LinkedScrollWrapper, LinkedScrollSection } from "./linked-scroll";
 
 class Root extends React.PureComponent {
-  constructor (props) {
-    super(props);
-    this.onDataTableRefSet = this.onDataTableRefSet.bind(this);
-    this.renderedTableWidth = 0;
-  }
-
-  componentDidUpdate () {
-    let tableWidth;
-    if (this.dataTableRef) {
-      tableWidth = this.dataTableRef.getBoundingClientRect().width;
-      if (this.renderedTableWidth !== tableWidth) {
-        this.forceUpdate();
-      }
-    }
-  }
-
-  onDataTableRefSet (element) {
-    this.dataTableRef = element;
-    this.forceUpdate();
-  }
-
   render () {
     const { editmodeClass, component, state } = this.props;
-    const { data, general, styling, error } = state;
+    const { data, general, styling, error, element } = state;
 
     // Determine cell- and column separator width
     let cellWidth = '0px';
     let columnSeparatorWidth = '';
-    if (this.dataTableRef && !error) {
-      const tableWidth = this.dataTableRef.getBoundingClientRect().width;
-      this.renderedTableWidth = tableWidth;
+    if (!error && element) {
+      const tableWidth = element.getBoundingClientRect().width;
 
       if (general.cellWidth) {
         cellWidth = general.cellWidth;
@@ -43,7 +21,7 @@ class Root extends React.PureComponent {
           columnSeparatorWidth = '8px';
         }
       } else {
-        const headerMarginRight = 8;
+        const headerMarginRight = 8 + 230 + 20;
         const borderWidth = 1;
         const rowCellCount = data.matrix[0].length;
 
@@ -99,7 +77,6 @@ class Root extends React.PureComponent {
             <div
               className={`data-table ${editmodeClass}`}
               style={{ width: general.cellWidth ? 'auto' : '100%' }}
-              ref={this.onDataTableRefSet}
             >
               <LinkedScrollSection linkHorizontal>
                 <HeadersTable
