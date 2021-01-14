@@ -21,6 +21,7 @@ class Root extends React.PureComponent {
           columnSeparatorWidth = '8px';
         }
       } else {
+        // 230 is the left "header", rest is magic margins
         const headerMarginRight = 8 + 230 + 20;
         const borderWidth = 1;
         const rowCellCount = data.matrix[0].length;
