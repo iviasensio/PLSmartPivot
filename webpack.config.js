@@ -3,9 +3,10 @@ const packageJSON = require('./package.json');
 const path = require('path');
 
 const DIST = path.resolve("./dist");
+// eslint-disable-next-line no-process-env
 const MODE = process.env.NODE_ENV || 'development';
-const SOURCE_MAP = 'sourec-map';
-const DEVTOOL = (process.env.NODE_ENV === 'development') ? SOURCE_MAP : false;
+const SOURCE_MAP = 'source-map';
+const DEVTOOL = MODE === 'development' ? SOURCE_MAP : false;
 
 console.log('Webpack mode:', MODE); // eslint-disable-line no-console
 
