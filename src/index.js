@@ -2,7 +2,6 @@ import definition from "./definition";
 import { exportXLS } from "./excel-export";
 import { initializeDataCube, initializeDesignList } from "./dataset";
 import initializeStore from "./store";
-import qlik from "qlik";
 import React from "react";
 import ReactDOM from "react-dom";
 import Root from "./root.jsx";
@@ -105,15 +104,8 @@ export default {
     );
     return snapshotLayout;
   },
-  async getContextMenu (obj, menu) {
-    const app = qlik.currApp(this);
-    const isPersonalResult = await app.global.isPersonalMode();
-    // This check is done because the desktop wrapper blocks downloads.
-    // It also blocks this feature in QCS currently as isPersonalMode returns true
-    if (
-      !this.$scope.layout.allowexportxls ||
-      (isPersonalResult && isPersonalResult.qReturn)
-    ) {
+  getContextMenu (obj, menu) {
+    if (!this.$scope.layout.allowexportxls) {
       return menu;
     }
 
