@@ -105,6 +105,10 @@ export default {
     return snapshotLayout;
   },
   getContextMenu (obj, menu) {
+    if (!this.$scope.layout.allowexportxls) {
+      return menu;
+    }
+
     if (this.backendApi.model.layout.qMeta.privileges.indexOf('exportdata') !== -1) {
       menu.addItem({
         translation: 'Export as XLS',
