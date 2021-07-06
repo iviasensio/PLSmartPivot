@@ -2,6 +2,7 @@ import definition from "./definition";
 import { exportXLS } from "./excel-export";
 import { initializeDataCube, initializeDesignList } from "./dataset";
 import initializeStore from "./store";
+import qlik from "qlik";
 import React from "react";
 import ReactDOM from "react-dom";
 import Root from "./root.jsx";
@@ -12,7 +13,7 @@ if (!window._babelPolyfill) {
   require("@babel/polyfill"); // eslint-disable-line global-require
 }
 
-export default {
+export default ({ flags }) => ({
   design: {
     dimensions: {
       max: 1,
@@ -104,12 +105,18 @@ export default {
     );
     return snapshotLayout;
   },
-  getContextMenu (obj, menu) {
+  async getContextMenu (obj, menu) {
     if (!this.$scope.layout.allowexportxls) {
       return menu;
     }
 
-    if (this.backendApi.model.layout.qMeta.privileges.indexOf('exportdata') !== -1) {
+    // Export as XLS is removed from desktop because the desktop wrapper blocks downloads.
+    // isPersonalMode returns true for both desktop and QCS
+    // By checking both if has download dialog and if is QCS can enable Export as XLS option on QCS
+    const app = qlik.currApp(this);
+    const isPersonalResult = await app.global.isPersonalMode();
+
+    if (this.backendApi.model.layout.qMeta.privileges.indexOf('exportdata') !== -1 || (flags.isEnabled('DOWNLOAD_USE_REPORTING') && isPersonalResult && isPersonalResult.qReturn)) {
       menu.addItem({
         translation: 'Export as XLS',
         tid: 'export-excel',
@@ -127,4 +134,4 @@ export default {
     return menu;
   },
   version: 1.0
-};
+});
