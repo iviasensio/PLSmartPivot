@@ -12,7 +12,7 @@ if (!window._babelPolyfill) {
   require("@babel/polyfill"); // eslint-disable-line global-require
 }
 
-export default {
+export default ({ flags }) => ({
   design: {
     dimensions: {
       max: 1,
@@ -104,12 +104,22 @@ export default {
     );
     return snapshotLayout;
   },
-  getContextMenu (obj, menu) {
+  async getContextMenu (obj, menu) {
     if (!this.$scope.layout.allowexportxls) {
       return menu;
     }
 
-    if (this.backendApi.model.layout.qMeta.privileges.indexOf('exportdata') !== -1) {
+    const app = this.backendApi.model.app;
+    const isPersonalResult = await app.global.isPersonalMode();
+
+    // Export as XLS option is removed from desktop because the desktop wrapper blocks downloads.
+    // Enabled for windows and QCS
+    // isPersonalMode returns true for both desktop and QCS
+    // By checking both if has download dialog and if is QCS can enable Export as XLS option on QCS
+    if (
+      (this.backendApi.model.layout.qMeta.privileges.includes('exportdata') && !isPersonalResult) ||
+      (flags.isEnabled('DOWNLOAD_USE_REPORTING') && isPersonalResult)
+    ) {
       menu.addItem({
         translation: 'Export as XLS',
         tid: 'export-excel',
@@ -127,4 +137,4 @@ export default {
     return menu;
   },
   version: 1.0
-};
+});
