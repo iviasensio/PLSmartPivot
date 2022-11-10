@@ -9,6 +9,15 @@ defaults: &defaults
     GITHUB_REPO: "PLSmartPivot"
     PACKAGE_NAME: "qlik-smart-pivot"
 
+# reusable commands
+commands:
+  setup_environment:
+    steps:
+      - run:
+          name: Setup environment
+          command: |
+            ./.circleci/upgrade-node.sh
+
 jobs:
   test:
     docker:
@@ -35,6 +44,7 @@ jobs:
     <<: *defaults
     steps:
       - checkout
+      - setup_environment
       - attach_workspace:
           at: ~/qlik-smart-pivot
       - run:
@@ -61,6 +71,7 @@ jobs:
     <<: *defaults
     steps:
       - checkout
+      - setup_environment
       - attach_workspace:
           at: ~/qlik-smart-pivot
       - run:
