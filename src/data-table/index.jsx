@@ -143,15 +143,13 @@ class DataTable extends React.PureComponent {
                     }
 
                     // eslint-disable-next-line no-shadow
-                    const { dimension1: dimension1Info, dimension2, measurement } = measurementData.parents;
-                    const id = `${dimension1Info.elementNumber}-${dimension2 && dimension2.elementNumber}-${measurement.header}-${measurement.index}`;
                     return (
                       <DataCell
                         cellWidth={cellWidth}
                         component={component}
                         data={data}
                         general={general}
-                        key={`${dimensionEntry.displayValue}-${id}`}
+                        key={`${Math.random()}-${new Date().getTime()}`}
                         measurement={measurementData}
                         styleBuilder={styleBuilder}
                         styling={styling}
