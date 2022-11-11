@@ -65,10 +65,6 @@ jobs:
     <<: *defaults
     steps:
       - checkout
-      - run:
-          name: Setup environment
-          command: |
-            ./.circleci/upgrade-node.sh
       - attach_workspace:
           at: ~/qlik-smart-pivot
       - run:
