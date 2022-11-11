@@ -3,7 +3,7 @@ version: 2
 defaults: &defaults
   working_directory: ~/qlik-smart-pivot
   docker:
-    - image: circleci/node:stretch
+    - image: circleci/node:16.13.0
   environment:
     GITHUB_ORG: "qlik-oss"
     GITHUB_REPO: "PLSmartPivot"
@@ -12,20 +12,12 @@ defaults: &defaults
 jobs:
   test:
     docker:
-    - image: circleci/node:stretch-browsers
+    - image: circleci/node:16.13.0-browsers
     steps:
       - checkout
       - run:
           name: Install dependencies
           command: npm install
-      - run:
-          name: BlackDuck scan
-          command: curl -s https://detect.synopsys.com/detect.sh | bash -s -- \
-            --blackduck.url="https://qliktech.blackducksoftware.com" \
-            --blackduck.trust.cert=true \
-            --blackduck.username="svc-blackduck" \
-            --blackduck.password=${svc_blackduck} \
-            --detect.project.name="viz-bundle-qlik-smart-pivot"
 
   bump-version:
     <<: *defaults
@@ -43,6 +35,10 @@ jobs:
     <<: *defaults
     steps:
       - checkout
+      - run:
+          name: Setup environment
+          command: |
+           sudo chmod +x ./.circleci/upgrade-node.sh
       - attach_workspace:
           at: ~/qlik-smart-pivot
       - run:
@@ -69,6 +65,10 @@ jobs:
     <<: *defaults
     steps:
       - checkout
+      - run:
+          name: Setup environment
+          command: |
+            ./.circleci/upgrade-node.sh
       - attach_workspace:
           at: ~/qlik-smart-pivot
       - run:
