@@ -9,49 +9,52 @@ var pkg = require('./package.json');
 var DIST = './dist';
 var VERSION = process.env.VERSION || 'local-dev';
 
-gulp.task('qext', function () {
-	var qext = {
-		name: 'P&L pivot',
-		type: 'visualization',
-		description: pkg.description + '\nVersion: ' + VERSION,
-		version: VERSION,
-		icon: 'pivot-table',
-		preview: 'qlik-smart-pivot.png',
-		keywords: 'qlik-sense, visualization',
-		author: pkg.author,
-		homepage: pkg.homepage,
-		license: pkg.license,
-		repository: pkg.repository,
-		dependencies: {
-			'qlik-sense': '>=5.5.x'
-		},
-		__next: true
-	};
-	if (pkg.contributors) {
-		qext.contributors = pkg.contributors;
-	}
-	var src = require('stream').Readable({
-		objectMode: true
-	});
-	src._read = function () {
-		this.push(new gutil.File({
-			cwd: '',
-			base: '',
-			path: pkg.name + '.qext',
-			contents: Buffer.from(JSON.stringify(qext, null, 4))
-		}));
-		this.push(null);
-	};
-	return src.pipe(gulp.dest(DIST));
+gulp.task("qext", function () {
+  var qext = {
+    name: "P&L pivot",
+    type: "visualization",
+    description: pkg.description + "\nVersion: " + VERSION,
+    version: VERSION,
+    icon: "pivot-table",
+    preview: "qlik-smart-pivot.png",
+    keywords: "qlik-sense, visualization",
+    author: pkg.author,
+    homepage: pkg.homepage,
+    license: pkg.license,
+    repository: pkg.repository,
+    dependencies: {
+      "qlik-sense": ">=5.5.x",
+    },
+    __next: true,
+  };
+  if (pkg.contributors) {
+    qext.contributors = pkg.contributors;
+  }
+  var src = require("stream").Readable({
+    objectMode: true,
+  });
+  src._read = function () {
+    this.push(
+      new gutil.File({
+        cwd: "",
+        base: "",
+        path: "qlik-smart-pivot.qext",
+        contents: Buffer.from(JSON.stringify(qext, null, 4)),
+      })
+    );
+    this.push(null);
+  };
+  return src.pipe(gulp.dest(DIST));
 });
 
-gulp.task('clean', function(){
+gulp.task("clean", function () {
   return del([DIST], { force: true });
 });
 
-gulp.task('zip-build', function(){
-  return gulp.src(DIST + '/**/*')
-    .pipe(zip(`${pkg.name}_${VERSION}.zip`))
+gulp.task("zip-build", function () {
+  return gulp
+    .src(DIST + "/**/*")
+    .pipe(zip(`qlik-smart-pivot_${VERSION}.zip`))
     .pipe(gulp.dest(DIST));
 });
 

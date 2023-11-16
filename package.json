@@ -1,5 +1,5 @@
 {
-  "name": "qlik-smart-pivot",
+  "name": "@qlik/qlik-smart-pivot",
   "version": "0.0.1",
   "description": "Profit & Loss reporting with color and font customizations.",
   "homepage": "",
